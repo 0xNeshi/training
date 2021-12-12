@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 const Container = styled.div`
   background-color: #282c34;
   min-height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
 `;

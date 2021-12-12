@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.nav`
-  height: 10vh;
+  height: 20vh;
   display: flex;
   align-items: end;
   justify-content: center;
@@ -12,7 +12,7 @@ const Container = styled.nav`
 const LogoContainer = styled(Link)`
   color: white;
   height: 50%;
-  font-size: 4em;
+  font-size: 3em;
   font-weight: bold;
 `;
 
