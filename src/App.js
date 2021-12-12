@@ -17,22 +17,13 @@ const MainContainer = styled.div`
 `;
 
 function App() {
-  const [exercise, setExercise] = useState("squat");
-
-  const handleChange = (exercise) => {
-    setExercise(exercise);
-  };
-
   return (
     <Container>
       <BrowserRouter>
         <Navbar />
         <MainContainer>
           <Routes>
-            <Route
-              path="/"
-              element={<ExercisePicker onChangeExercise={handleChange} />}
-            />
+            <Route path="/" element={<ExercisePicker />} />
             <Route exact path="/dashboard/:exercise" element={<Dashboard />} />
           </Routes>
         </MainContainer>

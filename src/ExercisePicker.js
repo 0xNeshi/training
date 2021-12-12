@@ -2,25 +2,13 @@ import React from "react";
 import Button from "./Button";
 import Container from "./Container";
 
-function ExercisePicker(props) {
+function ExercisePicker() {
   return (
     <Container>
-      <Button
-        text="Squat"
-        onButtonClicked={() => props.onChangeExercise("squat")}
-      />
-      <Button
-        text="Deadlift"
-        onButtonClicked={() => props.onChangeExercise("deadlift")}
-      />
-      <Button
-        text="Bench"
-        onButtonClicked={() => props.onChangeExercise("bench")}
-      />
-      <Button
-        text="Overhead Press"
-        onButtonClicked={() => props.onChangeExercise("overhead")}
-      />
+      <Button text="Squat" exercise="squat" />
+      <Button text="Deadlift" exercise="deadlift" />
+      <Button text="Bench" exercise="bench" />
+      <Button text="Overhead Press" exercise="overhead" />
     </Container>
   );
 }
