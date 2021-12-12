@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-import Dashboard from "./Dashboard";
-import ExercisePicker from "./ExercisePicker";
-import Navbar from "./Navbar";
+import Dashboard from "./components/Dashboard";
+import ExercisePicker from "./components/ExercisePicker";
+import Navbar from "./components/Navbar";
 
 const Container = styled.div`
   background-color: #282c34;
@@ -13,7 +12,7 @@ const Container = styled.div`
 `;
 
 const MainContainer = styled.div`
-  height: 70vh;
+  height: 90vh;
 `;
 
 function App() {

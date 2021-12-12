@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.nav`
-  height: 30vh;
+  height: 10vh;
   display: flex;
   align-items: end;
   justify-content: center;
