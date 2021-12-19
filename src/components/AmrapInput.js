@@ -32,6 +32,7 @@ export const AmrapInput = ({ reps, onChangeAmrap }) => {
       if (newAmrapReps === reps) {
         return;
       }
+      console.log("ensdfasd");
 
       onChangeAmrap(newAmrapReps);
     },
@@ -39,9 +40,6 @@ export const AmrapInput = ({ reps, onChangeAmrap }) => {
   );
 
   useEffect(() => {
-    if (amrapReps === reps) {
-      return;
-    }
     const timer = setTimeout(
       () => handleChangeAmrapReps(amrapReps),
       WAIT_INTERVAL
@@ -53,7 +51,7 @@ export const AmrapInput = ({ reps, onChangeAmrap }) => {
   }, [amrapReps, reps, handleChangeAmrapReps]);
 
   const handleKeyDown = (e) => {
-    if (e.keyCode === ENTER_KEY && amrapReps !== reps) {
+    if (e.keyCode === ENTER_KEY) {
       handleChangeAmrapReps(amrapReps);
     }
   };
