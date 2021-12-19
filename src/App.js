@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Dashboard from "./components/Dashboard";
 import ExercisePicker from "./components/ExercisePicker";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
 const Container = styled.div`
@@ -10,10 +11,11 @@ const Container = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: #343028;
+  color: white;
 `;
 
 const MainContainer = styled.div`
-  height: 83vh;
+  height: 85vh;
 `;
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
             <Route exact path="/dashboard/:exercise" element={<Dashboard />} />
           </Routes>
         </MainContainer>
+        <Footer />
       </BrowserRouter>
     </Container>
   );

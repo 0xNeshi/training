@@ -16,7 +16,6 @@ const Title = styled.h3`
   display: flex;
   align-items: end;
   justify-content: center;
-  color: white;
 `;
 
 const Content = styled.div`
@@ -27,7 +26,6 @@ const Content = styled.div`
   padding: 20px 0 20px;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
-  color: white;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
