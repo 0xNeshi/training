@@ -5,15 +5,15 @@ import ExercisePicker from "./components/ExercisePicker";
 import Navbar from "./components/Navbar";
 
 const Container = styled.div`
-  background-color: #282c34;
-  min-height: 100vh;
-  width: 100vw;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: #282c34;
 `;
 
 const MainContainer = styled.div`
-  height: 90vh;
+  height: 80vh;
 `;
 
 function App() {

@@ -15,20 +15,22 @@ const Title = styled.h3`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 90vh;
+  height: 100%;
   align-items: center;
 `;
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
   width: 100%;
-  overflow: auto;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 function Dashboard() {

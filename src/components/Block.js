@@ -6,7 +6,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 300px;
   width: 80%;
   border: 1px solid white;
   border-radius: 20px;
