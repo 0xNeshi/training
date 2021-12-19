@@ -56,6 +56,8 @@ export const AmrapInput = ({ reps, onChangeAmrap }) => {
     }
   };
 
+  const handleFocus = (e) => e.target.select();
+
   return (
     <Input
       value={amrapReps}
@@ -63,6 +65,7 @@ export const AmrapInput = ({ reps, onChangeAmrap }) => {
       onChange={(e) => setAmrapReps(+e.target.value)}
       onBlur={() => handleChangeAmrapReps(amrapReps)}
       onKeyDown={handleKeyDown}
+      onFocus={handleFocus}
     />
   );
 };
