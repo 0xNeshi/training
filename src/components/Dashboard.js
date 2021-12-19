@@ -40,7 +40,7 @@ function Dashboard() {
   const blockComponents = blocks
     .sort((b1, b2) => b2.trainingMax - b1.trainingMax)
     .map((block) => (
-      <Block number={block.number} trainingMax={block.trainingMax} />
+      <Block blockNumber={block.number} trainingMax={block.trainingMax} />
     ));
 
   return (

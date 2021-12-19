@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useGetWeights } from "../hooks/useGetWeights";
 import BlockRow from "./BlockRow";
 
 const Container = styled.div`
@@ -29,25 +30,21 @@ const BlockRowContainer = styled.div`
   justify-content: space-around;
 `;
 
-const calculate = (weight, percent) => {
-  const exactWeight = weight * percent;
-  const mod = exactWeight % 2.5;
-  return exactWeight - mod;
-};
-
-function Block({ number, trainingMax }) {
-  const sixtyFive = calculate(trainingMax, 0.65);
-  const seventy = calculate(trainingMax, 0.7);
-  const seventyFive = calculate(trainingMax, 0.75);
-  const eighty = calculate(trainingMax, 0.8);
-  const eightyFive = calculate(trainingMax, 0.85);
-  const ninety = calculate(trainingMax, 0.9);
-  const ninetyFive = calculate(trainingMax, 0.95);
+function Block({ blockNumber, trainingMax }) {
+  const [
+    sixtyFive,
+    seventy,
+    seventyFive,
+    eighty,
+    eightyFive,
+    ninety,
+    ninetyFive,
+  ] = useGetWeights(trainingMax);
 
   return (
     <Container>
       <Title>
-        Block {number} ({trainingMax}kg)
+        Block {blockNumber} ({trainingMax}kg)
       </Title>
       <Divider />
       <BlockRowContainer>
