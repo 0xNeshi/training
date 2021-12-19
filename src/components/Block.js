@@ -52,16 +52,19 @@ function Block({ blockNumber, trainingMax }) {
           repSchema={"5/3/1"}
           weights={[seventyFive, eightyFive, ninetyFive]}
           amrap={10}
+          changeAmrap={(reps) => console.log("reps", reps, blockNumber, 3)}
         />
         <BlockRow
           repSchema={"3/3/3"}
           weights={[seventy, eighty, ninety]}
           amrap={10}
+          changeAmrap={(reps) => console.log("reps", reps, blockNumber, 2)}
         />
         <BlockRow
           repSchema={"5/5/5"}
           weights={[sixtyFive, seventyFive, eightyFive]}
           amrap={10}
+          changeAmrap={(reps) => console.log("reps", reps, blockNumber, 1)}
         />
       </BlockRowContainer>
     </Container>
