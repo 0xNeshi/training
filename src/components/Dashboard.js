@@ -1,30 +1,8 @@
 import React from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
+import { useGetBlocks } from "../hooks/useGetBlocks";
 import Block from "./Block";
-
-const blockStats = [
-  {
-    number: 1,
-    exercise: "squat",
-    trainingMax: 75,
-  },
-  {
-    number: 2,
-    exercise: "squat",
-    trainingMax: 80,
-  },
-  {
-    number: 3,
-    exercise: "squat",
-    trainingMax: 85,
-  },
-  {
-    number: 4,
-    exercise: "squat",
-    trainingMax: 90,
-  },
-];
 
 const Title = styled.h3`
   height: 10vh;
@@ -55,8 +33,9 @@ const Content = styled.div`
 
 function Dashboard() {
   const { exercise } = useParams();
+  const { isLoading, blocks } = useGetBlocks(exercise);
 
-  const blocks = blockStats
+  const blockComponents = blocks
     .sort((b1, b2) => b2.trainingMax - b1.trainingMax)
     .map((block) => (
       <Block number={block.number} trainingMax={block.trainingMax} />
@@ -65,7 +44,7 @@ function Dashboard() {
   return (
     <Container>
       <Title>{exercise.toUpperCase()}</Title>
-      <Content>{blocks}</Content>
+      {!isLoading && <Content>{blockComponents}</Content>}
     </Container>
   );
 }
