@@ -60,7 +60,7 @@ export const AmrapInput = ({ reps, onChangeAmrap }) => {
 
   return (
     <Input
-      value={amrapReps}
+      value={amrapReps || ""}
       type="number"
       onChange={(e) => setAmrapReps(+e.target.value)}
       onBlur={() => handleChangeAmrapReps(amrapReps)}
