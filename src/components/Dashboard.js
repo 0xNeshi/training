@@ -4,14 +4,6 @@ import styled from "styled-components";
 import { useGetBlocks } from "../hooks/useGetBlocks";
 import Block from "./Block";
 
-const Title = styled.h3`
-  height: 10vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-`;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,11 +11,20 @@ const Container = styled.div`
   align-items: center;
 `;
 
+const Title = styled.h3`
+  height: 10vh;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  color: white;
+`;
+
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  padding: 20px 0 20px;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
@@ -31,6 +32,8 @@ const Content = styled.div`
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: #282c34;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0);
 `;
 
 function Dashboard() {

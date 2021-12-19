@@ -9,11 +9,11 @@ const Container = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  background-color: #282c34;
+  background-color: #343028;
 `;
 
 const MainContainer = styled.div`
-  height: 80vh;
+  height: 83vh;
 `;
 
 function App() {
