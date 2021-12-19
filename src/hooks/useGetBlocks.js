@@ -46,7 +46,7 @@ const blockStats = [
     weeks: [
       { number: 1, amrapReps: 10 },
       { number: 2, amrapReps: 7 },
-      { number: 3, amrapReps: 6 },
+      { number: 3, amrapReps: 0 },
     ],
   },
 ];
