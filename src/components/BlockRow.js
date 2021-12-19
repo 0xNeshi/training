@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -32,6 +32,16 @@ const AmrapInput = styled.input`
   border-radius: 5px;
   font-size: 1.2rem;
   font-weight: 500;
+
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
 `;
 
 const WAIT_INTERVAL = 1000;
@@ -40,26 +50,43 @@ const ENTER_KEY = 13;
 const Amrap = ({ reps, onChangeAmrap }) => {
   const [amrapReps, setAmrapReps] = useState(reps);
 
+  const handleChangeAmrapReps = useCallback(
+    (newAmrapReps) => {
+      if (newAmrapReps === reps) {
+        return;
+      }
+
+      onChangeAmrap(newAmrapReps);
+    },
+    [reps, onChangeAmrap]
+  );
+
   useEffect(() => {
     if (amrapReps === reps) {
       return;
     }
-    const timer = setTimeout(() => onChangeAmrap(amrapReps), WAIT_INTERVAL);
-    return () => clearTimeout(timer);
-  }, [amrapReps, reps]);
+    const timer = setTimeout(
+      () => handleChangeAmrapReps(amrapReps),
+      WAIT_INTERVAL
+    );
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [amrapReps, reps, handleChangeAmrapReps]);
 
   const handleKeyDown = (e) => {
-    if (e.keyCode === ENTER_KEY) {
-      onChangeAmrap(amrapReps);
+    if (e.keyCode === ENTER_KEY && amrapReps !== reps) {
+      handleChangeAmrapReps(amrapReps);
     }
   };
 
   return (
     <AmrapInput
       value={amrapReps}
-      type="text"
-      onChange={(e) => setAmrapReps(e.target.value)}
-      onBlur={() => onChangeAmrap(amrapReps)}
+      type="number"
+      onChange={(e) => setAmrapReps(+e.target.value)}
+      onBlur={() => handleChangeAmrapReps(amrapReps)}
       onKeyDown={handleKeyDown}
     />
   );

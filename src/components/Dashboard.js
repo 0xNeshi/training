@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { useGetBlocks } from "../hooks/useGetBlocks";
+import { updateAmrapReps, useGetBlocks } from "../hooks/useGetBlocks";
 import Block from "./Block";
 
 const Container = styled.div`
@@ -36,13 +36,24 @@ const Content = styled.div`
 
 function Dashboard() {
   const { exercise } = useParams();
-  const { isLoading, blocks } = useGetBlocks(exercise);
+  const { isLoading, blocks, refresh } = useGetBlocks(exercise);
+
+  const changeAmrapReps = (blockId, amrapReps, weekNumber) => {
+    updateAmrapReps(exercise, blockId, amrapReps, weekNumber);
+    refresh();
+  };
 
   const blockComponents = blocks
     .sort((b1, b2) => b2.dateCreated - b1.dateCreated)
-    .map((block) => <Block key={block.id} data={block} />);
-
-  console.log(blocks);
+    .map((block) => (
+      <Block
+        key={block.id}
+        data={block}
+        changeAmrapReps={(amrapReps, weekNumber) =>
+          changeAmrapReps(block.id, amrapReps, weekNumber)
+        }
+      />
+    ));
 
   return (
     <Container>
