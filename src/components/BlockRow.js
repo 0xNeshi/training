@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-function BlockRow({ weights, amrap }) {
+function BlockRow({ repSchema, weights, amrap }) {
   const [first, second, third] = weights;
 
   return (
     <Container>
       <span>
-        531 - {first}, {second}, {third}
+        <u>{repSchema}</u>
+        <i>{` - ${first}, ${second}, ${third}`}</i>
       </span>
       <span>+ {amrap}</span>
     </Container>

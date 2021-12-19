@@ -19,6 +19,11 @@ const blockStats = [
     exercise: "squat",
     trainingMax: 85,
   },
+  {
+    number: 4,
+    exercise: "squat",
+    trainingMax: 90,
+  },
 ];
 
 const Title = styled.h3`
@@ -32,7 +37,7 @@ const Title = styled.h3`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  min-height: 90vh;
   align-items: center;
 `;
 
