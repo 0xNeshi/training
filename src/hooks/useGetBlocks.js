@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 
-const blockStats = [
+let blockStats = [
   {
     id: 1,
     number: 1,
@@ -80,4 +80,12 @@ export const updateAmrapReps = (exercise, blockId, amrapReps, weekNumber) => {
   );
   const week = block.weeks.find((week) => week.number === weekNumber);
   week.amrapReps = amrapReps;
+};
+
+export const deleteBlock = (exercise, blockId) => {
+  const newBlocks = blockStats.filter(
+    (x) => x.exercise !== exercise || x.id !== blockId
+  );
+
+  blockStats = newBlocks;
 };

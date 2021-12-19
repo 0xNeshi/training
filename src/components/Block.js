@@ -1,3 +1,5 @@
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
 import { useGetWeights } from "../hooks/useGetWeights";
@@ -11,6 +13,13 @@ const Container = styled.div`
   border: 1px solid white;
   border-radius: 20px;
   padding: 0 20px;
+`;
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const Title = styled.h3`
@@ -30,7 +39,7 @@ const BlockRowContainer = styled.div`
   justify-content: space-around;
 `;
 
-function Block({ data, changeAmrapReps }) {
+function Block({ data, changeAmrapReps, deleteBlock }) {
   const { number, trainingMax, weeks } = data;
 
   const [
@@ -45,9 +54,18 @@ function Block({ data, changeAmrapReps }) {
 
   return (
     <Container>
-      <Title>
-        Block {number} ({trainingMax}kg)
-      </Title>
+      <Header>
+        <Title>
+          Block {number} ({trainingMax}kg)
+        </Title>
+        <FontAwesomeIcon
+          icon={faTrashAlt}
+          size="lg"
+          color="red"
+          style={{ cursor: "pointer" }}
+          onClick={deleteBlock}
+        />
+      </Header>
       <Divider />
       <BlockRowContainer>
         <BlockRow

@@ -1,7 +1,11 @@
 import React from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { updateAmrapReps, useGetBlocks } from "../hooks/useGetBlocks";
+import {
+  deleteBlock,
+  updateAmrapReps,
+  useGetBlocks,
+} from "../hooks/useGetBlocks";
 import Block from "./Block";
 
 const Container = styled.div`
@@ -43,6 +47,11 @@ function Dashboard() {
     refresh();
   };
 
+  const handleDeleteBlock = (blockId) => {
+    deleteBlock(exercise, blockId);
+    refresh();
+  };
+
   const blockComponents = blocks
     .sort((b1, b2) => b2.dateCreated - b1.dateCreated)
     .map((block) => (
@@ -52,6 +61,7 @@ function Dashboard() {
         changeAmrapReps={(amrapReps, weekNumber) =>
           changeAmrapReps(block.id, amrapReps, weekNumber)
         }
+        deleteBlock={() => handleDeleteBlock(block.id)}
       />
     ));
 
