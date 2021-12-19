@@ -21,6 +21,17 @@ const RepSchema = styled(Text)`
 const Weights = styled.span`
   flex-grow: 3;
   font-style: italic;
+  width: 100px;
+`;
+
+const Amrap = styled.input`
+  flex-grow: 1;
+  width: 10px;
+  height: 30px;
+  border: 1px solid white;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: 500;
 `;
 
 function BlockRow({ repSchema, weights, amrap }) {
@@ -33,7 +44,8 @@ function BlockRow({ repSchema, weights, amrap }) {
       <Weights>
         {first} , {second} , {third}
       </Weights>
-      <Text>x {amrap}</Text>
+      <Text>+</Text>
+      <Amrap value={amrap} />
     </Container>
   );
 }
