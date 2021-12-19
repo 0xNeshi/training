@@ -7,7 +7,7 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   font-size: 1.2em;
-  height: 55px;
+  height: 70px;
 `;
 
 const Text = styled.span`
