@@ -39,10 +39,10 @@ function Dashboard() {
   const { isLoading, blocks } = useGetBlocks(exercise);
 
   const blockComponents = blocks
-    .sort((b1, b2) => b2.trainingMax - b1.trainingMax)
-    .map((block) => (
-      <Block blockNumber={block.number} trainingMax={block.trainingMax} />
-    ));
+    .sort((b1, b2) => b2.dateCreated - b1.dateCreated)
+    .map((block) => <Block key={block.id} data={block} />);
+
+  console.log(blocks);
 
   return (
     <Container>

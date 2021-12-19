@@ -30,7 +30,9 @@ const BlockRowContainer = styled.div`
   justify-content: space-around;
 `;
 
-function Block({ blockNumber, trainingMax }) {
+function Block({ data }) {
+  const { number, trainingMax, id, weeks } = data;
+
   const [
     sixtyFive,
     seventy,
@@ -44,27 +46,27 @@ function Block({ blockNumber, trainingMax }) {
   return (
     <Container>
       <Title>
-        Block {blockNumber} ({trainingMax}kg)
+        Block {number} ({trainingMax}kg)
       </Title>
       <Divider />
       <BlockRowContainer>
         <BlockRow
           repSchema={"5/3/1"}
           weights={[seventyFive, eightyFive, ninetyFive]}
-          amrap={10}
-          changeAmrap={(reps) => console.log("reps", reps, blockNumber, 3)}
+          amrap={weeks[2].amrapReps}
+          changeAmrap={(reps) => console.log("reps", reps, id, weeks[2].number)}
         />
         <BlockRow
           repSchema={"3/3/3"}
           weights={[seventy, eighty, ninety]}
-          amrap={10}
-          changeAmrap={(reps) => console.log("reps", reps, blockNumber, 2)}
+          amrap={weeks[1].amrapReps}
+          changeAmrap={(reps) => console.log("reps", reps, id, weeks[1].number)}
         />
         <BlockRow
           repSchema={"5/5/5"}
           weights={[sixtyFive, seventyFive, eightyFive]}
-          amrap={10}
-          changeAmrap={(reps) => console.log("reps", reps, blockNumber, 1)}
+          amrap={weeks[0].amrapReps}
+          changeAmrap={(reps) => console.log("reps", reps, id, weeks[0].number)}
         />
       </BlockRowContainer>
     </Container>
