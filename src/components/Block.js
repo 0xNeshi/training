@@ -57,6 +57,16 @@ function Block({ number, trainingMax }) {
           weights={[seventyFive, eightyFive, ninetyFive]}
           amrap={10}
         />
+        <BlockRow
+          repSchema={"3/3/3"}
+          weights={[seventy, eighty, ninety]}
+          amrap={10}
+        />
+        <BlockRow
+          repSchema={"5/5/5"}
+          weights={[sixtyFive, seventyFive, eightyFive]}
+          amrap={10}
+        />
       </BlockRowContainer>
     </Container>
   );
