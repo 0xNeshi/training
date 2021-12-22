@@ -14,15 +14,17 @@ const Container = styled.div`
 const Table = styled.table`
   border-collapse: collapse;
   font-size: 0.9rem;
-  text-align: left;
+  text-align: center;
 `;
 
 const HeaderCell = styled.td`
   border-left: 1px solid white;
+  font-weight: bold;
 `;
 
 const HeaderNameCell = styled(HeaderCell)`
   border-left: none;
+  text-align: left;
 `;
 
 const AmrapHeaderCell = styled(HeaderCell)`
@@ -59,7 +61,7 @@ function WeekRow({ changeAmrapReps, week, blockId }) {
   return (
     <Container>
       <span>
-        Week {week.number} ({repSchemas[week.number]})
+        Week {week.number} (<u>{repSchemas[week.number]}</u>)
       </span>
       <Table>
         <thead>

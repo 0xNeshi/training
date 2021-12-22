@@ -7,12 +7,12 @@ const Cell = styled.td`
 `;
 
 const AmrapCell = styled(Cell)`
-  text-align: center;
   border-left: none;
 `;
 
 const NameCell = styled(Cell)`
   border-left: none;
+  text-align: left;
 `;
 
 function ExerciseRow({
