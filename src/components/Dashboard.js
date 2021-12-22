@@ -28,7 +28,6 @@ const Content = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #282c34;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0);
 `;
 
 function Dashboard() {

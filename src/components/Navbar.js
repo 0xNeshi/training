@@ -3,10 +3,8 @@ import styled from "styled-components";
 
 const Container = styled.nav`
   height: 5vh;
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  box-shadow: 0 0px 4px 2px black;
+  box-shadow: 0 1px 8px black;
+  z-index: 10;
 `;
 
 function Navbar() {
