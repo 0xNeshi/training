@@ -15,7 +15,7 @@ const Container = styled.div`
 `;
 
 const MainContainer = styled.div`
-  height: 85vh;
+  height: 90vh;
 `;
 
 function App() {

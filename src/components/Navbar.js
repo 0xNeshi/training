@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.nav`
-  height: 3vh;
+  height: 5vh;
   display: flex;
   align-items: end;
   justify-content: center;

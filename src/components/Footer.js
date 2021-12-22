@@ -6,17 +6,13 @@ const Container = styled.footer`
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   font-style: italic;
-  padding-bottom: 5px;
+  font-size: 0.6rem;
 `;
 
 function Footer() {
-  return (
-    <Container>
-      <small>&copy; Copyright 2021, Nenad Misic</small>
-    </Container>
-  );
+  return <Container>&copy; Copyright 2021, Nenad Misic</Container>;
 }
 
 export default Footer;
