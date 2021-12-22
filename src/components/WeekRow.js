@@ -17,6 +17,19 @@ const Table = styled.table`
   text-align: left;
 `;
 
+const HeaderCell = styled.td`
+  border-left: 1px solid white;
+`;
+
+const HeaderNameCell = styled(HeaderCell)`
+  border-left: none;
+`;
+
+const AmrapHeaderCell = styled(HeaderCell)`
+  text-align: center;
+  border-left: none;
+`;
+
 const repSchemas = {
   1: "5/5/5",
   2: "3/3/3",
@@ -47,12 +60,12 @@ function WeekRow({ changeAmrap, week, blockId }) {
         Week {week.number} ({repSchemas[week.number]})
       </span>
       <Table>
-        <th>Name</th>
-        <th>TM</th>
-        <th>{fractionToPercentage(first)}</th>
-        <th>{fractionToPercentage(second)}</th>
-        <th>{fractionToPercentage(third)}</th>
-        <th style={{ textAlign: "center" }}>+</th>
+        <HeaderNameCell>Name</HeaderNameCell>
+        <HeaderCell>TM</HeaderCell>
+        <HeaderCell>{fractionToPercentage(first)}</HeaderCell>
+        <HeaderCell>{fractionToPercentage(second)}</HeaderCell>
+        <HeaderCell>{fractionToPercentage(third)}</HeaderCell>
+        <AmrapHeaderCell>+</AmrapHeaderCell>
 
         {exerciseRows}
       </Table>

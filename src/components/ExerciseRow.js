@@ -3,9 +3,7 @@ import styled from "styled-components";
 import { AmrapInput } from "./AmrapInput";
 
 const Cell = styled.td`
-  border-bottom: 1px solid white;
   border-left: 1px solid white;
-  font-size: 0.9rem;
 `;
 
 const AmrapCell = styled(Cell)`

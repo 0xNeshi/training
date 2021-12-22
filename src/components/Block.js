@@ -72,27 +72,7 @@ function Block({ data, changeAmrapReps, deleteBlock }) {
         />
       </Header>
       <Divider />
-      <BlockRowContainer>
-        {rows}
-        {/* <BlockRow
-          repSchema={"5/3/1"}
-          weights={[seventyFive, eightyFive, ninetyFive]}
-          amrap={weeks[2].amrapReps}
-          changeAmrap={(reps) => changeAmrapReps(reps, weeks[2].number)}
-        /> */}
-        {/* <BlockRow
-          repSchema={"3/3/3"}
-          weights={[seventy, eighty, ninety]}
-          amrap={weeks[1].amrapReps}
-          changeAmrap={(reps) => changeAmrapReps(reps, weeks[1].number)}
-        />
-        <BlockRow
-          repSchema={"5/5/5"}
-          weights={[sixtyFive, seventyFive, eightyFive]}
-          amrap={weeks[0].amrapReps}
-          changeAmrap={(reps) => changeAmrapReps(reps, weeks[0].number)}
-        /> */}
-      </BlockRowContainer>
+      <BlockRowContainer>{rows}</BlockRowContainer>
     </Container>
   );
 }
