@@ -3,7 +3,7 @@ import { mockNewBlocks } from "./data";
 
 let mockBlocks = mockNewBlocks;
 
-export const useGetBlocks = () => {
+export const useGetBlocks2 = () => {
   const [blocks, setBlocks] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [toggleRefresh, setToggleRefresh] = useState(false);

@@ -5,7 +5,7 @@ import {
   deleteBlock,
   updateAmrapReps,
   useGetBlocks,
-} from "../hooks/useGetBlocks";
+} from "../hooks/useGetBlocks2";
 import Block from "./Block";
 
 const Container = styled.div`
@@ -31,16 +31,15 @@ const Content = styled.div`
 `;
 
 function Dashboard() {
-  const { exercise } = useParams();
-  const { isLoading, blocks, refresh } = useGetBlocks(exercise);
+  const { isLoading, blocks, refresh } = useGetBlocks();
 
-  const changeAmrapReps = (blockId, amrapReps, weekNumber) => {
+  const changeAmrapReps = (blockId, exercise, amrapReps, weekNumber) => {
     updateAmrapReps(exercise, blockId, amrapReps, weekNumber);
     refresh();
   };
 
   const handleDeleteBlock = (blockId) => {
-    deleteBlock(exercise, blockId);
+    deleteBlock(blockId);
     refresh();
   };
 
@@ -50,8 +49,8 @@ function Dashboard() {
       <Block
         key={block.id}
         data={block}
-        changeAmrapReps={(amrapReps, weekNumber) =>
-          changeAmrapReps(block.id, amrapReps, weekNumber)
+        changeAmrapReps={(exercise, weekNumber, amrapReps) =>
+          changeAmrapReps(block.id, exercise, amrapReps, weekNumber)
         }
         deleteBlock={() => handleDeleteBlock(block.id)}
       />
