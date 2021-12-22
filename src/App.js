@@ -1,7 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Dashboard from "./components/Dashboard";
-import ExercisePicker from "./components/ExercisePicker";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
@@ -25,8 +24,8 @@ function App() {
         <Navbar />
         <MainContainer>
           <Routes>
-            <Route path="/" element={<ExercisePicker />} />
-            <Route exact path="/dashboard/:exercise" element={<Dashboard />} />
+            <Route exact path="/dashboard" element={<Dashboard />} />
+            <Route exact path="*" element={<Navigate to="/dashboard" />} />
           </Routes>
         </MainContainer>
         <Footer />
