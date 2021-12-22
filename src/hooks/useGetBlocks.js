@@ -1,8 +1,7 @@
-import { useEffect, useState, useCallback } from "react";
-import { mockBlocks, mockNewBlocks } from "./data";
+import { useCallback, useEffect, useState } from "react";
+import { mockBlocks } from "./data";
 
 let blockStats = mockBlocks;
-let newBlocks = mockNewBlocks;
 
 export const useGetBlocks = (exercise) => {
   const [blocks, setBlocks] = useState([]);
