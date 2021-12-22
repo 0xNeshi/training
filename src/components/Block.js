@@ -47,7 +47,7 @@ function Block({ data, changeAmrapReps, deleteBlock }) {
       return (
         <WeekRow
           key={`weekrow${blockId}${week.number}`}
-          changeAmrap={changeAmrapReps}
+          changeAmrapReps={changeAmrapReps}
           week={week}
           blockId={blockId}
         />

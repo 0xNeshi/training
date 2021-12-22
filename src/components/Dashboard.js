@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  deleteBlock,
-  updateAmrapReps,
-  useGetBlocks,
-} from "../hooks/useGetBlocks";
+import { useGetBlocks } from "../hooks/useGetBlocks";
 import Block from "./Block";
 
 const Container = styled.div`
@@ -30,10 +26,11 @@ const Content = styled.div`
 `;
 
 function Dashboard() {
-  const { isLoading, blocks, refresh } = useGetBlocks();
+  const { isLoading, blocks, refresh, updateAmrapReps, deleteBlock } =
+    useGetBlocks();
 
-  const changeAmrapReps = (blockId, exercise, amrapReps, weekNumber) => {
-    updateAmrapReps(exercise, blockId, amrapReps, weekNumber);
+  const changeAmrapReps = (blockId, weekNumber, exercise, amrapReps) => {
+    updateAmrapReps(blockId, weekNumber, exercise, amrapReps);
     refresh();
   };
 
@@ -46,8 +43,8 @@ function Dashboard() {
     <Block
       key={block.id}
       data={block}
-      changeAmrapReps={(exercise, weekNumber, amrapReps) =>
-        changeAmrapReps(block.id, exercise, amrapReps, weekNumber)
+      changeAmrapReps={(weekNumber, exercise, amrapReps) =>
+        changeAmrapReps(block.id, weekNumber, exercise, amrapReps)
       }
       deleteBlock={handleDeleteBlock}
     />

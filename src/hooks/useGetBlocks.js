@@ -10,30 +10,31 @@ export const useGetBlocks = () => {
     setToggleRefresh((prevState) => !prevState);
   }, []);
 
-  const newBlocks = mockBlocks.sort(
-    (b1, b2) => b2.dateCreated - b1.dateCreated
-  );
+  const updateAmrapReps = (blockId, weekNumber, exerciseName, amrapReps) => {
+    const updatedBlocks = [...blocks];
+    const block = updatedBlocks.find((x) => x.id === blockId);
+    const week = block.weeks.find((week) => week.number === weekNumber);
+    const exercise = week.exercises.find((e) => e.name === exerciseName);
+    exercise.amrapReps = amrapReps;
+
+    setBlocks(updatedBlocks);
+  };
+
+  const deleteBlock = (blockId) => {
+    setBlocks((prevBlocks) => prevBlocks.filter((x) => x.id !== blockId));
+  };
+
   useEffect(() => {
     setLoading(true);
-    setBlocks(newBlocks);
+    setBlocks(mockBlocks);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    setBlocks((prev) => prev.sort((b1, b2) => b2.dateCreated - b1.dateCreated));
     setLoading(false);
   }, [toggleRefresh]);
 
-  return { isLoading, blocks, refresh };
-};
-
-export const updateAmrapReps = (
-  blockId,
-  exerciseName,
-  amrapReps,
-  weekNumber
-) => {
-  const block = mockBlocks.find((x) => x.id === blockId);
-  const exercise = block.exercises.find((e) => e.name === exerciseName);
-  const week = exercise.weeks.find((week) => week.number === weekNumber);
-  week.amrapReps = amrapReps;
-};
-
-export const deleteBlock = (blockId) => {
-  mockBlocks = mockBlocks.filter((x) => x.id !== blockId);
+  return { isLoading, blocks, refresh, updateAmrapReps, deleteBlock };
 };

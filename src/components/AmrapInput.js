@@ -24,7 +24,7 @@ const Input = styled.input`
 const WAIT_INTERVAL = 1000;
 const ENTER_KEY = 13;
 
-export const AmrapInput = ({ reps, onChangeAmrap }) => {
+export const AmrapInput = ({ reps, onChangeAmrapReps }) => {
   const [amrapReps, setAmrapReps] = useState(reps);
 
   const handleChangeAmrapReps = useCallback(
@@ -32,10 +32,9 @@ export const AmrapInput = ({ reps, onChangeAmrap }) => {
       if (newAmrapReps === reps) {
         return;
       }
-
-      onChangeAmrap(newAmrapReps);
+      onChangeAmrapReps(newAmrapReps);
     },
-    [reps, onChangeAmrap]
+    [reps, onChangeAmrapReps]
   );
 
   useEffect(() => {

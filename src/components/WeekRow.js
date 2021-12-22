@@ -36,7 +36,7 @@ const repSchemas = {
   3: "5/3/1",
 };
 
-function WeekRow({ changeAmrap, week, blockId }) {
+function WeekRow({ changeAmrapReps, week, blockId }) {
   const exerciseRows = week.exercises.map((ex) => {
     const weights = getWeights(ex.trainingMax, week.number);
 
@@ -44,7 +44,9 @@ function WeekRow({ changeAmrap, week, blockId }) {
       <ExerciseRow
         key={`${blockId}${week.number}${ex.name}`}
         weights={weights}
-        changeAmrap={changeAmrap}
+        changeAmrapReps={(newAmrapReps) =>
+          changeAmrapReps(week.number, ex.name, newAmrapReps)
+        }
         amrapReps={ex.amrapReps}
         exerciseName={ex.name}
         trainingMax={ex.trainingMax}

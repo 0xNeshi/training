@@ -20,7 +20,7 @@ function ExerciseRow({
   weights,
   trainingMax,
   amrapReps,
-  changeAmrap,
+  changeAmrapReps,
 }) {
   const [first, second, third] = weights;
 
@@ -32,7 +32,7 @@ function ExerciseRow({
       <Cell>{second}</Cell>
       <Cell>{third}</Cell>
       <AmrapCell>
-        <AmrapInput reps={amrapReps} onChangeAmrap={changeAmrap} />
+        <AmrapInput reps={amrapReps} onChangeAmrapReps={changeAmrapReps} />
       </AmrapCell>
     </tr>
   );
