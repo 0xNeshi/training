@@ -2,37 +2,41 @@ import React from "react";
 import styled from "styled-components";
 import { AmrapInput } from "./AmrapInput";
 
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  font-size: 1.2em;
-  height: 70px;
+const Cell = styled.td`
+  border-bottom: 1px solid white;
+  border-left: 1px solid white;
+  font-size: 0.9rem;
 `;
 
-const Text = styled.span`
-  flex-grow: 1;
+const AmrapCell = styled(Cell)`
+  text-align: center;
+  border-left: none;
 `;
 
-const Weights = styled.span`
-  flex-grow: 3;
-  font-style: italic;
-  width: 100px;
+const NameCell = styled(Cell)`
+  border-left: none;
 `;
 
-function ExerciseRow({ exerciseName, weights, amrapReps, changeAmrap }) {
+function ExerciseRow({
+  exerciseName,
+  weights,
+  trainingMax,
+  amrapReps,
+  changeAmrap,
+}) {
   const [first, second, third] = weights;
 
   return (
-    <Container>
-      <Text>{exerciseName}</Text>
-      <Weights>
-        {first} , {second} , {third}
-      </Weights>
-      <Text>+</Text>
-      <AmrapInput reps={amrapReps} onChangeAmrap={changeAmrap} />;
-    </Container>
+    <tr>
+      <NameCell>{exerciseName}</NameCell>
+      <Cell>{trainingMax}</Cell>
+      <Cell>{first}</Cell>
+      <Cell>{second}</Cell>
+      <Cell>{third}</Cell>
+      <AmrapCell>
+        <AmrapInput reps={amrapReps} onChangeAmrap={changeAmrap} />
+      </AmrapCell>
+    </tr>
   );
 }
 

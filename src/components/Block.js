@@ -35,7 +35,7 @@ const BlockRowContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-around;
+  gap: 10px;
 `;
 
 function Block({ data, changeAmrapReps, deleteBlock }) {
@@ -58,16 +58,6 @@ function Block({ data, changeAmrapReps, deleteBlock }) {
     () => deleteBlock(blockId),
     [blockId, deleteBlock]
   );
-
-  // const [
-  //   sixtyFive,
-  //   seventy,
-  //   seventyFive,
-  //   eighty,
-  //   eightyFive,
-  //   ninety,
-  //   ninetyFive,
-  // ] = useGetWeights(trainingMax);
 
   return (
     <Container>

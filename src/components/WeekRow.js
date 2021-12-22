@@ -1,19 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import { getWeights } from "../hooks/useGetWeights";
+import { getPercentages, getWeights } from "../hooks/useGetWeights";
 import ExerciseRow from "./ExerciseRow";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
-  font-size: 1.2em;
+  height: 230px;
 `;
 
-const Text = styled.span`
-  flex-grow: 1;
-  text-decoration: underline;
+const Table = styled.table`
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  text-align: left;
 `;
 
 const repSchemas = {
@@ -33,18 +34,32 @@ function WeekRow({ changeAmrap, week, blockId }) {
         changeAmrap={changeAmrap}
         amrapReps={ex.amrapReps}
         exerciseName={ex.name}
+        trainingMax={ex.trainingMax}
       />
     );
   });
 
+  const [first, second, third] = getPercentages(week.number);
+
   return (
     <Container>
-      <Text>
+      <span>
         Week {week.number} ({repSchemas[week.number]})
-      </Text>
-      {exerciseRows}
+      </span>
+      <Table>
+        <th>Name</th>
+        <th>TM</th>
+        <th>{fractionToPercentage(first)}</th>
+        <th>{fractionToPercentage(second)}</th>
+        <th>{fractionToPercentage(third)}</th>
+        <th style={{ textAlign: "center" }}>+</th>
+
+        {exerciseRows}
+      </Table>
     </Container>
   );
 }
 
 export default WeekRow;
+
+const fractionToPercentage = (fraction) => `${fraction * 100}%`;

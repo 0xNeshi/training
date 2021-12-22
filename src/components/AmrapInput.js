@@ -2,13 +2,12 @@ import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 
 const Input = styled.input`
-  flex-grow: 1;
-  width: 10px;
+  width: 30px;
   height: 30px;
   border: 1px solid white;
   border-radius: 5px;
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
+  text-align: center;
 
   &[type="number"]::-webkit-outer-spin-button,
   &[type="number"]::-webkit-inner-spin-button {
@@ -32,7 +31,6 @@ export const AmrapInput = ({ reps, onChangeAmrap }) => {
       if (newAmrapReps === reps) {
         return;
       }
-      console.log("ensdfasd");
 
       onChangeAmrap(newAmrapReps);
     },
