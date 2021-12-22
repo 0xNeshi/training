@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router";
 import styled from "styled-components";
 import {
   deleteBlock,
@@ -43,18 +42,16 @@ function Dashboard() {
     refresh();
   };
 
-  const blockComponents = blocks
-    .sort((b1, b2) => b2.dateCreated - b1.dateCreated)
-    .map((block) => (
-      <Block
-        key={block.id}
-        data={block}
-        changeAmrapReps={(exercise, weekNumber, amrapReps) =>
-          changeAmrapReps(block.id, exercise, amrapReps, weekNumber)
-        }
-        deleteBlock={() => handleDeleteBlock(block.id)}
-      />
-    ));
+  const blockComponents = blocks.map((block) => (
+    <Block
+      key={block.id}
+      data={block}
+      changeAmrapReps={(exercise, weekNumber, amrapReps) =>
+        changeAmrapReps(block.id, exercise, amrapReps, weekNumber)
+      }
+      deleteBlock={handleDeleteBlock}
+    />
+  ));
 
   return (
     <Container>{!isLoading && <Content>{blockComponents}</Content>}</Container>

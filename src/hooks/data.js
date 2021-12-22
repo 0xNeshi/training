@@ -54,41 +54,80 @@ export const mockNewBlocks = [
     id: 1,
     number: 1,
     dateCreated: Date.now() - 3000,
-    exercises: [
+    weeks: [
       {
-        name: "squat",
-        trainingMax: 75,
-        weeks: [
-          { number: 1, amrapReps: 10 },
-          { number: 2, amrapReps: 7 },
-          { number: 3, amrapReps: 6 },
+        number: 1,
+        exercises: [
+          {
+            name: "squat",
+            trainingMax: 75,
+            amrapReps: 10,
+          },
+          {
+            name: "overhead",
+            trainingMax: 40,
+            amrapReps: 11,
+          },
+          {
+            name: "deadlift",
+            trainingMax: 100,
+            amrapReps: 12,
+          },
+          {
+            name: "bench",
+            trainingMax: 50,
+            amrapReps: 7,
+          },
         ],
       },
       {
-        name: "overhead",
-        trainingMax: 50,
-        weeks: [
-          { number: 1, amrapReps: 10 },
-          { number: 2, amrapReps: 8 },
-          { number: 3, amrapReps: 6 },
+        number: 2,
+        exercises: [
+          {
+            name: "squat",
+            trainingMax: 75,
+            amrapReps: 9,
+          },
+          {
+            name: "overhead",
+            trainingMax: 40,
+            amrapReps: 10,
+          },
+          {
+            name: "deadlift",
+            trainingMax: 100,
+            amrapReps: 10,
+          },
+          {
+            name: "bench",
+            trainingMax: 50,
+            amrapReps: 8,
+          },
         ],
       },
       {
-        name: "deadlift",
-        trainingMax: 100,
-        weeks: [
-          { number: 1, amrapReps: 10 },
-          { number: 2, amrapReps: 2 },
-          { number: 3, amrapReps: 6 },
-        ],
-      },
-      {
-        name: "bench",
-        trainingMax: 60,
-        weeks: [
-          { number: 1, amrapReps: 10 },
-          { number: 2, amrapReps: 9 },
-          { number: 3, amrapReps: 6 },
+        number: 3,
+        exercises: [
+          {
+            name: "squat",
+            trainingMax: 75,
+            amrapReps: 7,
+          },
+          {
+            name: "overhead",
+            trainingMax: 40,
+            amrapReps: 7,
+          },
+          {
+            name: "deadlift",
+            trainingMax: 100,
+            amrapReps: 7,
+          },
+          {
+            name: "bench",
+            trainingMax: 50,
+            amrapReps: 8,
+          },
         ],
       },
     ],
@@ -97,41 +136,80 @@ export const mockNewBlocks = [
     id: 2,
     number: 2,
     dateCreated: Date.now() - 1000,
-    exercises: [
+    weeks: [
       {
-        name: "squat",
-        trainingMax: 80,
-        weeks: [
-          { number: 1, amrapReps: 12 },
-          { number: 2, amrapReps: 7 },
-          { number: 3, amrapReps: 0 },
+        number: 1,
+        exercises: [
+          {
+            name: "squat",
+            trainingMax: 80,
+            amrapReps: 10,
+          },
+          {
+            name: "overhead",
+            trainingMax: 42.5,
+            amrapReps: 11,
+          },
+          {
+            name: "deadlift",
+            trainingMax: 105,
+            amrapReps: 12,
+          },
+          {
+            name: "bench",
+            trainingMax: 52.5,
+            amrapReps: 7,
+          },
         ],
       },
       {
-        name: "overhead",
-        trainingMax: 52.5,
-        weeks: [
-          { number: 1, amrapReps: 5 },
-          { number: 2, amrapReps: 8 },
-          { number: 3, amrapReps: 0 },
+        number: 2,
+        exercises: [
+          {
+            name: "squat",
+            trainingMax: 80,
+            amrapReps: 9,
+          },
+          {
+            name: "overhead",
+            trainingMax: 42.5,
+            amrapReps: 10,
+          },
+          {
+            name: "deadlift",
+            trainingMax: 105,
+            amrapReps: 10,
+          },
+          {
+            name: "bench",
+            trainingMax: 52.5,
+            amrapReps: 8,
+          },
         ],
       },
       {
-        name: "deadlift",
-        trainingMax: 105,
-        weeks: [
-          { number: 1, amrapReps: 7 },
-          { number: 2, amrapReps: 2 },
-          { number: 3, amrapReps: 0 },
-        ],
-      },
-      {
-        name: "bench",
-        trainingMax: 62.5,
-        weeks: [
-          { number: 1, amrapReps: 8 },
-          { number: 2, amrapReps: 9 },
-          { number: 3, amrapReps: 0 },
+        number: 3,
+        exercises: [
+          {
+            name: "squat",
+            trainingMax: 80,
+            amrapReps: 0,
+          },
+          {
+            name: "overhead",
+            trainingMax: 42.5,
+            amrapReps: 0,
+          },
+          {
+            name: "deadlift",
+            trainingMax: 105,
+            amrapReps: 0,
+          },
+          {
+            name: "bench",
+            trainingMax: 52.5,
+            amrapReps: 0,
+          },
         ],
       },
     ],

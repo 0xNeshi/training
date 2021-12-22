@@ -2,6 +2,12 @@ import { useMemo } from "react";
 
 const weightPercentages = [0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95];
 
+const weightsPerWeek = {
+  1: [0.65, 0.75, 0.85],
+  2: [0.7, 0.8, 0.9],
+  3: [0.75, 0.85, 0.95],
+};
+
 const calculate = (weight, percent) => {
   const exactWeight = weight * percent;
   const mod = exactWeight % 2.5;
@@ -13,6 +19,14 @@ export const useGetWeights = (trainingMax) => {
     () =>
       weightPercentages.map((percentage) => calculate(trainingMax, percentage)),
     [trainingMax]
+  );
+
+  return weights;
+};
+
+export const getWeights = (trainingMax, weekNumber) => {
+  const weights = weightsPerWeek[weekNumber].map((percentage) =>
+    calculate(trainingMax, percentage)
   );
 
   return weights;

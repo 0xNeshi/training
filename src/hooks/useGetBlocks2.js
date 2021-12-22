@@ -3,7 +3,7 @@ import { mockNewBlocks } from "./data";
 
 let mockBlocks = mockNewBlocks;
 
-export const useGetBlocks2 = () => {
+export const useGetBlocks = () => {
   const [blocks, setBlocks] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [toggleRefresh, setToggleRefresh] = useState(false);
@@ -12,18 +12,26 @@ export const useGetBlocks2 = () => {
     setToggleRefresh((prevState) => !prevState);
   }, []);
 
+  const newBlocks = mockBlocks.sort(
+    (b1, b2) => b2.dateCreated - b1.dateCreated
+  );
   useEffect(() => {
     setLoading(true);
-    setBlocks(mockBlocks);
+    setBlocks(newBlocks);
     setLoading(false);
   }, [toggleRefresh]);
 
   return { isLoading, blocks, refresh };
 };
 
-export const updateAmrapReps = (exercise, blockId, amrapReps, weekNumber) => {
+export const updateAmrapReps = (
+  blockId,
+  exerciseName,
+  amrapReps,
+  weekNumber
+) => {
   const block = mockBlocks.find((x) => x.id === blockId);
-  const exercise = block.exercises.find((e) => e.name === exercise);
+  const exercise = block.exercises.find((e) => e.name === exerciseName);
   const week = exercise.weeks.find((week) => week.number === weekNumber);
   week.amrapReps = amrapReps;
 };

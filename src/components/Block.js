@@ -1,9 +1,8 @@
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
-import { useGetWeights } from "../hooks/useGetWeights";
-import BlockRow from "./BlockRow";
+import WeekRow from "./WeekRow";
 
 const Container = styled.div`
   display: flex;
@@ -40,41 +39,58 @@ const BlockRowContainer = styled.div`
 `;
 
 function Block({ data, changeAmrapReps, deleteBlock }) {
-  const { number, trainingMax, weeks } = data;
+  const { id: blockId, number: blockNumber, weeks } = data;
 
-  const [
-    sixtyFive,
-    seventy,
-    seventyFive,
-    eighty,
-    eightyFive,
-    ninety,
-    ninetyFive,
-  ] = useGetWeights(trainingMax);
+  const rows = weeks
+    .sort((w1, w2) => w2.number - w1.number)
+    .map((week) => {
+      return (
+        <WeekRow
+          key={`weekrow${blockId}${week.number}`}
+          changeAmrap={changeAmrapReps}
+          week={week}
+          blockId={blockId}
+        />
+      );
+    });
+
+  const handleDeleteBlock = useCallback(
+    () => deleteBlock(blockId),
+    [blockId, deleteBlock]
+  );
+
+  // const [
+  //   sixtyFive,
+  //   seventy,
+  //   seventyFive,
+  //   eighty,
+  //   eightyFive,
+  //   ninety,
+  //   ninetyFive,
+  // ] = useGetWeights(trainingMax);
 
   return (
     <Container>
       <Header>
-        <Title>
-          Block {number} ({trainingMax}kg)
-        </Title>
+        <Title>Block {blockNumber}</Title>
         <FontAwesomeIcon
           icon={faTrashAlt}
           size="lg"
           color="red"
           style={{ cursor: "pointer" }}
-          onClick={deleteBlock}
+          onClick={handleDeleteBlock}
         />
       </Header>
       <Divider />
       <BlockRowContainer>
-        <BlockRow
+        {rows}
+        {/* <BlockRow
           repSchema={"5/3/1"}
           weights={[seventyFive, eightyFive, ninetyFive]}
           amrap={weeks[2].amrapReps}
           changeAmrap={(reps) => changeAmrapReps(reps, weeks[2].number)}
-        />
-        <BlockRow
+        /> */}
+        {/* <BlockRow
           repSchema={"3/3/3"}
           weights={[seventy, eighty, ninety]}
           amrap={weeks[1].amrapReps}
@@ -85,7 +101,7 @@ function Block({ data, changeAmrapReps, deleteBlock }) {
           weights={[sixtyFive, seventyFive, eightyFive]}
           amrap={weeks[0].amrapReps}
           changeAmrap={(reps) => changeAmrapReps(reps, weeks[0].number)}
-        />
+        /> */}
       </BlockRowContainer>
     </Container>
   );
