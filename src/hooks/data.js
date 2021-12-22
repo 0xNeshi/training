@@ -56,7 +56,7 @@ export const mockNewBlocks = [
     dateCreated: Date.now() - 3000,
     exercises: [
       {
-        exercise: "squat",
+        name: "squat",
         trainingMax: 75,
         weeks: [
           { number: 1, amrapReps: 10 },
@@ -65,7 +65,7 @@ export const mockNewBlocks = [
         ],
       },
       {
-        exercise: "overhead",
+        name: "overhead",
         trainingMax: 50,
         weeks: [
           { number: 1, amrapReps: 10 },
@@ -74,7 +74,7 @@ export const mockNewBlocks = [
         ],
       },
       {
-        exercise: "deadlift",
+        name: "deadlift",
         trainingMax: 100,
         weeks: [
           { number: 1, amrapReps: 10 },
@@ -83,7 +83,7 @@ export const mockNewBlocks = [
         ],
       },
       {
-        exercise: "bench",
+        name: "bench",
         trainingMax: 60,
         weeks: [
           { number: 1, amrapReps: 10 },
@@ -99,7 +99,7 @@ export const mockNewBlocks = [
     dateCreated: Date.now() - 1000,
     exercises: [
       {
-        exercise: "squat",
+        name: "squat",
         trainingMax: 80,
         weeks: [
           { number: 1, amrapReps: 12 },
@@ -108,7 +108,7 @@ export const mockNewBlocks = [
         ],
       },
       {
-        exercise: "overhead",
+        name: "overhead",
         trainingMax: 52.5,
         weeks: [
           { number: 1, amrapReps: 5 },
@@ -117,7 +117,7 @@ export const mockNewBlocks = [
         ],
       },
       {
-        exercise: "deadlift",
+        name: "deadlift",
         trainingMax: 105,
         weeks: [
           { number: 1, amrapReps: 7 },
@@ -126,7 +126,7 @@ export const mockNewBlocks = [
         ],
       },
       {
-        exercise: "bench",
+        name: "bench",
         trainingMax: 62.5,
         weeks: [
           { number: 1, amrapReps: 8 },
