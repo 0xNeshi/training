@@ -15,13 +15,6 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h3`
-  height: 10vh;
-  display: flex;
-  align-items: end;
-  justify-content: center;
-`;
-
 const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,10 +59,7 @@ function Dashboard() {
     ));
 
   return (
-    <Container>
-      <Title>{exercise.toUpperCase()}</Title>
-      {!isLoading && <Content>{blockComponents}</Content>}
-    </Container>
+    <Container>{!isLoading && <Content>{blockComponents}</Content>}</Container>
   );
 }
 
