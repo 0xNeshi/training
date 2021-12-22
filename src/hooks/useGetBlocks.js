@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { mockBlocks } from "./data";
 
-let blockStats = mockBlocks;
-
-export const useGetBlocks = (exercise) => {
+export const useGetBlocks = () => {
   const [blocks, setBlocks] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [toggleRefresh, setToggleRefresh] = useState(false);
@@ -12,32 +10,30 @@ export const useGetBlocks = (exercise) => {
     setToggleRefresh((prevState) => !prevState);
   }, []);
 
+  const newBlocks = mockBlocks.sort(
+    (b1, b2) => b2.dateCreated - b1.dateCreated
+  );
   useEffect(() => {
     setLoading(true);
-
-    const newBlocks = blockStats.filter(
-      (x) => x.exercise.toLowerCase() === exercise.toLowerCase()
-    );
-
     setBlocks(newBlocks);
     setLoading(false);
-  }, [exercise, toggleRefresh]);
+  }, [toggleRefresh]);
 
   return { isLoading, blocks, refresh };
 };
 
-export const updateAmrapReps = (exercise, blockId, amrapReps, weekNumber) => {
-  const block = blockStats.find(
-    (x) => x.exercise === exercise && x.id === blockId
-  );
-  const week = block.weeks.find((week) => week.number === weekNumber);
+export const updateAmrapReps = (
+  blockId,
+  exerciseName,
+  amrapReps,
+  weekNumber
+) => {
+  const block = mockBlocks.find((x) => x.id === blockId);
+  const exercise = block.exercises.find((e) => e.name === exerciseName);
+  const week = exercise.weeks.find((week) => week.number === weekNumber);
   week.amrapReps = amrapReps;
 };
 
-export const deleteBlock = (exercise, blockId) => {
-  const newBlocks = blockStats.filter(
-    (x) => x.exercise !== exercise || x.id !== blockId
-  );
-
-  blockStats = newBlocks;
+export const deleteBlock = (blockId) => {
+  mockBlocks = mockBlocks.filter((x) => x.id !== blockId);
 };

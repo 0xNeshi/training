@@ -4,7 +4,7 @@ import {
   deleteBlock,
   updateAmrapReps,
   useGetBlocks,
-} from "../hooks/useGetBlocks2";
+} from "../hooks/useGetBlocks";
 import Block from "./Block";
 
 const Container = styled.div`

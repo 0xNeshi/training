@@ -60,14 +60,17 @@ function WeekRow({ changeAmrap, week, blockId }) {
         Week {week.number} ({repSchemas[week.number]})
       </span>
       <Table>
-        <HeaderNameCell>Name</HeaderNameCell>
-        <HeaderCell>TM</HeaderCell>
-        <HeaderCell>{fractionToPercentage(first)}</HeaderCell>
-        <HeaderCell>{fractionToPercentage(second)}</HeaderCell>
-        <HeaderCell>{fractionToPercentage(third)}</HeaderCell>
-        <AmrapHeaderCell>+</AmrapHeaderCell>
-
-        {exerciseRows}
+        <thead>
+          <tr>
+            <HeaderNameCell>Name</HeaderNameCell>
+            <HeaderCell>TM</HeaderCell>
+            <HeaderCell>{fractionToPercentage(first)}</HeaderCell>
+            <HeaderCell>{fractionToPercentage(second)}</HeaderCell>
+            <HeaderCell>{fractionToPercentage(third)}</HeaderCell>
+            <AmrapHeaderCell>+</AmrapHeaderCell>
+          </tr>
+        </thead>
+        <tbody>{exerciseRows}</tbody>
       </Table>
     </Container>
   );
