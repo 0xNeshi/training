@@ -56,8 +56,8 @@ function Dashboard() {
 
   const handleAddNoteClosed = () => setAddNodeModalOpen(false);
 
-  const handleAddNote = (title, text, dateCreated) => {
-    addSection({ title, text, dateCreated, type: "note" });
+  const handleAddNote = (title, text) => {
+    addSection({ title, text, dateCreated: Date.now(), type: "note" });
     refresh();
   };
 

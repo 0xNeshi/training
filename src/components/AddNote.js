@@ -7,12 +7,10 @@ function AddNote({ isOpen, onClose, onSubmit }) {
     initialValues: {
       title: "",
       text: "",
-      dateCreated: Date.now(),
     },
-    onSubmit: (values) => {
-      console.log(values);
-      const { title, text, dateCreated } = values;
-      onSubmit(title, text, dateCreated);
+    onSubmit: ({ title, text }, { resetForm }) => {
+      onSubmit(title, text);
+      resetForm();
       onClose();
     },
   });
@@ -21,7 +19,13 @@ function AddNote({ isOpen, onClose, onSubmit }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <FormikProvider value={formik}>
         <Form>
-          <Field id="title" name="title" placeholder="Title" type="text" />
+          <Field
+            id="title"
+            name="title"
+            placeholder="Title"
+            type="text"
+            autoFocus={true}
+          />
           <Field id="text" name="text" placeholder="Text" type="text" />
           <div>
             <button type="submit">Submit</button>
