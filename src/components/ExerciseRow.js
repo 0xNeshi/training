@@ -10,6 +10,10 @@ const AmrapCell = styled(Cell)`
   border-left: none;
 `;
 
+const TMCell = styled(Cell)`
+  font-weight: 600;
+`;
+
 const NameCell = styled(Cell)`
   border-left: none;
   text-align: left;
@@ -27,7 +31,7 @@ function ExerciseRow({
   return (
     <tr>
       <NameCell>{exerciseName}</NameCell>
-      <Cell>{trainingMax}</Cell>
+      <TMCell>{trainingMax}</TMCell>
       <Cell>{first}</Cell>
       <Cell>{second}</Cell>
       <Cell>{third}</Cell>
