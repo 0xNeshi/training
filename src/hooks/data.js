@@ -3,6 +3,7 @@ export const mockBlocks = [
     id: 1,
     number: 1,
     dateCreated: Date.now() - 3000,
+    type: "block",
     weeks: [
       {
         number: 1,
@@ -82,8 +83,16 @@ export const mockBlocks = [
     ],
   },
   {
+    id: 3,
+    type: "note",
+    dateCreated: Date.now() - 2000,
+    title: "BBB 20 Week Challenge Started",
+    text: "Officially starting the Boring But Big 20 week challenge lasting for a couple of months",
+  },
+  {
     id: 2,
     number: 2,
+    type: "block",
     dateCreated: Date.now() - 1000,
     weeks: [
       {

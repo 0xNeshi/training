@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useGetBlocks } from "../hooks/useGetBlocks";
 import Block from "./Block";
 import FAB from "./FAB";
+import Note from "./Note";
 
 const Container = styled.div`
   display: flex;
@@ -48,16 +49,20 @@ function Dashboard() {
     refresh();
   };
 
-  const blockComponents = blocks.map((block) => (
-    <Block
-      key={block.id}
-      data={block}
-      changeAmrapReps={(weekNumber, exercise, amrapReps) =>
-        changeAmrapReps(block.id, weekNumber, exercise, amrapReps)
-      }
-      deleteBlock={handleDeleteBlock}
-    />
-  ));
+  const blockComponents = blocks.map((block) =>
+    block.type === "block" ? (
+      <Block
+        key={block.id}
+        data={block}
+        changeAmrapReps={(weekNumber, exercise, amrapReps) =>
+          changeAmrapReps(block.id, weekNumber, exercise, amrapReps)
+        }
+        deleteBlock={handleDeleteBlock}
+      />
+    ) : (
+      <Note key={block.id} data={block} deleteNote={handleDeleteBlock} />
+    )
+  );
 
   return (
     <Container>
