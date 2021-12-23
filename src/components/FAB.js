@@ -1,6 +1,11 @@
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faEdit,
+  faPlus,
+  faSignOutAlt,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Favorite } from "@mui/icons-material";
 import React, { useState } from "react";
 import {
   ChildButton,
@@ -8,6 +13,10 @@ import {
   FloatingMenu,
   MainButton,
 } from "react-floating-button-menu";
+
+const Icon = ({ icon }) => (
+  <FontAwesomeIcon icon={icon} size="lg" color="#28342A" />
+);
 
 function FAB() {
   const [isOpen, setOpen] = useState(false);
@@ -20,27 +29,23 @@ function FAB() {
       isOpen={isOpen}
     >
       <MainButton
-        iconResting={<FontAwesomeIcon icon={faBars} size="lg" color="white" />}
-        iconActive={<FontAwesomeIcon icon={faTimes} size="lg" color="white" />}
-        background="#28342A"
+        iconResting={<Icon icon={faBars} />}
+        iconActive={<Icon icon={faTimes} />}
+        background="white"
         onClick={() => setOpen((prev) => !prev)}
-        size={70}
+        size={60}
       />
       <ChildButton
-        icon={<Favorite style={{ fontSize: 20 }} />}
+        icon={<Icon icon={faPlus} />}
         background="white"
-        size={70}
+        size={52}
         onClick={() => console.log("First button clicked")}
       />
+      <ChildButton icon={<Icon icon={faEdit} />} background="white" size={52} />
       <ChildButton
-        icon={<Favorite style={{ fontSize: 20 }} />}
+        icon={<Icon icon={faSignOutAlt} />}
         background="white"
-        size={70}
-      />
-      <ChildButton
-        icon={<Favorite style={{ fontSize: 20 }} />}
-        background="white"
-        size={70}
+        size={52}
       />
     </FloatingMenu>
   );
