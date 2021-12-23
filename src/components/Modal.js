@@ -17,7 +17,6 @@ function Modal({ isOpen, onClose, children }) {
       isOpen={isOpen}
       overlayRef={(_ref) => setOverlayRef(_ref)}
       onRequestClose={onClose}
-      contentLabel="Minimal Modal Example"
     >
       {children}
     </ReactModal>
