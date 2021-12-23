@@ -10,7 +10,7 @@ const Container = styled.footer`
   font-style: italic;
   font-size: 0.6rem;
   box-shadow: 0 -1px 8px black;
-  z-index: 10;
+  z-index: 1;
 `;
 
 function Footer() {

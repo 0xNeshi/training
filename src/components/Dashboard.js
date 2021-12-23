@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { useGetBlocks } from "../hooks/useGetBlocks";
 import Block from "./Block";
+import FAB from "./FAB";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
   align-items: center;
+  position: relative;
 `;
 
 const Content = styled.div`
@@ -23,6 +25,13 @@ const Content = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #282c34;
+`;
+
+const FABContainer = styled.div`
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  z-index: 2;
 `;
 
 function Dashboard() {
@@ -51,7 +60,12 @@ function Dashboard() {
   ));
 
   return (
-    <Container>{!isLoading && <Content>{blockComponents}</Content>}</Container>
+    <Container>
+      {!isLoading && <Content>{blockComponents}</Content>}
+      <FABContainer>
+        <FAB />
+      </FABContainer>
+    </Container>
   );
 }
 
