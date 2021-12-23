@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useGetBlocks } from "../hooks/useGetBlocks";
+import { useGetSections } from "../hooks/useGetSections";
 import AddNote from "./AddNote";
 import Block from "./Block";
 import FAB from "./FAB";
@@ -39,16 +39,16 @@ const FABContainer = styled.div`
 function Dashboard() {
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
 
-  const { isLoading, blocks, refresh, updateAmrapReps, deleteBlock } =
-    useGetBlocks();
+  const { isLoading, sections, refresh, updateAmrapReps, deleteSection } =
+    useGetSections();
 
-  const changeAmrapReps = (blockId, weekNumber, exercise, amrapReps) => {
-    updateAmrapReps(blockId, weekNumber, exercise, amrapReps);
+  const changeAmrapReps = (sectionId, weekNumber, exercise, amrapReps) => {
+    updateAmrapReps(sectionId, weekNumber, exercise, amrapReps);
     refresh();
   };
 
-  const handleDeleteBlock = (blockId) => {
-    deleteBlock(blockId);
+  const handleDeleteSection = (sectionId) => {
+    deleteSection(sectionId);
     refresh();
   };
 
@@ -56,28 +56,35 @@ function Dashboard() {
 
   const handleAddNoteClosed = () => setAddNodeModalOpen(false);
 
-  const blockComponents = blocks.map((block) =>
-    block.type === "block" ? (
+  const handleAddNote = (title, text, dateCreated) =>
+    console.log(title, text, dateCreated);
+
+  const sectionComponents = sections.map((section) =>
+    section.type === "block" ? (
       <Block
-        key={block.id}
-        data={block}
+        key={section.id}
+        data={section}
         changeAmrapReps={(weekNumber, exercise, amrapReps) =>
-          changeAmrapReps(block.id, weekNumber, exercise, amrapReps)
+          changeAmrapReps(section.id, weekNumber, exercise, amrapReps)
         }
-        deleteBlock={handleDeleteBlock}
+        deleteBlock={handleDeleteSection}
       />
     ) : (
-      <Note key={block.id} data={block} deleteNote={handleDeleteBlock} />
+      <Note key={section.id} data={section} deleteNote={handleDeleteSection} />
     )
   );
 
   return (
     <Container>
-      {!isLoading && <Content>{blockComponents}</Content>}
+      {!isLoading && <Content>{sectionComponents}</Content>}
       <FABContainer>
         <FAB onAddNoteClicked={handleAddNoteClicked} />
       </FABContainer>
-      <AddNote isOpen={isAddNodeModalOpen} onClose={handleAddNoteClosed} />
+      <AddNote
+        isOpen={isAddNodeModalOpen}
+        onClose={handleAddNoteClosed}
+        onSubmit={handleAddNote}
+      />
     </Container>
   );
 }

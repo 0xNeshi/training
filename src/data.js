@@ -1,4 +1,4 @@
-export const mockBlocks = [
+export const mockSections = [
   {
     id: 1,
     number: 1,

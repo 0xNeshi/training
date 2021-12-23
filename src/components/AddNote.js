@@ -1,8 +1,8 @@
-import { Form, FormikProvider, useFormik } from "formik";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import React from "react";
 import Modal from "./Modal";
 
-function AddNote({ isOpen, onClose }) {
+function AddNote({ isOpen, onClose, onSubmit }) {
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -11,6 +11,8 @@ function AddNote({ isOpen, onClose }) {
     },
     onSubmit: (values) => {
       console.log(values);
+      const { title, text, dateCreated } = values;
+      onSubmit(title, text, dateCreated);
       onClose();
     },
   });
@@ -19,8 +21,8 @@ function AddNote({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <FormikProvider value={formik}>
         <Form>
-          <input id="title" name="title" placeholder="Title" type="text" />
-          <input id="text" name="text" placeholder="Text" type="text" />
+          <Field id="title" name="title" placeholder="Title" type="text" />
+          <Field id="text" name="text" placeholder="Text" type="text" />
           <div>
             <button type="submit">Submit</button>
             <button onClick={onClose}>Cancel</button>
