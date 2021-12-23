@@ -90,6 +90,13 @@ export const mockBlocks = [
     text: "Officially starting the Boring But Big 20 week challenge lasting for a couple of months",
   },
   {
+    id: 4,
+    type: "note",
+    dateCreated: Date.now() - 1500,
+    title: "Deload",
+    text: "",
+  },
+  {
     id: 2,
     number: 2,
     type: "block",
