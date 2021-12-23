@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { mockSections } from "../data";
+import { getSections, deleteSection, updateSection } from "../sectionService";
 
 export const useGetSections = () => {
   const [sections, setSections] = useState([]);
@@ -11,32 +11,25 @@ export const useGetSections = () => {
   }, []);
 
   const updateAmrapReps = (sectionId, weekNumber, exerciseName, amrapReps) => {
-    const updatedSections = [...sections];
-    const section = updatedSections.find((x) => x.id === sectionId);
+    const tempSection = sections.find((x) => x.id === sectionId);
+    const section = { ...tempSection };
     const week = section.weeks.find((week) => week.number === weekNumber);
     const exercise = week.exercises.find((e) => e.name === exerciseName);
     exercise.amrapReps = amrapReps;
 
-    setSections(updatedSections);
+    updateSection(sectionId, section);
   };
 
-  const deleteSection = (sectionId) => {
-    setSections((prevSections) =>
-      prevSections.filter((x) => x.id !== sectionId)
-    );
+  const deleteSectionById = (sectionId) => {
+    deleteSection(sectionId);
   };
 
   useEffect(() => {
     setLoading(true);
-    setSections(mockSections);
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    setLoading(true);
-    setSections((prev) =>
-      prev.sort((b1, b2) => b2.dateCreated - b1.dateCreated)
+    const newSections = getSections().sort(
+      (b1, b2) => b2.dateCreated - b1.dateCreated
     );
+    setSections(newSections);
     setLoading(false);
   }, [toggleRefresh]);
 
@@ -45,6 +38,6 @@ export const useGetSections = () => {
     sections: sections,
     refresh,
     updateAmrapReps,
-    deleteSection,
+    deleteSectionById,
   };
 };

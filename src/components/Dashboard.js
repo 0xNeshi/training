@@ -39,8 +39,13 @@ const FABContainer = styled.div`
 function Dashboard() {
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
 
-  const { isLoading, sections, refresh, updateAmrapReps, deleteSection } =
-    useGetSections();
+  const {
+    isLoading,
+    sections,
+    refresh,
+    updateAmrapReps,
+    deleteSectionById: deleteSection,
+  } = useGetSections();
 
   const changeAmrapReps = (sectionId, weekNumber, exercise, amrapReps) => {
     updateAmrapReps(sectionId, weekNumber, exercise, amrapReps);
