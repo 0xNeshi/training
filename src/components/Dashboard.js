@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useGetSections } from "../hooks/useGetSections";
+import { addSection, deleteSection, updateAmrapReps } from "../sectionService";
 import AddNote from "./AddNote";
 import Block from "./Block";
 import FAB from "./FAB";
@@ -39,13 +40,7 @@ const FABContainer = styled.div`
 function Dashboard() {
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
 
-  const {
-    isLoading,
-    sections,
-    refresh,
-    updateAmrapReps,
-    deleteSectionById: deleteSection,
-  } = useGetSections();
+  const { isLoading, sections, refresh } = useGetSections();
 
   const changeAmrapReps = (sectionId, weekNumber, exercise, amrapReps) => {
     updateAmrapReps(sectionId, weekNumber, exercise, amrapReps);
@@ -61,8 +56,10 @@ function Dashboard() {
 
   const handleAddNoteClosed = () => setAddNodeModalOpen(false);
 
-  const handleAddNote = (title, text, dateCreated) =>
-    console.log(title, text, dateCreated);
+  const handleAddNote = (title, text, dateCreated) => {
+    addSection({ title, text, dateCreated, type: "note" });
+    refresh();
+  };
 
   const sectionComponents = sections.map((section) =>
     section.type === "block" ? (
