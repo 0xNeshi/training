@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useGetBlocks } from "../hooks/useGetBlocks";
-import AddNote from "./AddNote";
+import AddNote from "./Modal";
 import Block from "./Block";
 import FAB from "./FAB";
 import Note from "./Note";

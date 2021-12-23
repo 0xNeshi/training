@@ -1,26 +1,11 @@
-import React, { useEffect, useState } from "react";
-import ReactModal from "react-modal";
-
-ReactModal.setAppElement("#root");
+import React from "react";
+import Modal from "./Modal";
 
 function AddNote({ isOpen, onClose }) {
-  const [overlayRef, setOverlayRef] = useState();
-
-  useEffect(() => {
-    if (overlayRef?.style) {
-      overlayRef.style.zIndex = 3;
-    }
-  }, [overlayRef?.style]);
-
   return (
-    <ReactModal
-      isOpen={isOpen}
-      overlayRef={(_ref) => setOverlayRef(_ref)}
-      onRequestClose={onClose}
-      contentLabel="Minimal Modal Example"
-    >
-      <button onClick={onClose}>Close Modal</button>
-    </ReactModal>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      jsfhlkajsdhflkasdjfha
+    </Modal>
   );
 }
 
