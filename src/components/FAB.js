@@ -40,13 +40,13 @@ function FAB({ onAddNoteClicked }) {
         onClick={() => setOpen((prev) => !prev)}
         size={60}
       />
+      <ChildButton icon={<Icon icon={faPlus} />} background="white" size={52} />
       <ChildButton
-        icon={<Icon icon={faPlus} />}
+        icon={<Icon icon={faEdit} />}
         background="white"
         size={52}
         onClick={() => handleClick(onAddNoteClicked)}
       />
-      <ChildButton icon={<Icon icon={faEdit} />} background="white" size={52} />
       <ChildButton
         icon={<Icon icon={faSignOutAlt} />}
         background="white"
