@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Container = styled.nav`
   height: 5vh;
   box-shadow: 0 1px 8px black;
-  z-index: 10;
+  z-index: 2;
 `;
 
 function Navbar() {

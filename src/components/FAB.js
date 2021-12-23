@@ -18,8 +18,13 @@ const Icon = ({ icon }) => (
   <FontAwesomeIcon icon={icon} size="lg" color="#28342A" />
 );
 
-function FAB() {
+function FAB({ onAddNoteClicked }) {
   const [isOpen, setOpen] = useState(false);
+
+  const handleClick = (onClick) => {
+    onClick();
+    setOpen(false);
+  };
 
   return (
     <FloatingMenu
@@ -39,7 +44,7 @@ function FAB() {
         icon={<Icon icon={faPlus} />}
         background="white"
         size={52}
-        onClick={() => console.log("First button clicked")}
+        onClick={() => handleClick(onAddNoteClicked)}
       />
       <ChildButton icon={<Icon icon={faEdit} />} background="white" size={52} />
       <ChildButton

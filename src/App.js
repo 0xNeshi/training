@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
+import AddNote from "./components/AddNote";
 import Dashboard from "./components/Dashboard";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";

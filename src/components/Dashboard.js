@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useGetBlocks } from "../hooks/useGetBlocks";
+import AddNote from "./AddNote";
 import Block from "./Block";
 import FAB from "./FAB";
 import Note from "./Note";
@@ -36,6 +37,8 @@ const FABContainer = styled.div`
 `;
 
 function Dashboard() {
+  const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
+
   const { isLoading, blocks, refresh, updateAmrapReps, deleteBlock } =
     useGetBlocks();
 
@@ -48,6 +51,10 @@ function Dashboard() {
     deleteBlock(blockId);
     refresh();
   };
+
+  const handleAddNoteClicked = () => setAddNodeModalOpen(true);
+
+  const handleAddNoteClosed = () => setAddNodeModalOpen(false);
 
   const blockComponents = blocks.map((block) =>
     block.type === "block" ? (
@@ -68,8 +75,9 @@ function Dashboard() {
     <Container>
       {!isLoading && <Content>{blockComponents}</Content>}
       <FABContainer>
-        <FAB />
+        <FAB onAddNoteClicked={handleAddNoteClicked} />
       </FABContainer>
+      <AddNote isOpen={isAddNodeModalOpen} onClose={handleAddNoteClosed} />
     </Container>
   );
 }
