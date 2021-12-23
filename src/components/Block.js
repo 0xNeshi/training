@@ -1,33 +1,7 @@
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
+import Section from "./Section";
 import WeekRow from "./WeekRow";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  border: 1px solid white;
-  border-radius: 20px;
-  padding: 0 20px;
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-const Title = styled.h3`
-  width: 100%;
-`;
-
-const Divider = styled.hr`
-  width: 100%;
-`;
 
 const BlockRowContainer = styled.div`
   height: 100%;
@@ -54,26 +28,14 @@ function Block({ data, changeAmrapReps, deleteBlock }) {
       );
     });
 
-  const handleDeleteBlock = useCallback(
-    () => deleteBlock(blockId),
-    [blockId, deleteBlock]
-  );
-
   return (
-    <Container>
-      <Header>
-        <Title>Block {blockNumber}</Title>
-        <FontAwesomeIcon
-          icon={faTrashAlt}
-          size="lg"
-          color="red"
-          style={{ cursor: "pointer" }}
-          onClick={handleDeleteBlock}
-        />
-      </Header>
-      <Divider />
+    <Section
+      sectionId={blockId}
+      title={`Block ${blockNumber}`}
+      onDeleteSection={deleteBlock}
+    >
       <BlockRowContainer>{rows}</BlockRowContainer>
-    </Container>
+    </Section>
   );
 }
 
