@@ -32,18 +32,18 @@ const Input = ({ fieldName, label, autoFocus = false }) => (
 function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
   const formik = useFormik({
     initialValues: {
-      squat: initialValues.squatMax,
-      overhead: initialValues.overheadMax,
-      deadlift: initialValues.deadliftMax,
-      bench: initialValues.benchMax,
+      squatMax: initialValues.squatMax,
+      overheadMax: initialValues.overheadMax,
+      deadliftMax: initialValues.deadliftMax,
+      benchMax: initialValues.benchMax,
       blockNumber: initialValues.nextBlockNumber,
     },
     enableReinitialize: true,
     onSubmit: (
-      { blockNumber, squat, overhead, deadlift, bench },
+      { blockNumber, squatMax, overheadMax, deadliftMax, benchMax },
       { resetForm }
     ) => {
-      onSubmit(blockNumber, squat, overhead, deadlift, bench);
+      onSubmit(blockNumber, squatMax, overheadMax, deadliftMax, benchMax);
       resetForm();
       onClose();
     },
@@ -53,10 +53,10 @@ function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <FormikProvider value={formik}>
         <Form>
-          <Input fieldName="squat" label="Squat" autoFocus={true} />
-          <Input fieldName="overhead" label="Overhead" />
-          <Input fieldName="deadlift" label="Deadlift" />
-          <Input fieldName="bench" label="Bench" />
+          <Input fieldName="squatMax" label="Squat" autoFocus={true} />
+          <Input fieldName="overheadMax" label="Overhead" />
+          <Input fieldName="deadliftMax" label="Deadlift" />
+          <Input fieldName="benchMax" label="Bench" />
           <Input fieldName="blockNumber" label="Block No." />
           <ButtonContainer>
             <button onClick={onClose}>Cancel</button>
