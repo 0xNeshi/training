@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import { useGetSections } from "../hooks/useGetSections";
 import { addSection, deleteSection, updateAmrapReps } from "../sectionService";
+import { getNewBlockSuggestedValues } from "../utilities";
 import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";
 import Block from "./Block";
@@ -38,52 +39,11 @@ const FABContainer = styled.div`
   z-index: 2;
 `;
 
-const createBlock = (
-  blockNumber,
-  squatMax,
-  overheadMax,
-  deadliftMax,
-  benchMax
-) => {
-  const weeks = [];
-  const numberOfWeeks = 3;
-
-  for (let i = 1; i <= numberOfWeeks; i++) {
-    weeks.push({
-      number: i,
-      exercises: [
-        createExercise("squat", squatMax),
-        createExercise("overhead", overheadMax),
-        createExercise("deadlift", deadliftMax),
-        createExercise("bench", benchMax),
-      ],
-    });
-  }
-
-  return {
-    type: "block",
-    number: blockNumber,
-    dateCreated: Date.now(),
-    weeks: weeks,
-  };
-};
-
-const createExercise = (exerciseName, trainingMax) => ({
-  name: exerciseName,
-  trainingMax,
-  amrapReps: 0,
-});
-
 function Dashboard() {
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
 
   const { isLoading, sections, refresh } = useGetSections();
-
-  const nextBlockNumber = useMemo(() => {
-    console.log("run");
-    return (sections.find((s) => s.type === "block")?.number || 0) + 1;
-  }, [sections]);
 
   const changeAmrapReps = (sectionId, weekNumber, exercise, amrapReps) => {
     updateAmrapReps(sectionId, weekNumber, exercise, amrapReps);
@@ -141,6 +101,8 @@ function Dashboard() {
     )
   );
 
+  const suggestedValues = getNewBlockSuggestedValues(sections);
+
   return (
     <Container>
       {!isLoading && <Content>{sectionComponents}</Content>}
@@ -159,7 +121,7 @@ function Dashboard() {
         isOpen={isAddBlockModalOpen}
         onClose={handleAddBlockClosed}
         onSubmit={handleAddBlock}
-        nextBlockNumber={nextBlockNumber}
+        initialValues={suggestedValues}
       />
     </Container>
   );
