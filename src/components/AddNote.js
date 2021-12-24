@@ -1,6 +1,11 @@
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import React from "react";
+import styled from "styled-components";
 import Modal from "./Modal";
+
+const ButtonContainer = styled.div`
+  display: flex;
+`;
 
 function AddNote({ isOpen, onClose, onSubmit }) {
   const formik = useFormik({
@@ -27,10 +32,10 @@ function AddNote({ isOpen, onClose, onSubmit }) {
             autoFocus={true}
           />
           <Field id="text" name="text" placeholder="Text" type="text" />
-          <div>
-            <button type="submit">Submit</button>
+          <ButtonContainer>
             <button onClick={onClose}>Cancel</button>
-          </div>
+            <button type="submit">Submit</button>
+          </ButtonContainer>
         </Form>
       </FormikProvider>
     </Modal>

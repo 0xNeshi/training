@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import { useGetSections } from "../hooks/useGetSections";
 import { addSection, deleteSection, updateAmrapReps } from "../sectionService";
+import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";
 import Block from "./Block";
 import FAB from "./FAB";
@@ -37,10 +38,52 @@ const FABContainer = styled.div`
   z-index: 2;
 `;
 
+const createBlock = (
+  blockNumber,
+  squatMax,
+  overheadMax,
+  deadliftMax,
+  benchMax
+) => {
+  const weeks = [];
+  const numberOfWeeks = 3;
+
+  for (let i = 1; i <= numberOfWeeks; i++) {
+    weeks.push({
+      number: i,
+      exercises: [
+        createExercise("squat", squatMax),
+        createExercise("overhead", overheadMax),
+        createExercise("deadlift", deadliftMax),
+        createExercise("bench", benchMax),
+      ],
+    });
+  }
+
+  return {
+    type: "block",
+    number: blockNumber,
+    dateCreated: Date.now(),
+    weeks: weeks,
+  };
+};
+
+const createExercise = (exerciseName, trainingMax) => ({
+  name: exerciseName,
+  trainingMax,
+  amrapReps: 0,
+});
+
 function Dashboard() {
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
+  const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
 
   const { isLoading, sections, refresh } = useGetSections();
+
+  const nextBlockNumber = useMemo(() => {
+    console.log("run");
+    return (sections.find((s) => s.type === "block")?.number || 0) + 1;
+  }, [sections]);
 
   const changeAmrapReps = (sectionId, weekNumber, exercise, amrapReps) => {
     updateAmrapReps(sectionId, weekNumber, exercise, amrapReps);
@@ -58,6 +101,28 @@ function Dashboard() {
 
   const handleAddNote = (title, text) => {
     addSection({ title, text, dateCreated: Date.now(), type: "note" });
+    refresh();
+  };
+
+  const handleAddBlockClicked = () => setAddBlockModalOpen(true);
+
+  const handleAddBlockClosed = () => setAddBlockModalOpen(false);
+
+  const handleAddBlock = (
+    blockNumber,
+    squatMax,
+    overheadMax,
+    deadliftMax,
+    benchMax
+  ) => {
+    const section = createBlock(
+      blockNumber,
+      squatMax,
+      overheadMax,
+      deadliftMax,
+      benchMax
+    );
+    addSection(section);
     refresh();
   };
 
@@ -80,12 +145,21 @@ function Dashboard() {
     <Container>
       {!isLoading && <Content>{sectionComponents}</Content>}
       <FABContainer>
-        <FAB onAddNoteClicked={handleAddNoteClicked} />
+        <FAB
+          onAddNoteClicked={handleAddNoteClicked}
+          onAddBlockClicked={handleAddBlockClicked}
+        />
       </FABContainer>
       <AddNote
         isOpen={isAddNodeModalOpen}
         onClose={handleAddNoteClosed}
         onSubmit={handleAddNote}
+      />
+      <AddBlock
+        isOpen={isAddBlockModalOpen}
+        onClose={handleAddBlockClosed}
+        onSubmit={handleAddBlock}
+        nextBlockNumber={nextBlockNumber}
       />
     </Container>
   );

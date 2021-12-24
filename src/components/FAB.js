@@ -18,7 +18,7 @@ const Icon = ({ icon }) => (
   <FontAwesomeIcon icon={icon} size="lg" color="#28342A" />
 );
 
-function FAB({ onAddNoteClicked }) {
+function FAB({ onAddNoteClicked, onAddBlockClicked }) {
   const [isOpen, setOpen] = useState(false);
 
   const handleClick = (onClick) => {
@@ -40,7 +40,12 @@ function FAB({ onAddNoteClicked }) {
         onClick={() => setOpen((prev) => !prev)}
         size={60}
       />
-      <ChildButton icon={<Icon icon={faPlus} />} background="white" size={52} />
+      <ChildButton
+        icon={<Icon icon={faPlus} />}
+        background="white"
+        size={52}
+        onClick={() => handleClick(onAddBlockClicked)}
+      />
       <ChildButton
         icon={<Icon icon={faEdit} />}
         background="white"
