@@ -1,8 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Dashboard from "./components/Dashboard";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
 
 const Container = styled.div`
   display: flex;
@@ -14,21 +12,19 @@ const Container = styled.div`
 `;
 
 const MainContainer = styled.div`
-  height: 90vh;
+  height: 100vh;
 `;
 
 function App() {
   return (
     <Container>
       <BrowserRouter>
-        <Navbar />
         <MainContainer>
           <Routes>
             <Route exact path="/dashboard" element={<Dashboard />} />
             <Route exact path="*" element={<Navigate to="/dashboard" />} />
           </Routes>
         </MainContainer>
-        <Footer />
       </BrowserRouter>
     </Container>
   );

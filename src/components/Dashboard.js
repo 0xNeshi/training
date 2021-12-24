@@ -33,7 +33,7 @@ const Content = styled.div`
 
 const FABContainer = styled.div`
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
   right: 10px;
   z-index: 2;
 `;
