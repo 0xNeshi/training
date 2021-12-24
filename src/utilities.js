@@ -1,4 +1,4 @@
-const createBlock = (
+export const createBlock = (
   blockNumber,
   squatMax,
   overheadMax,
@@ -56,22 +56,23 @@ export const getNewBlockSuggestedValues = (sections = []) => {
 
   // sections are sorted descending by dateCreated, so sections[0] is the last section
   const currentBlock = blocks[0];
+  const nextBlockNumber = currentBlock.number + 1;
   const currentExercises = getLastWeeksExercises(currentBlock);
 
   const increments =
-    sections.length === 1 || sections[0].type === "block"
+    blocks.length === 1
       ? defaultIncrements
-      : getIncrements(currentBlock, sections[1]);
+      : getIncrements(currentBlock, blocks[1]);
 
-  const suggestedValues = currentExercises.reduce((values, exercise) => {
-    const { name, trainingMax } = exercise;
-    values[`${name}Max`] = trainingMax + increments[name];
-    return values;
-  }, {});
-
-  const nextBlockNumber = useMemo(
-    () => (sections.find((s) => s.type === "block")?.number || 0) + 1,
-    [sections]
+  const suggestedValues = currentExercises.reduce(
+    (valuesObj, exercise) => {
+      const { name, trainingMax } = exercise;
+      valuesObj[`${name}Max`] = trainingMax + increments[name];
+      return valuesObj;
+    },
+    {
+      nextBlockNumber,
+    }
   );
 
   return suggestedValues;
@@ -87,7 +88,7 @@ const getIncrements = (currentSection, lastSection) => {
       (e) => e.name === exercise.name
     );
     if (prevExercise) {
-      increments[`${prevExercise.name}Max`] =
+      increments[prevExercise.name] =
         exercise.trainingMax - prevExercise.trainingMax;
     }
   });

@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useGetSections } from "../hooks/useGetSections";
 import { addSection, deleteSection, updateAmrapReps } from "../sectionService";
-import { getNewBlockSuggestedValues } from "../utilities";
+import { createBlock, getNewBlockSuggestedValues } from "../utilities";
 import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";
 import Block from "./Block";
