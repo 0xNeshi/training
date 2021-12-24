@@ -46,7 +46,7 @@ export const getNewBlockSuggestedValues = (sections = []) => {
 
   if (!blocks?.length) {
     return {
-      nextBlockNumber: 1,
+      blockNumber: 1,
       squatMax: "",
       overheadMax: "",
       deadliftMax: "",
@@ -56,7 +56,7 @@ export const getNewBlockSuggestedValues = (sections = []) => {
 
   // sections are sorted descending by dateCreated, so sections[0] is the last section
   const currentBlock = blocks[0];
-  const nextBlockNumber = currentBlock.number + 1;
+  const blockNumber = currentBlock.number + 1;
   const currentExercises = getLastWeeksExercises(currentBlock);
 
   const increments =
@@ -71,7 +71,7 @@ export const getNewBlockSuggestedValues = (sections = []) => {
       return valuesObj;
     },
     {
-      nextBlockNumber,
+      blockNumber,
     }
   );
 

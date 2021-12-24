@@ -31,13 +31,7 @@ const Input = ({ fieldName, label, autoFocus = false }) => (
 
 function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
   const formik = useFormik({
-    initialValues: {
-      squatMax: initialValues.squatMax,
-      overheadMax: initialValues.overheadMax,
-      deadliftMax: initialValues.deadliftMax,
-      benchMax: initialValues.benchMax,
-      blockNumber: initialValues.nextBlockNumber,
-    },
+    initialValues: initialValues,
     enableReinitialize: true,
     onSubmit: (
       { blockNumber, squatMax, overheadMax, deadliftMax, benchMax },
