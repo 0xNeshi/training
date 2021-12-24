@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { getPercentages, getWeights } from "../hooks/useGetWeights";
+import { getPercentages, getWeights } from "../hooks";
 import ExerciseRow from "./ExerciseRow";
 
 const Container = styled.div`
