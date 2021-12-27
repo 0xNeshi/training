@@ -47,10 +47,10 @@ const FABContainer = styled.div`
 
 function Dashboard() {
   const user = useContext(UserContext);
+  const { isLoading, sections, refresh } = useGetSections(user.email);
+
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
-
-  const { isLoading, sections, refresh } = useGetSections();
 
   const changeAmrapReps = (sectionId, weekNumber, exercise, amrapReps) => {
     updateAmrapReps(sectionId, weekNumber, exercise, amrapReps);

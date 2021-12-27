@@ -1,4 +1,4 @@
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { mockSections } from "../data";
 
@@ -6,7 +6,13 @@ let tempSections = [...mockSections];
 const usersCollection = "users";
 const sectionsCollection = "sections";
 
-export const getSections = () => tempSections;
+export const getSections = async (userEmail) => {
+  const snapshot = await getDocs(getSectionsCollection(userEmail));
+
+  const sections = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+  return sections;
+};
 
 export const addSection = async (userEmail, section) => {
   const docRef = await addDoc(
@@ -35,3 +41,6 @@ export const updateAmrapReps = (
   const exercise = week.exercises.find((e) => e.name === exerciseName);
   exercise.amrapReps = amrapReps;
 };
+
+const getSectionsCollection = (userEmail) =>
+  collection(db, usersCollection, userEmail, sectionsCollection);
