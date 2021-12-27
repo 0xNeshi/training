@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getSections } from "../sectionService";
+import { getSections } from "../services/sectionService";
 
 export const useGetSections = () => {
   const [sections, setSections] = useState([]);

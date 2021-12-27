@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useGetSections } from "../hooks";
-import { addSection, deleteSection, updateAmrapReps } from "../sectionService";
+import {
+  addSection,
+  deleteSection,
+  updateAmrapReps,
+} from "../services/sectionService";
 import { createBlock, getNewBlockSuggestedValues } from "../utilities";
 import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";

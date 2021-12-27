@@ -1,6 +1,9 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Dashboard from "./components/Dashboard";
+import SignIn from "./components/SignIn";
+import UserProvider from "./providers/UserProvider";
+import { RequireAnon, RequireAuth } from "./guards";
 
 const Container = styled.div`
   display: flex;
@@ -17,16 +20,34 @@ const MainContainer = styled.div`
 
 function App() {
   return (
-    <Container>
-      <BrowserRouter>
-        <MainContainer>
-          <Routes>
-            <Route exact path="/dashboard" element={<Dashboard />} />
-            <Route exact path="*" element={<Navigate to="/dashboard" />} />
-          </Routes>
-        </MainContainer>
-      </BrowserRouter>
-    </Container>
+    <UserProvider>
+      <Container>
+        <BrowserRouter>
+          <MainContainer>
+            <Routes>
+              <Route
+                exact
+                path="/signin"
+                element={
+                  <RequireAnon>
+                    <SignIn />
+                  </RequireAnon>
+                }
+              />
+              <Route
+                exact
+                path="/dashboard"
+                element={
+                  <RequireAuth>
+                    <Dashboard />
+                  </RequireAuth>
+                }
+              />
+            </Routes>
+          </MainContainer>
+        </BrowserRouter>
+      </Container>
+    </UserProvider>
   );
 }
 
