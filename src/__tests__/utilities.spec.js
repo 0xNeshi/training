@@ -7,7 +7,7 @@ describe("getNewBlockSuggestedValues", () => {
     "should return empty suggestions",
     (sections) => {
       const output = {
-        nextBlockNumber: 1,
+        blockNumber: 1,
         squatMax: "",
         overheadMax: "",
         deadliftMax: "",
@@ -106,7 +106,7 @@ describe("getNewBlockSuggestedValues", () => {
     ];
 
     const output = {
-      nextBlockNumber: 2,
+      blockNumber: 2,
       squatMax: 85,
       overheadMax: 45,
       deadliftMax: 110,
@@ -287,7 +287,7 @@ describe("getNewBlockSuggestedValues", () => {
     ];
 
     const output = {
-      nextBlockNumber: 3,
+      blockNumber: 3,
       squatMax: 85,
       overheadMax: 45,
       deadliftMax: 110,
@@ -482,7 +482,7 @@ describe("getNewBlockSuggestedValues", () => {
     ];
 
     const output = {
-      nextBlockNumber: 3,
+      blockNumber: 3,
       squatMax: 85,
       overheadMax: 45,
       deadliftMax: 110,
@@ -663,7 +663,7 @@ describe("getNewBlockSuggestedValues", () => {
     ];
 
     const output = {
-      nextBlockNumber: 3,
+      blockNumber: 3,
       squatMax: 80,
       overheadMax: 42,
       deadliftMax: 105,
