@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useGetSections } from "../hooks";
+import { signOut } from "../services/authService";
 import {
   addSection,
   deleteSection,
@@ -90,6 +91,10 @@ function Dashboard() {
     refresh();
   };
 
+  const handleSignOutClicked = () => {
+    signOut();
+  };
+
   const sectionComponents = sections.map((section) =>
     section.type === "block" ? (
       <Block
@@ -114,6 +119,7 @@ function Dashboard() {
         <FAB
           onAddNoteClicked={handleAddNoteClicked}
           onAddBlockClicked={handleAddBlockClicked}
+          onSignOutClicked={handleSignOutClicked}
         />
       </FABContainer>
       <AddNote

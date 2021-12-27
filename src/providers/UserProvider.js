@@ -8,8 +8,7 @@ function UserProvider(props) {
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
-      const { displayName, email } = user;
-      setUser({ displayName, email });
+      setUser(user);
     });
   }, []);
 

@@ -18,7 +18,7 @@ const Icon = ({ icon }) => (
   <FontAwesomeIcon icon={icon} size="lg" color="#28342A" />
 );
 
-function FAB({ onAddNoteClicked, onAddBlockClicked }) {
+function FAB({ onAddNoteClicked, onAddBlockClicked, onSignOutClicked }) {
   const [isOpen, setOpen] = useState(false);
 
   const handleClick = (onClick) => {
@@ -56,6 +56,7 @@ function FAB({ onAddNoteClicked, onAddBlockClicked }) {
         icon={<Icon icon={faSignOutAlt} />}
         background="white"
         size={52}
+        onClick={() => handleClick(onSignOutClicked)}
       />
     </FloatingMenu>
   );

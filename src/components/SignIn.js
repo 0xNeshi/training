@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import signInWithGoogle from "../services/authService";
+import { signInWithGoogle } from "../services/authService";
 
 const Container = styled.div`
   display: flex;
