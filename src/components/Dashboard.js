@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { useGetSections } from "../hooks";
 import { signOut } from "../services/authService";
@@ -13,6 +13,7 @@ import AddNote from "./AddNote";
 import Block from "./Block";
 import FAB from "./FAB";
 import Note from "./Note";
+import { UserContext } from "../providers/UserProvider";
 
 const Container = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ const FABContainer = styled.div`
 `;
 
 function Dashboard() {
+  const user = useContext(UserContext);
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
 
@@ -65,7 +67,12 @@ function Dashboard() {
   const handleAddNoteClosed = () => setAddNodeModalOpen(false);
 
   const handleAddNote = (title, text) => {
-    addSection({ title, text, dateCreated: Date.now(), type: "note" });
+    addSection(user.email, {
+      title,
+      text,
+      dateCreated: Date.now(),
+      type: "note",
+    });
     refresh();
   };
 
@@ -87,7 +94,7 @@ function Dashboard() {
       deadliftMax,
       benchMax
     );
-    addSection(section);
+    addSection(user.email, section);
     refresh();
   };
 

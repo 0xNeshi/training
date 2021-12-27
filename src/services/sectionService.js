@@ -1,19 +1,19 @@
-import { mockSections } from "../data";
-import { v4 as uuid } from "uuid";
-import { collection, addDoc, doc } from "firebase/firestore";
+import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { mockSections } from "../data";
 
 let tempSections = [...mockSections];
+const usersCollection = "users";
+const sectionsCollection = "sections";
 
 export const getSections = () => tempSections;
 
-export const addSection = async (section) => {
-  // const sectionsRef = collection(db, 'sections')
-  // const docRef = await addDoc(collection(db, "sections"), {
-  //   ...section,
-  //   id: uuid(),
-  // });
-  // console.log("Document written with ID: ", docRef);
+export const addSection = async (userEmail, section) => {
+  const docRef = await addDoc(
+    collection(db, usersCollection, userEmail, sectionsCollection),
+    section
+  );
+  console.log("Document written with ID: ", docRef);
 };
 
 export const deleteSection = (sectionId) =>
