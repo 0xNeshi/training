@@ -672,4 +672,155 @@ describe("getNewBlockSuggestedValues", () => {
 
     expect(getNewBlockSuggestedValues(sections)).toEqual(output);
   });
+
+  test("should increment squat and deadlift by previous increments and bench and overhead by default increments", () => {
+    const sections = [
+      {
+        id: 2,
+        number: 2,
+        type: "block",
+        dateCreated: Date.now() - 1000,
+        weeks: [
+          {
+            number: 1,
+            exercises: [
+              {
+                name: "squat",
+                trainingMax: 77.5,
+                amrapReps: 10,
+              },
+              {
+                name: "overhead",
+                trainingMax: 41,
+                amrapReps: 11,
+              },
+              {
+                name: "deadlift",
+                trainingMax: 102.5,
+                amrapReps: 12,
+              },
+              {
+                name: "bench",
+                trainingMax: 51,
+                amrapReps: 7,
+              },
+            ],
+          },
+          {
+            number: 2,
+            exercises: [
+              {
+                name: "squat",
+                trainingMax: 77.5,
+                amrapReps: 9,
+              },
+              {
+                name: "overhead",
+                trainingMax: 41,
+                amrapReps: 10,
+              },
+              {
+                name: "deadlift",
+                trainingMax: 102.5,
+                amrapReps: 10,
+              },
+              {
+                name: "bench",
+                trainingMax: 51,
+                amrapReps: 8,
+              },
+            ],
+          },
+          {
+            number: 3,
+            exercises: [
+              {
+                name: "squat",
+                trainingMax: 77.5,
+                amrapReps: 0,
+              },
+              {
+                name: "overhead",
+                trainingMax: 41,
+                amrapReps: 0,
+              },
+              {
+                name: "deadlift",
+                trainingMax: 102.5,
+                amrapReps: 0,
+              },
+              {
+                name: "bench",
+                trainingMax: 51,
+                amrapReps: 0,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 1,
+        number: 1,
+        dateCreated: Date.now() - 3000,
+        type: "block",
+        weeks: [
+          {
+            number: 1,
+            exercises: [
+              {
+                name: "squat",
+                trainingMax: 75,
+                amrapReps: 10,
+              },
+              {
+                name: "deadlift",
+                trainingMax: 100,
+                amrapReps: 12,
+              },
+            ],
+          },
+          {
+            number: 2,
+            exercises: [
+              {
+                name: "squat",
+                trainingMax: 75,
+                amrapReps: 9,
+              },
+              {
+                name: "deadlift",
+                trainingMax: 100,
+                amrapReps: 10,
+              },
+            ],
+          },
+          {
+            number: 3,
+            exercises: [
+              {
+                name: "squat",
+                trainingMax: 75,
+                amrapReps: 7,
+              },
+              {
+                name: "deadlift",
+                trainingMax: 100,
+                amrapReps: 7,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const output = {
+      blockNumber: 3,
+      squatMax: 80,
+      overheadMax: 42,
+      deadliftMax: 105,
+      benchMax: 52,
+    };
+
+    expect(getNewBlockSuggestedValues(sections)).toEqual(output);
+  });
 });
