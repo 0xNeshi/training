@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../providers/UserProvider";
-import { signInWithGoogle, signOut } from "../services/authService";
-import { exists } from "../services/userService";
+import { signInWithGoogle } from "../services/authService";
 
 const Container = styled.div`
   display: flex;

@@ -20,7 +20,7 @@ export const useGetSections = (userEmail) => {
         setSections(newSections);
       })
       .finally(() => setLoading(false));
-  }, [toggleRefresh]);
+  }, [userEmail, toggleRefresh]);
 
   return {
     isLoading,
