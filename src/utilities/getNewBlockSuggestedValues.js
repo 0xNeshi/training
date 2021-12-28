@@ -42,13 +42,13 @@ export const getNewBlockSuggestedValues = (sections = []) => {
   return suggestedValues;
 };
 
-const getIncrements = (currentSection, lastSection) => {
-  const currentSectionLastExercises = getLastWeeksExercises(currentSection);
-  const lastSectionLastExercises = getLastWeeksExercises(lastSection);
+const getIncrements = (currentBlock, lastBlock) => {
+  const currentBlockLastExercises = getLastWeeksExercises(currentBlock);
+  const lastBlockLastExercises = getLastWeeksExercises(lastBlock);
 
   const increments = {};
-  currentSectionLastExercises.forEach((exercise) => {
-    const prevExercise = lastSectionLastExercises.find(
+  currentBlockLastExercises.forEach((exercise) => {
+    const prevExercise = lastBlockLastExercises.find(
       (e) => e.name === exercise.name
     );
     if (prevExercise) {
@@ -60,7 +60,7 @@ const getIncrements = (currentSection, lastSection) => {
   return increments;
 };
 
-const getLastWeeksExercises = (section) =>
-  section.weeks.reduce((prev, curr) =>
-    curr.number > prev.number ? curr : prev
-  ).exercises;
+// Gets exercises from the last week (3) of the block
+const getLastWeeksExercises = (block) =>
+  block.weeks.reduce((prev, curr) => (curr.number > prev.number ? curr : prev))
+    .exercises;
