@@ -1,10 +1,20 @@
-import { addDoc, collection, doc, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 import { mockSections } from "../data";
 
 let tempSections = [...mockSections];
 const usersCollection = "users";
 const sectionsCollection = "sections";
+
+const getSectionsCollection = (userEmail) =>
+  collection(db, usersCollection, userEmail, sectionsCollection);
 
 export const getSections = async (userEmail) => {
   const snapshot = await getDocs(getSectionsCollection(userEmail));
@@ -22,25 +32,15 @@ export const addSection = async (userEmail, section) => {
   console.log("Document written with ID: ", docRef);
 };
 
-export const deleteSection = (sectionId) =>
-  (tempSections = tempSections.filter((s) => s.id !== sectionId));
-
-export const updateSection = (sectionId, section) => {
-  deleteSection(sectionId);
-  tempSections.push(section);
+export const deleteSection = async (userEmail, sectionId) => {
+  await deleteDoc(doc(getSectionsCollection(userEmail), sectionId));
+  console.log("Deleted document with ID: ", sectionId);
 };
 
-export const updateAmrapReps = (
-  sectionId,
-  weekNumber,
-  exerciseName,
-  amrapReps
-) => {
-  const section = tempSections.find((x) => x.id === sectionId);
-  const week = section.weeks.find((week) => week.number === weekNumber);
-  const exercise = week.exercises.find((e) => e.name === exerciseName);
-  exercise.amrapReps = amrapReps;
-};
+export const updateSection = async (userEmail, section) => {
+  const blockRef = doc(getSectionsCollection(userEmail), section.id);
 
-const getSectionsCollection = (userEmail) =>
-  collection(db, usersCollection, userEmail, sectionsCollection);
+  const { id, ...sectionFields } = section;
+  await setDoc(blockRef, sectionFields);
+  console.log("Updated document with ID: ", section.id);
+};

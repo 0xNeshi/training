@@ -5,7 +5,7 @@ import { signOut } from "../services/authService";
 import {
   addSection,
   deleteSection,
-  updateAmrapReps,
+  updateSection,
 } from "../services/sectionService";
 import { createBlock, getNewBlockSuggestedValues } from "../utilities";
 import AddBlock from "./AddBlock";
@@ -52,14 +52,17 @@ function Dashboard() {
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
 
-  const changeAmrapReps = (sectionId, weekNumber, exercise, amrapReps) => {
-    updateAmrapReps(sectionId, weekNumber, exercise, amrapReps);
-    refresh();
+  const changeAmrapReps = (sectionId, weekNumber, exerciseName, amrapReps) => {
+    const section = sections.find((x) => x.id === sectionId);
+    const week = section.weeks.find((week) => week.number === weekNumber);
+    const exercise = week.exercises.find((e) => e.name === exerciseName);
+    exercise.amrapReps = amrapReps;
+
+    updateSection(user.email, section).then(() => refresh());
   };
 
   const handleDeleteSection = (sectionId) => {
-    deleteSection(sectionId);
-    refresh();
+    deleteSection(user.email, sectionId).then(() => refresh());
   };
 
   const handleAddNoteClicked = () => setAddNodeModalOpen(true);
