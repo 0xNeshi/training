@@ -5,6 +5,13 @@ const defaultIncrements = {
   bench: 2.5,
 };
 
+const Exercise = {
+  Squat: "squat",
+  Deadlift: "deadlift",
+  Overhead: "overhead",
+  Bench: "bench",
+};
+
 export const getNewBlockSuggestedValues = (sections = []) => {
   const blocks = sections?.filter((s) => s.type === "block");
 
@@ -28,15 +35,17 @@ export const getNewBlockSuggestedValues = (sections = []) => {
       ? defaultIncrements
       : getIncrements(currentBlock, blocks[1]);
 
-  const suggestedValues = currentExercises.reduce(
-    (valuesObj, exercise) => {
-      const { name, trainingMax } = exercise;
-      valuesObj[`${name}Max`] = trainingMax + increments[name];
+  const suggestedValues = Object.keys(Exercise).reduce(
+    (valuesObj, enumKey) => {
+      const exName = Exercise[enumKey];
+      const key = `${exName}Max`;
+      const exercise = currentExercises.find((ex) => ex.name === exName);
+
+      valuesObj[key] = exercise ? exercise.trainingMax + increments[exName] : 0;
+
       return valuesObj;
     },
-    {
-      blockNumber,
-    }
+    { blockNumber }
   );
 
   return suggestedValues;
