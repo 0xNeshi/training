@@ -46,7 +46,7 @@ const FABContainer = styled.div`
 `;
 
 function Dashboard() {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { isLoading, sections, refresh } = useGetSections(user.email);
 
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);

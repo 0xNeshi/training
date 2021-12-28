@@ -7,9 +7,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
-import { mockSections } from "../data";
 
-let tempSections = [...mockSections];
 const usersCollection = "users";
 const sectionsCollection = "sections";
 

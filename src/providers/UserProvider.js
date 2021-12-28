@@ -1,19 +1,34 @@
 import React, { createContext, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
+import { exists } from "../services/userService";
 
-const UserContext = createContext({ user: null });
+const UserContext = createContext({ user: null, error: null });
 
 function UserProvider(props) {
   const [user, setUser] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
-      setUser(user);
+      if (!user) {
+        setUser(null);
+        return;
+      }
+
+      const userExists = await exists(user.email);
+      if (userExists) {
+        setUser(user);
+        setError("");
+      } else {
+        setError("User not found");
+      }
     });
   }, []);
 
   return (
-    <UserContext.Provider value={user}>{props.children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, error }}>
+      {props.children}
+    </UserContext.Provider>
   );
 }
 
