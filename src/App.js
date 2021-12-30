@@ -1,5 +1,5 @@
 import { Container, CssBaseline } from "@mui/material";
-import { blue, common, grey, indigo, lime } from "@mui/material/colors";
+import { grey, indigo } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
