@@ -37,7 +37,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
-        <Container component="main">
+        <Container component="main" sx={{ padding: 0 }}>
           <CssBaseline />
           <BrowserRouter>
             <MainContainer>
