@@ -10,17 +10,17 @@ export const useGetSections = (userEmail) => {
     setToggleRefresh((prevState) => !prevState);
   }, []);
 
-  useEffect(() => {
+  const getData = useCallback(async () => {
     setLoading(true);
-    getSections(userEmail)
-      .then((data) => {
-        const newSections = data.sort(
-          (b1, b2) => b2.dateCreated - b1.dateCreated
-        );
-        setSections(newSections);
-      })
-      .finally(() => setLoading(false));
-  }, [userEmail, toggleRefresh]);
+    const newSections = await getSections(userEmail);
+    const sortedSections = newSections.sort(
+      (b1, b2) => b2.dateCreated - b1.dateCreated
+    );
+    setSections(sortedSections);
+    setLoading(false);
+  }, [userEmail]);
+
+  useEffect(() => getData(), [toggleRefresh, getData]);
 
   return {
     isLoading,
