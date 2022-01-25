@@ -2,35 +2,6 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 import ExerciseRow from "./ExerciseRow";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 100%;
-  height: 230px;
-`;
-
-const Table = styled.table`
-  border-collapse: collapse;
-  font-size: 0.9rem;
-  text-align: center;
-`;
-
-const HeaderCell = styled.td`
-  border-left: 1px solid white;
-  font-weight: bold;
-`;
-
-const HeaderNameCell = styled(HeaderCell)`
-  border-left: none;
-  text-align: left;
-`;
-
-const AmrapHeaderCell = styled(HeaderCell)`
-  text-align: center;
-  border-left: none;
-`;
-
 export default function WeekRow({ changeAmrapReps, week, blockId }) {
   const exerciseRows = useMemo(
     () =>
@@ -81,6 +52,35 @@ export default function WeekRow({ changeAmrapReps, week, blockId }) {
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  height: 230px;
+`;
+
+const Table = styled.table`
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  text-align: center;
+`;
+
+const HeaderCell = styled.td`
+  border-left: 1px solid white;
+  font-weight: bold;
+`;
+
+const HeaderNameCell = styled(HeaderCell)`
+  border-left: none;
+  text-align: left;
+`;
+
+const AmrapHeaderCell = styled(HeaderCell)`
+  text-align: center;
+  border-left: none;
+`;
+
 const fractionToPercentage = (fraction) => `${fraction * 100}%`;
 
 const getWeights = (trainingMax, weekNumber) => {
@@ -105,7 +105,7 @@ const repSchemas = {
   3: "5/3/1",
 };
 
-const exercisesInOrder = ["squat", "bench", "deadlift", "overhead"];
+const exercisesInOrder = ["overhead", "deadlift", "bench", "squat"];
 
 const percentagesPerWeek = {
   1: [0.65, 0.75, 0.85],
