@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
-import { getPercentages, getWeights } from "../hooks";
 import ExerciseRow from "./ExerciseRow";
 
 const Container = styled.div`
@@ -32,31 +31,33 @@ const AmrapHeaderCell = styled(HeaderCell)`
   border-left: none;
 `;
 
-const repSchemas = {
-  1: "5/5/5",
-  2: "3/3/3",
-  3: "5/3/1",
-};
+export default function WeekRow({ changeAmrapReps, week, blockId }) {
+  const exerciseRows = useMemo(
+    () =>
+      exercisesInOrder.map((exName) => {
+        const exercise = week.exercises.find((x) => x.name === exName);
+        const weights = getWeights(exercise.trainingMax, week.number);
 
-function WeekRow({ changeAmrapReps, week, blockId }) {
-  const exerciseRows = week.exercises.map((ex) => {
-    const weights = getWeights(ex.trainingMax, week.number);
+        return (
+          <ExerciseRow
+            key={`${blockId}${week.number}${exercise.name}`}
+            weights={weights}
+            changeAmrapReps={(newAmrapReps) =>
+              changeAmrapReps(week.number, exercise.name, newAmrapReps)
+            }
+            amrapReps={exercise.amrapReps}
+            exerciseName={exercise.name}
+            trainingMax={exercise.trainingMax}
+          />
+        );
+      }),
+    [week, blockId, changeAmrapReps]
+  );
 
-    return (
-      <ExerciseRow
-        key={`${blockId}${week.number}${ex.name}`}
-        weights={weights}
-        changeAmrapReps={(newAmrapReps) =>
-          changeAmrapReps(week.number, ex.name, newAmrapReps)
-        }
-        amrapReps={ex.amrapReps}
-        exerciseName={ex.name}
-        trainingMax={ex.trainingMax}
-      />
-    );
-  });
-
-  const [first, second, third] = getPercentages(week.number);
+  const [first, second, third] = useMemo(
+    () => getPercentages(week.number),
+    [week]
+  );
 
   return (
     <Container>
@@ -80,6 +81,34 @@ function WeekRow({ changeAmrapReps, week, blockId }) {
   );
 }
 
-export default WeekRow;
-
 const fractionToPercentage = (fraction) => `${fraction * 100}%`;
+
+const getWeights = (trainingMax, weekNumber) => {
+  const weights = percentagesPerWeek[weekNumber].map((percentage) =>
+    calculate(trainingMax, percentage)
+  );
+
+  return weights;
+};
+
+const calculate = (weight, percent) => {
+  const exactWeight = weight * percent;
+  const mod = exactWeight % 2.5;
+  return exactWeight - mod;
+};
+
+const getPercentages = (weekNumber) => percentagesPerWeek[weekNumber];
+
+const repSchemas = {
+  1: "5/5/5",
+  2: "3/3/3",
+  3: "5/3/1",
+};
+
+const exercisesInOrder = ["squat", "bench", "deadlift", "overhead"];
+
+const percentagesPerWeek = {
+  1: [0.65, 0.75, 0.85],
+  2: [0.7, 0.8, 0.9],
+  3: [0.75, 0.85, 0.95],
+};
