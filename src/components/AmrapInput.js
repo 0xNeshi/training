@@ -9,16 +9,6 @@ const Input = styled.input`
   color: white;
   font-weight: 600;
   text-align: center;
-
-  &[type="number"]::-webkit-outer-spin-button,
-  &[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &[type="number"] {
-    -moz-appearance: textfield;
-  }
 `;
 
 const WAIT_INTERVAL = 1000;
@@ -59,7 +49,7 @@ export const AmrapInput = ({ reps, onChangeAmrapReps }) => {
   return (
     <Input
       value={amrapReps || ""}
-      type="number"
+      type="text"
       onChange={(e) => setAmrapReps(+e.target.value)}
       onBlur={() => handleChangeAmrapReps(amrapReps)}
       onKeyDown={handleKeyDown}
