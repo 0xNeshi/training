@@ -17,32 +17,29 @@ const ENTER_KEY = 13;
 export const AmrapInput = ({ reps, onChangeAmrapReps }) => {
   const [amrapReps, setAmrapReps] = useState(reps);
 
-  const handleChangeAmrapReps = useCallback(
-    (newAmrapReps) => {
-      if (newAmrapReps === reps) {
-        return;
-      }
-      onChangeAmrapReps(newAmrapReps);
-    },
-    [reps, onChangeAmrapReps]
-  );
+  const handleChangeAmrapReps = useCallback(() => {
+    if (amrapReps === reps) {
+      return;
+    }
+    onChangeAmrapReps(amrapReps);
+  }, [reps, onChangeAmrapReps, amrapReps]);
 
   useEffect(() => {
-    const timer = setTimeout(
-      () => handleChangeAmrapReps(amrapReps),
-      WAIT_INTERVAL
-    );
+    const timer = setTimeout(() => handleChangeAmrapReps(), WAIT_INTERVAL);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [amrapReps, reps, handleChangeAmrapReps]);
+  }, [reps, handleChangeAmrapReps]);
 
-  const handleKeyDown = (e) => {
-    if (e.keyCode === ENTER_KEY) {
-      handleChangeAmrapReps(amrapReps);
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.keyCode === ENTER_KEY) {
+        handleChangeAmrapReps();
+      }
+    },
+    [handleChangeAmrapReps]
+  );
 
   const handleFocus = (e) => e.target.select();
 
@@ -50,8 +47,8 @@ export const AmrapInput = ({ reps, onChangeAmrapReps }) => {
     <Input
       value={amrapReps || ""}
       type="text"
-      onChange={(e) => setAmrapReps(+e.target.value)}
-      onBlur={() => handleChangeAmrapReps(amrapReps)}
+      onChange={(e) => setAmrapReps(e.target.value)}
+      onBlur={handleChangeAmrapReps}
       onKeyDown={handleKeyDown}
       onFocus={handleFocus}
     />
