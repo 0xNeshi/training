@@ -7,6 +7,15 @@ const ButtonContainer = styled.div`
   display: flex;
 `;
 
+const AddNoteForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
 function AddNote({ isOpen, onClose, onSubmit }) {
   const formik = useFormik({
     initialValues: {
@@ -23,7 +32,7 @@ function AddNote({ isOpen, onClose, onSubmit }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <FormikProvider value={formik}>
-        <Form>
+        <AddNoteForm>
           <Field
             id="title"
             name="title"
@@ -36,7 +45,7 @@ function AddNote({ isOpen, onClose, onSubmit }) {
             <button onClick={onClose}>Cancel</button>
             <button type="submit">Submit</button>
           </ButtonContainer>
-        </Form>
+        </AddNoteForm>
       </FormikProvider>
     </Modal>
   );
