@@ -76,7 +76,6 @@ export default function Dashboard() {
       addSection({
         title,
         text,
-        dateCreated: Date.now(),
         type: "note",
       }),
     [addSection]

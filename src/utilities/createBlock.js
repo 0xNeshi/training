@@ -23,7 +23,6 @@ export const createBlock = (
   return {
     type: "block",
     number: blockNumber,
-    dateCreated: Date.now(),
     weeks: weeks,
   };
 };

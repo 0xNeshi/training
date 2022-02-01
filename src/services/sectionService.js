@@ -4,7 +4,11 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  limit,
+  orderBy,
+  query,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 
@@ -42,7 +46,29 @@ export const updateSection = async (userEmail, section) => {
   console.log("Updated document with ID: ", section.id);
 };
 
-export const pushBackup = async (backup) => {
+export async function pushBackup(backup) {
   const docRef = await addDoc(collection(db, "backups"), backup);
   console.log("Added backup with ID: ", docRef);
-};
+}
+
+export async function getSectionsFromBackup(userEmail) {
+  const q = query(
+    collection(db, "backups"),
+    where("userEmail", "==", userEmail),
+    orderBy("lastBackupTime", "desc"),
+    limit(1)
+  );
+  const snapshot = await getDocs(q);
+  const sections = extractSections(snapshot.docs[0].data());
+  return sections;
+}
+
+function extractSections(backup) {
+  const stringifiedSections = Buffer.from(
+    backup.base64Sections,
+    "base64"
+  ).toString("utf8");
+  const sections = JSON.parse(stringifiedSections);
+
+  return sections;
+}

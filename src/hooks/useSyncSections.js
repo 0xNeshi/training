@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getSections, pushBackup } from "../services/sectionService";
+import { getSectionsFromBackup, pushBackup } from "../services/sectionService";
 import usePersistentState from "./usePersistentState";
 
 // 1000 ms * 60 secs * 60 mins * 24 hours * 7 days = 604800000 ms
@@ -13,7 +13,7 @@ export default function useSyncSections(userEmail) {
 
   const fetch = useCallback(async () => {
     setLoading(true);
-    const backupSections = await getSections(userEmail);
+    const backupSections = await getSectionsFromBackup(userEmail);
     setSections(backupSections);
     setLoading(false);
     localStorage.setItem(lastBackupKey, Date.now());

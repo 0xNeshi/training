@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import useSyncSections from "./useSyncSections";
+import { v4 as uuidv4 } from "uuid";
 
 export default function useSections(userEmail) {
   const { state, isLoading } = useSyncSections(userEmail);
@@ -8,7 +9,11 @@ export default function useSections(userEmail) {
   const add = useCallback(
     (section) => {
       const newSections = [...sections];
+
+      section.id = uuidv4();
+      section.dateCreated = Date.now();
       newSections.push(section);
+
       setSections(newSections);
     },
     [sections, setSections]
