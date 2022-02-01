@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { getSections } from "../services/sectionService";
 
-export const useGetSections = (userEmail) => {
+export default function useGetSections(userEmail) {
   const [sections, setSections] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [toggleRefresh, setToggleRefresh] = useState(false);
@@ -24,7 +24,7 @@ export const useGetSections = (userEmail) => {
 
   return {
     isLoading,
-    sections: sections,
+    sections,
     refresh,
   };
-};
+}

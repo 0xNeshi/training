@@ -1,12 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import styled from "styled-components";
-import { useGetSections } from "../hooks";
+import { useSections } from "../hooks";
 import { signOut } from "../services/authService";
-import {
-  addSection,
-  deleteSection,
-  updateSection,
-} from "../services/sectionService";
+
 import { createBlock, getNewBlockSuggestedValues } from "../utilities";
 import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";
@@ -47,37 +43,43 @@ const FABContainer = styled.div`
 
 function Dashboard() {
   const { user } = useContext(UserContext);
-  const { isLoading, sections, refresh } = useGetSections(user.email);
+  const {
+    isLoading,
+    sections,
+    add: addSection,
+    remove: deleteSection,
+    update: updateSection,
+  } = useSections(user.email);
+  const sortedSections = useMemo(
+    () => [...sections].sort((s1, s2) => s2.dateCreated - s1.dateCreated),
+    [sections]
+  );
 
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
 
   const changeAmrapReps = (sectionId, weekNumber, exerciseName, amrapReps) => {
-    const section = sections.find((x) => x.id === sectionId);
+    const section = { ...sections.find((x) => x.id === sectionId) };
     const week = section.weeks.find((week) => week.number === weekNumber);
     const exercise = week.exercises.find((e) => e.name === exerciseName);
     exercise.amrapReps = amrapReps;
 
-    updateSection(user.email, section).then(() => refresh());
+    updateSection(section);
   };
 
-  const handleDeleteSection = (sectionId) => {
-    deleteSection(user.email, sectionId).then(() => refresh());
-  };
+  const handleDeleteSection = (sectionId) => deleteSection(sectionId);
 
   const handleAddNoteClicked = () => setAddNodeModalOpen(true);
 
   const handleAddNoteClosed = () => setAddNodeModalOpen(false);
 
-  const handleAddNote = (title, text) => {
-    addSection(user.email, {
+  const handleAddNote = (title, text) =>
+    addSection({
       title,
       text,
       dateCreated: Date.now(),
       type: "note",
     });
-    refresh();
-  };
 
   const handleAddBlockClicked = () => setAddBlockModalOpen(true);
 
@@ -97,15 +99,12 @@ function Dashboard() {
       deadliftMax,
       benchMax
     );
-    addSection(user.email, section);
-    refresh();
+    addSection(section);
   };
 
-  const handleSignOutClicked = () => {
-    signOut();
-  };
+  const handleSignOutClicked = () => signOut();
 
-  const sectionComponents = sections.map((section) =>
+  const sectionComponents = sortedSections.map((section) =>
     section.type === "block" ? (
       <Block
         key={section.id}
@@ -120,7 +119,7 @@ function Dashboard() {
     )
   );
 
-  const suggestedValues = getNewBlockSuggestedValues(sections);
+  const suggestedValues = getNewBlockSuggestedValues(sortedSections);
 
   return (
     <Container>
