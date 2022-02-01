@@ -19,7 +19,7 @@ const NameCell = styled(Cell)`
   text-align: left;
 `;
 
-function ExerciseRow({
+export default function ExerciseRow({
   exerciseName,
   weights,
   trainingMax,
@@ -41,5 +41,3 @@ function ExerciseRow({
     </tr>
   );
 }
-
-export default ExerciseRow;

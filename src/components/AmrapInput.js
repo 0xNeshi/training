@@ -41,7 +41,7 @@ export const AmrapInput = ({ reps, onChangeAmrapReps }) => {
     [handleChangeAmrapReps]
   );
 
-  const handleFocus = (e) => e.target.select();
+  const handleFocus = useCallback((e) => e.target.select(), []);
 
   return (
     <Input

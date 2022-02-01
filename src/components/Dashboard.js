@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useSections } from "../hooks";
 import { signOut } from "../services/authService";
@@ -58,68 +58,91 @@ function Dashboard() {
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
 
-  const changeAmrapReps = (sectionId, weekNumber, exerciseName, amrapReps) => {
-    const section = { ...sections.find((x) => x.id === sectionId) };
-    const week = section.weeks.find((week) => week.number === weekNumber);
-    const exercise = week.exercises.find((e) => e.name === exerciseName);
-    exercise.amrapReps = amrapReps;
+  const changeAmrapReps = useCallback(
+    (sectionId, weekNumber, exerciseName, amrapReps) => {
+      const section = sortedSections.find((x) => x.id === sectionId);
+      const week = section.weeks.find((week) => week.number === weekNumber);
+      const exercise = week.exercises.find((e) => e.name === exerciseName);
+      exercise.amrapReps = amrapReps;
 
-    updateSection(section);
-  };
-
-  const handleDeleteSection = (sectionId) => deleteSection(sectionId);
-
-  const handleAddNoteClicked = () => setAddNodeModalOpen(true);
-
-  const handleAddNoteClosed = () => setAddNodeModalOpen(false);
-
-  const handleAddNote = (title, text) =>
-    addSection({
-      title,
-      text,
-      dateCreated: Date.now(),
-      type: "note",
-    });
-
-  const handleAddBlockClicked = () => setAddBlockModalOpen(true);
-
-  const handleAddBlockClosed = () => setAddBlockModalOpen(false);
-
-  const handleAddBlock = (
-    blockNumber,
-    squatMax,
-    overheadMax,
-    deadliftMax,
-    benchMax
-  ) => {
-    const section = createBlock(
-      blockNumber,
-      squatMax,
-      overheadMax,
-      deadliftMax,
-      benchMax
-    );
-    addSection(section);
-  };
-
-  const handleSignOutClicked = () => signOut();
-
-  const sectionComponents = sortedSections.map((section) =>
-    section.type === "block" ? (
-      <Block
-        key={section.id}
-        data={section}
-        changeAmrapReps={(weekNumber, exercise, amrapReps) =>
-          changeAmrapReps(section.id, weekNumber, exercise, amrapReps)
-        }
-        deleteBlock={handleDeleteSection}
-      />
-    ) : (
-      <Note key={section.id} data={section} deleteNote={handleDeleteSection} />
-    )
+      updateSection(section);
+    },
+    [sortedSections, updateSection]
   );
 
-  const suggestedValues = getNewBlockSuggestedValues(sortedSections);
+  const handleDeleteSection = useCallback(
+    (sectionId) => deleteSection(sectionId),
+    [deleteSection]
+  );
+
+  const handleAddNoteClicked = useCallback(() => setAddNodeModalOpen(true), []);
+
+  const handleAddNoteClosed = useCallback(() => setAddNodeModalOpen(false), []);
+
+  const handleAddNote = useCallback(
+    (title, text) =>
+      addSection({
+        title,
+        text,
+        dateCreated: Date.now(),
+        type: "note",
+      }),
+    [addSection]
+  );
+
+  const handleAddBlockClicked = useCallback(
+    () => setAddBlockModalOpen(true),
+    []
+  );
+
+  const handleAddBlockClosed = useCallback(
+    () => setAddBlockModalOpen(false),
+    []
+  );
+
+  const handleAddBlock = useCallback(
+    (blockNumber, squatMax, overheadMax, deadliftMax, benchMax) => {
+      const section = createBlock(
+        blockNumber,
+        squatMax,
+        overheadMax,
+        deadliftMax,
+        benchMax
+      );
+      addSection(section);
+    },
+    [addSection]
+  );
+
+  const handleSignOutClicked = useCallback(() => signOut(), []);
+
+  const sectionComponents = useMemo(
+    () =>
+      sortedSections.map((section) =>
+        section.type === "block" ? (
+          <Block
+            key={section.id}
+            data={section}
+            changeAmrapReps={(weekNumber, exercise, amrapReps) =>
+              changeAmrapReps(section.id, weekNumber, exercise, amrapReps)
+            }
+            deleteBlock={handleDeleteSection}
+          />
+        ) : (
+          <Note
+            key={section.id}
+            data={section}
+            deleteNote={handleDeleteSection}
+          />
+        )
+      ),
+    [sortedSections, changeAmrapReps, handleDeleteSection]
+  );
+
+  const suggestedValues = useMemo(
+    () => getNewBlockSuggestedValues(sortedSections),
+    [sortedSections]
+  );
 
   return (
     <Container>

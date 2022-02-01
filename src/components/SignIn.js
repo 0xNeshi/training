@@ -29,7 +29,7 @@ const Icon = styled.img`
   border-radius: 3px;
 `;
 
-const SignIn = () => {
+export default function SignIn() {
   const { error } = useContext(UserContext);
 
   return (
@@ -38,14 +38,11 @@ const SignIn = () => {
       <Button
         variant="contained"
         onClick={signInWithGoogle}
-        sx={{ backgroundColor: blue[800], paddingLeft: 1 }}
-      >
+        sx={{ backgroundColor: blue[800], paddingLeft: 1 }}>
         <Icon src={Google} alt="Google logo" />
         Connect with Google
       </Button>
       {error && <Error>{error}</Error>}
     </Container>
   );
-};
-
-export default SignIn;
+}

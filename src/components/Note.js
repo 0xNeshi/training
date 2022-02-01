@@ -6,7 +6,7 @@ const Text = styled.p`
   width: 100%;
 `;
 
-function Note({ data, deleteNote }) {
+export default function Note({ data, deleteNote }) {
   const { id: noteId, title, text } = data;
 
   return (
@@ -15,5 +15,3 @@ function Note({ data, deleteNote }) {
     </Section>
   );
 }
-
-export default Note;

@@ -16,7 +16,7 @@ const AddNoteForm = styled(Form)`
   justify-content: center;
 `;
 
-function AddNote({ isOpen, onClose, onSubmit }) {
+export default function AddNote({ isOpen, onClose, onSubmit }) {
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -50,5 +50,3 @@ function AddNote({ isOpen, onClose, onSubmit }) {
     </Modal>
   );
 }
-
-export default AddNote;

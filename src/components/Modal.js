@@ -11,7 +11,7 @@ const modalStyle = {
 
 ReactModal.setAppElement("#root");
 
-function Modal({ isOpen, onClose, children }) {
+export default function Modal({ isOpen, onClose, children }) {
   const [overlayRef, setOverlayRef] = useState();
 
   useEffect(() => {
@@ -30,5 +30,3 @@ function Modal({ isOpen, onClose, children }) {
     </ReactModal>
   );
 }
-
-export default Modal;

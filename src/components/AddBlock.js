@@ -52,7 +52,7 @@ const Input = ({ fieldName, label, autoFocus = false }) => (
   </InputComponent>
 );
 
-function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
+export default function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
   const formik = useFormik({
     initialValues: initialValues,
     enableReinitialize: true,
@@ -88,5 +88,3 @@ function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
     </Modal>
   );
 }
-
-export default AddBlock;
