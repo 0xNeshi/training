@@ -1,15 +1,14 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useSections } from "../hooks";
+import { UserContext } from "../providers/UserProvider";
 import { signOut } from "../services/authService";
-
 import { createBlock, getNewBlockSuggestedValues } from "../utilities";
 import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";
 import Block from "./Block";
 import FAB from "./FAB";
 import Note from "./Note";
-import { UserContext } from "../providers/UserProvider";
 
 const Container = styled.div`
   display: flex;
@@ -41,7 +40,7 @@ const FABContainer = styled.div`
   z-index: 2;
 `;
 
-function Dashboard() {
+export default function Dashboard() {
   const { user } = useContext(UserContext);
   const {
     isLoading,
@@ -54,31 +53,24 @@ function Dashboard() {
     () => [...sections].sort((s1, s2) => s2.dateCreated - s1.dateCreated),
     [sections]
   );
-
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
-
   const changeAmrapReps = useCallback(
     (sectionId, weekNumber, exerciseName, amrapReps) => {
       const section = sortedSections.find((x) => x.id === sectionId);
       const week = section.weeks.find((week) => week.number === weekNumber);
       const exercise = week.exercises.find((e) => e.name === exerciseName);
       exercise.amrapReps = amrapReps;
-
       updateSection(section);
     },
     [sortedSections, updateSection]
   );
-
   const handleDeleteSection = useCallback(
     (sectionId) => deleteSection(sectionId),
     [deleteSection]
   );
-
   const handleAddNoteClicked = useCallback(() => setAddNodeModalOpen(true), []);
-
   const handleAddNoteClosed = useCallback(() => setAddNodeModalOpen(false), []);
-
   const handleAddNote = useCallback(
     (title, text) =>
       addSection({
@@ -89,17 +81,14 @@ function Dashboard() {
       }),
     [addSection]
   );
-
   const handleAddBlockClicked = useCallback(
     () => setAddBlockModalOpen(true),
     []
   );
-
   const handleAddBlockClosed = useCallback(
     () => setAddBlockModalOpen(false),
     []
   );
-
   const handleAddBlock = useCallback(
     (blockNumber, squatMax, overheadMax, deadliftMax, benchMax) => {
       const section = createBlock(
@@ -113,9 +102,7 @@ function Dashboard() {
     },
     [addSection]
   );
-
   const handleSignOutClicked = useCallback(() => signOut(), []);
-
   const sectionComponents = useMemo(
     () =>
       sortedSections.map((section) =>
@@ -138,12 +125,10 @@ function Dashboard() {
       ),
     [sortedSections, changeAmrapReps, handleDeleteSection]
   );
-
   const suggestedValues = useMemo(
     () => getNewBlockSuggestedValues(sortedSections),
     [sortedSections]
   );
-
   return (
     <Container>
       {!isLoading && <Content>{sectionComponents}</Content>}
@@ -168,5 +153,3 @@ function Dashboard() {
     </Container>
   );
 }
-
-export default Dashboard;

@@ -41,3 +41,8 @@ export const updateSection = async (userEmail, section) => {
 
   console.log("Updated document with ID: ", section.id);
 };
+
+export const pushBackup = async (backup) => {
+  const docRef = await addDoc(collection(db, "backups"), backup);
+  console.log("Added backup with ID: ", docRef);
+};
