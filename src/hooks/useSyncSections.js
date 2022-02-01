@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { getSectionsFromBackup, pushBackup } from "../services/sectionService";
 import usePersistentState from "./usePersistentState";
 
-// 1000 ms * 60 secs * 60 mins * 24 hours * 7 days = 604800000 ms
-const WEEK_DURATION = 604800000;
+// 1000 ms * 60 secs * 60 mins * 24 hours = 86400000 ms
+const DAY_DURATION = 86400000;
 
 export default function useSyncSections(userEmail) {
   const sectionsKey = useMemo(() => `sections-${userEmail}`, [userEmail]);
@@ -58,5 +58,5 @@ function createBackupObject(userEmail, sections) {
 function shouldBackup(lastBackupKey) {
   const lastBackupTime = +localStorage.getItem(lastBackupKey);
   const currentTime = Date.now();
-  return !lastBackupTime || currentTime - lastBackupTime >= WEEK_DURATION;
+  return !lastBackupTime || currentTime - lastBackupTime >= DAY_DURATION;
 }
