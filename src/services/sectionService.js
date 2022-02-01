@@ -16,9 +16,7 @@ const getSectionsCollection = (userEmail) =>
 
 export const getSections = async (userEmail) => {
   const snapshot = await getDocs(getSectionsCollection(userEmail));
-
   const sections = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-
   return sections;
 };
 
@@ -32,13 +30,14 @@ export const addSection = async (userEmail, section) => {
 
 export const deleteSection = async (userEmail, sectionId) => {
   await deleteDoc(doc(getSectionsCollection(userEmail), sectionId));
+
   console.log("Deleted document with ID: ", sectionId);
 };
 
 export const updateSection = async (userEmail, section) => {
-  const blockRef = doc(getSectionsCollection(userEmail), section.id);
-
   const { id, ...sectionFields } = section;
+  const blockRef = doc(getSectionsCollection(userEmail), section.id);
   await setDoc(blockRef, sectionFields);
+
   console.log("Updated document with ID: ", section.id);
 };
