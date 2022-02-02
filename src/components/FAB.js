@@ -6,7 +6,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ChildButton,
   Directions,
@@ -20,45 +20,66 @@ export default function FAB({
   onSignOutClicked,
 }) {
   const [isOpen, setOpen] = useState(false);
+  const ref = useRef();
 
-  const handleClick = useCallback((onClick) => {
+  const handleClick = useCallback((event, onClick) => {
+    event.preventDefault();
     onClick();
     setOpen(false);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const path = event.path || (event.composedPath && event.composedPath());
+
+      if (!path.includes(ref.current)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   return (
-    <FloatingMenu
-      slideSpeed={500}
-      direction={Directions.Up}
-      spacing={8}
-      isOpen={isOpen}
-    >
-      <MainButton
-        iconResting={<Icon icon={faBars} />}
-        iconActive={<Icon icon={faTimes} />}
-        background="lightgrey"
-        onClick={() => setOpen((prev) => !prev)}
-        size={60}
-      />
-      <ChildButton
-        icon={<Icon icon={faPlus} />}
-        background="lightgrey"
-        size={52}
-        onClick={() => handleClick(onAddBlockClicked)}
-      />
-      <ChildButton
-        icon={<Icon icon={faEdit} />}
-        background="lightgrey"
-        size={52}
-        onClick={() => handleClick(onAddNoteClicked)}
-      />
-      <ChildButton
-        icon={<Icon icon={faSignOutAlt} />}
-        background="lightgrey"
-        size={52}
-        onClick={() => handleClick(onSignOutClicked)}
-      />
-    </FloatingMenu>
+    <div ref={ref}>
+      <FloatingMenu
+        slideSpeed={500}
+        direction={Directions.Up}
+        spacing={8}
+        isOpen={isOpen}
+      >
+        <MainButton
+          iconResting={<Icon icon={faBars} />}
+          iconActive={<Icon icon={faTimes} />}
+          background="lightgrey"
+          onClick={(e) => {
+            e.preventDefault();
+            setOpen((prev) => !prev);
+          }}
+          size={60}
+        />
+        <ChildButton
+          icon={<Icon icon={faPlus} />}
+          background="lightgrey"
+          size={52}
+          onClick={(e) => handleClick(e, onAddBlockClicked)}
+        />
+        <ChildButton
+          icon={<Icon icon={faEdit} />}
+          background="lightgrey"
+          size={52}
+          onClick={(e) => handleClick(e, onAddNoteClicked)}
+        />
+        <ChildButton
+          icon={<Icon icon={faSignOutAlt} />}
+          background="lightgrey"
+          size={52}
+          onClick={(e) => handleClick(e, onSignOutClicked)}
+        />
+      </FloatingMenu>
+    </div>
   );
 }
 
