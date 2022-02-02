@@ -26,7 +26,7 @@ export default function AddNote({ isOpen, onClose, onSubmit }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <AddNoteForm onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <Input
             label="Title"
@@ -38,7 +38,7 @@ export default function AddNote({ isOpen, onClose, onSubmit }) {
             registerReturn={register("text")}
             error={errors?.text?.message}
             multiline
-            rows={4}
+            rows={5}
             variant="filled"
           />
         </InputContainer>
@@ -61,16 +61,16 @@ export default function AddNote({ isOpen, onClose, onSubmit }) {
             Submit
           </Button>
         </ButtonContainer>
-      </AddNoteForm>
+      </Form>
     </Modal>
   );
 }
 
-const AddNoteForm = styled.form`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
-  height: 100%;
-  justify-content: space-evenly;
+  height: 40vh;
+  justify-content: space-between;
   align-items: center;
 `;
 

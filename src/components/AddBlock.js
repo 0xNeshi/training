@@ -34,7 +34,7 @@ export default function AddBlock(props) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <InputForm onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <Input
             label="Squat max"
@@ -81,10 +81,17 @@ export default function AddBlock(props) {
             Submit
           </Button>
         </ButtonContainer>
-      </InputForm>
+      </Form>
     </Modal>
   );
 }
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  gap: 20px;
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -99,11 +106,4 @@ const InputContainer = styled.div`
   justify-content: space-evenly;
   width: 100%;
   align-items: center;
-`;
-
-const InputForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 20px;
 `;

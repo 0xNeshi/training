@@ -7,6 +7,7 @@ import { getNewBlockSuggestedValues } from "../utilities";
 import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";
 import Block from "./Block";
+import DeleteSectionCheck from "./DeleteSectionCheck";
 import FAB from "./FAB";
 import Note from "./Note";
 
@@ -25,6 +26,8 @@ export default function Dashboard() {
   );
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
+  const [isDeleteSectionModalOpen, setDeleteSectionModalOpen] = useState(false);
+
   const changeAmrapReps = useCallback(
     (sectionId, weekNumber, exerciseName, amrapReps) => {
       const section = sortedSections.find((x) => x.id === sectionId);
@@ -35,10 +38,7 @@ export default function Dashboard() {
     },
     [sortedSections, updateSection]
   );
-  const handleDeleteSection = useCallback(
-    (sectionId) => deleteSection(sectionId),
-    [deleteSection]
-  );
+
   const handleAddNoteClicked = useCallback(() => setAddNodeModalOpen(true), []);
   const handleAddNoteClosed = useCallback(() => setAddNodeModalOpen(false), []);
   const handleAddNote = useCallback(
@@ -75,6 +75,24 @@ export default function Dashboard() {
     [addSection]
   );
   const handleSignOutClicked = useCallback(() => signOut(), []);
+
+  const handleOpenDeleteSectionModal = useCallback(
+    () => setDeleteSectionModalOpen(true),
+    []
+  );
+  const handleDeleteSectionCheckClosed = useCallback(
+    () => setDeleteSectionModalOpen(false),
+    []
+  );
+
+  const handleDeleteSection = useCallback(
+    (sectionId) => {
+      deleteSection(sectionId);
+      setDeleteSectionModalOpen(false);
+    },
+    [deleteSection]
+  );
+
   const sectionComponents = useMemo(
     () =>
       sortedSections.map((section) =>
@@ -85,17 +103,17 @@ export default function Dashboard() {
             changeAmrapReps={(weekNumber, exercise, amrapReps) =>
               changeAmrapReps(section.id, weekNumber, exercise, amrapReps)
             }
-            deleteBlock={handleDeleteSection}
+            deleteBlock={handleOpenDeleteSectionModal}
           />
         ) : (
           <Note
             key={section.id}
             data={section}
-            deleteNote={handleDeleteSection}
+            deleteNote={handleOpenDeleteSectionModal}
           />
         )
       ),
-    [sortedSections, changeAmrapReps, handleDeleteSection]
+    [sortedSections, changeAmrapReps, handleOpenDeleteSectionModal]
   );
 
   const suggestedValues = useMemo(
@@ -123,6 +141,11 @@ export default function Dashboard() {
         onClose={handleAddBlockClosed}
         onSubmit={handleAddBlock}
         initialValues={suggestedValues}
+      />
+      <DeleteSectionCheck
+        isOpen={isDeleteSectionModalOpen}
+        onClose={handleDeleteSectionCheckClosed}
+        onSubmit={handleDeleteSection}
       />
     </Container>
   );
