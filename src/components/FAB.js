@@ -14,10 +14,6 @@ import {
   MainButton,
 } from "react-floating-button-menu";
 
-const Icon = ({ icon }) => (
-  <FontAwesomeIcon icon={icon} size="lg" color="#28342A" />
-);
-
 export default function FAB({
   onAddNoteClicked,
   onAddBlockClicked,
@@ -35,7 +31,8 @@ export default function FAB({
       slideSpeed={500}
       direction={Directions.Up}
       spacing={8}
-      isOpen={isOpen}>
+      isOpen={isOpen}
+    >
       <MainButton
         iconResting={<Icon icon={faBars} />}
         iconActive={<Icon icon={faTimes} />}
@@ -64,3 +61,7 @@ export default function FAB({
     </FloatingMenu>
   );
 }
+
+const Icon = ({ icon }) => (
+  <FontAwesomeIcon icon={icon} size="lg" color="#28342A" />
+);

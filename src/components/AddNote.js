@@ -1,20 +1,6 @@
 import { Field, Form, FormikProvider, useFormik } from "formik";
-
 import styled from "styled-components";
 import Modal from "./Modal";
-
-const ButtonContainer = styled.div`
-  display: flex;
-`;
-
-const AddNoteForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-`;
 
 export default function AddNote({ isOpen, onClose, onSubmit }) {
   const formik = useFormik({
@@ -50,3 +36,16 @@ export default function AddNote({ isOpen, onClose, onSubmit }) {
     </Modal>
   );
 }
+
+const ButtonContainer = styled.div`
+  display: flex;
+`;
+
+const AddNoteForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;

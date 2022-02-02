@@ -1,18 +1,18 @@
-const defaultIncrements = {
+const DEFAULT_INCREMENTS = {
   squat: 5,
   deadlift: 5,
   overhead: 2.5,
   bench: 2.5,
 };
 
-const Exercise = {
+const EXERCISE_KEYS = {
   Squat: "squat",
   Deadlift: "deadlift",
   Overhead: "overhead",
   Bench: "bench",
 };
 
-export const getNewBlockSuggestedValues = (sections = []) => {
+export default function getNewBlockSuggestedValues(sections = []) {
   const blocks = sections?.filter((s) => s.type === "block");
 
   if (!blocks?.length) {
@@ -32,12 +32,12 @@ export const getNewBlockSuggestedValues = (sections = []) => {
 
   const increments =
     blocks.length === 1
-      ? defaultIncrements
+      ? DEFAULT_INCREMENTS
       : getIncrements(currentBlock, blocks[1]);
 
-  const suggestedValues = Object.keys(Exercise).reduce(
+  const suggestedValues = Object.keys(EXERCISE_KEYS).reduce(
     (valuesObj, enumKey) => {
-      const exName = Exercise[enumKey];
+      const exName = EXERCISE_KEYS[enumKey];
       const key = `${exName}Max`;
       const exercise = currentExercises.find((ex) => ex.name === exName);
 
@@ -49,9 +49,9 @@ export const getNewBlockSuggestedValues = (sections = []) => {
   );
 
   return suggestedValues;
-};
+}
 
-const getIncrements = (currentBlock, lastBlock) => {
+function getIncrements(currentBlock, lastBlock) {
   const currentBlockLastExercises = getLastWeeksExercises(currentBlock);
   const lastBlockLastExercises = getLastWeeksExercises(lastBlock);
 
@@ -62,13 +62,17 @@ const getIncrements = (currentBlock, lastBlock) => {
     );
     increments[exercise.name] = !!prevExercise
       ? exercise.trainingMax - prevExercise.trainingMax
-      : defaultIncrements[exercise.name];
+      : DEFAULT_INCREMENTS[exercise.name];
   });
 
   return increments;
-};
+}
 
-// Gets exercises from the last week (3) of the block
-const getLastWeeksExercises = (block) =>
-  block.weeks.reduce((prev, curr) => (curr.number > prev.number ? curr : prev))
-    .exercises;
+// Gets exercises from the last week (week 3) of the block
+function getLastWeeksExercises(block) {
+  const lastWeek = block.weeks.reduce((prev, curr) =>
+    curr.number > prev.number ? curr : prev
+  );
+
+  return lastWeek.exercises;
+}

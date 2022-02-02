@@ -4,7 +4,7 @@ import styled from "styled-components";
 const WAIT_INTERVAL = 1000;
 const ENTER_KEY = 13;
 
-export const AmrapInput = ({ reps, onChangeAmrapReps }) => {
+export const AmrapInput = ({ reps = "", onChangeAmrapReps }) => {
   const [amrapReps, setAmrapReps] = useState(reps);
 
   const handleChangeAmrapReps = useCallback(

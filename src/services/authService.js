@@ -1,9 +1,15 @@
 import { signInWithPopup, signOut as _signOut } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase";
 
-const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
+export function signInWithGoogle() {
+  if (!window.navigator.onLine) {
+    alert("Please check your internet connection");
+    return;
+  }
+  return signInWithPopup(auth, googleProvider);
+}
 
-const signOut = () =>
+export function signOut() {
   _signOut(auth)
     .then(() => {
       console.log("Logged out");
@@ -11,5 +17,4 @@ const signOut = () =>
     .catch((error) => {
       console.log(error);
     });
-
-export { signInWithGoogle, signOut };
+}

@@ -6,6 +6,25 @@ import Google from "../assets/images/google.png";
 import { UserContext } from "../providers/UserProvider";
 import { signInWithGoogle } from "../services/authService";
 
+export default function SignIn() {
+  const { error } = useContext(UserContext);
+
+  return (
+    <Container>
+      <h3>Let's get started...</h3>
+      <Button
+        variant="contained"
+        onClick={signInWithGoogle}
+        sx={{ backgroundColor: blue[800], paddingLeft: 1 }}
+      >
+        <Icon src={Google} alt="Google logo" />
+        Connect with Google
+      </Button>
+      {error && <Error>{error}</Error>}
+    </Container>
+  );
+}
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,21 +47,3 @@ const Icon = styled.img`
   background-color: white;
   border-radius: 3px;
 `;
-
-export default function SignIn() {
-  const { error } = useContext(UserContext);
-
-  return (
-    <Container>
-      <h3>Let's get started...</h3>
-      <Button
-        variant="contained"
-        onClick={signInWithGoogle}
-        sx={{ backgroundColor: blue[800], paddingLeft: 1 }}>
-        <Icon src={Google} alt="Google logo" />
-        Connect with Google
-      </Button>
-      {error && <Error>{error}</Error>}
-    </Container>
-  );
-}

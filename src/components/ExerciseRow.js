@@ -1,23 +1,6 @@
 import styled from "styled-components";
 import { AmrapInput } from "./AmrapInput";
 
-const Cell = styled.td`
-  border-left: 1px solid white;
-`;
-
-const AmrapCell = styled(Cell)`
-  border-left: none;
-`;
-
-const TMCell = styled(Cell)`
-  font-weight: 600;
-`;
-
-const NameCell = styled(Cell)`
-  border-left: none;
-  text-align: left;
-`;
-
 export default function ExerciseRow({
   exerciseName,
   weights,
@@ -40,3 +23,20 @@ export default function ExerciseRow({
     </tr>
   );
 }
+
+const Cell = styled.td`
+  border-left: 1px solid white;
+`;
+
+const AmrapCell = styled(Cell)`
+  border-left: none;
+`;
+
+const TMCell = styled(Cell)`
+  font-weight: 600;
+`;
+
+const NameCell = styled(Cell)`
+  border-left: none;
+  text-align: left;
+`;

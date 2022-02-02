@@ -3,8 +3,10 @@ import useSyncSections from "./useSyncSections";
 import { v4 as uuidv4 } from "uuid";
 
 export default function useSections(userEmail) {
-  const { state, isLoading } = useSyncSections(userEmail);
-  const [sections, setSections] = state;
+  const {
+    state: [sections, setSections],
+    isLoading,
+  } = useSyncSections(userEmail);
 
   const add = useCallback(
     (section) => {

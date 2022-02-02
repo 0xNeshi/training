@@ -8,39 +8,14 @@ import SignIn from "./components/SignIn";
 import { RequireAnon, RequireAuth } from "./guards";
 import UserProvider from "./providers/UserProvider";
 
-// const Container = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   height: 100vh;
-//   width: 100vw;
-//   color: white;
-// `;
-
-const MainContainer = styled.div`
-  height: 100vh;
-`;
-
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: {
-      main: indigo[600],
-    },
-    background: {
-      default: grey[900],
-      paper: grey[900],
-    },
-  },
-});
-
-function App() {
+export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
         <Container component="main" sx={{ padding: 0 }}>
           <CssBaseline />
           <BrowserRouter>
-            <MainContainer>
+            <ContentContainer>
               <Routes>
                 <Route
                   exact
@@ -62,7 +37,7 @@ function App() {
                 />
                 <Route exact path="/" element={<Navigate to="/dashboard" />} />
               </Routes>
-            </MainContainer>
+            </ContentContainer>
           </BrowserRouter>
         </Container>
       </UserProvider>
@@ -70,4 +45,19 @@ function App() {
   );
 }
 
-export default App;
+const ContentContainer = styled.div`
+  height: 100vh;
+`;
+
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: indigo[600],
+    },
+    background: {
+      default: grey[900],
+      paper: grey[900],
+    },
+  },
+});

@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 
-const modalStyle = {
-  content: {
-    height: "50vh",
-    marginTop: "auto",
-    marginBottom: "auto",
-  },
-};
-
-ReactModal.setAppElement("#root");
-
 export default function Modal({ isOpen, onClose, children }) {
   const [overlayRef, setOverlayRef] = useState();
 
@@ -25,8 +15,19 @@ export default function Modal({ isOpen, onClose, children }) {
       isOpen={isOpen}
       overlayRef={(_ref) => setOverlayRef(_ref)}
       onRequestClose={onClose}
-      style={modalStyle}>
+      style={modalStyle}
+    >
       {children}
     </ReactModal>
   );
 }
+
+const modalStyle = {
+  content: {
+    height: "50vh",
+    marginTop: "auto",
+    marginBottom: "auto",
+  },
+};
+
+ReactModal.setAppElement("#root");

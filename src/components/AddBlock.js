@@ -1,7 +1,43 @@
 import { Field, Form, FormikProvider, useFormik } from "formik";
-
 import styled from "styled-components";
 import Modal from "./Modal";
+
+export default function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
+  const formik = useFormik({
+    initialValues: initialValues,
+    enableReinitialize: true,
+    onSubmit: (
+      { blockNumber, squatMax, overheadMax, deadliftMax, benchMax },
+      { resetForm }
+    ) => {
+      onSubmit(blockNumber, squatMax, overheadMax, deadliftMax, benchMax);
+      resetForm();
+      onClose();
+    },
+  });
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <Container>
+        <FormikProvider value={formik}>
+          <InputForm>
+            <InputContainer>
+              <Input fieldName="squatMax" label="Squat" autoFocus={true} />
+              <Input fieldName="overheadMax" label="Overhead" />
+              <Input fieldName="deadliftMax" label="Deadlift" />
+              <Input fieldName="benchMax" label="Bench" />
+              <Input fieldName="blockNumber" label="Block No." />
+            </InputContainer>
+            <ButtonContainer>
+              <button onClick={onClose}>Cancel</button>
+              <button type="submit">Submit</button>
+            </ButtonContainer>
+          </InputForm>
+        </FormikProvider>
+      </Container>
+    </Modal>
+  );
+}
 
 const Container = styled.div`
   display: flex;
@@ -51,40 +87,3 @@ const Input = ({ fieldName, label, autoFocus = false }) => (
     />
   </InputComponent>
 );
-
-export default function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
-  const formik = useFormik({
-    initialValues: initialValues,
-    enableReinitialize: true,
-    onSubmit: (
-      { blockNumber, squatMax, overheadMax, deadliftMax, benchMax },
-      { resetForm }
-    ) => {
-      onSubmit(blockNumber, squatMax, overheadMax, deadliftMax, benchMax);
-      resetForm();
-      onClose();
-    },
-  });
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <Container>
-        <FormikProvider value={formik}>
-          <InputForm>
-            <InputContainer>
-              <Input fieldName="squatMax" label="Squat" autoFocus={true} />
-              <Input fieldName="overheadMax" label="Overhead" />
-              <Input fieldName="deadliftMax" label="Deadlift" />
-              <Input fieldName="benchMax" label="Bench" />
-              <Input fieldName="blockNumber" label="Block No." />
-            </InputContainer>
-            <ButtonContainer>
-              <button onClick={onClose}>Cancel</button>
-              <button type="submit">Submit</button>
-            </ButtonContainer>
-          </InputForm>
-        </FormikProvider>
-      </Container>
-    </Modal>
-  );
-}

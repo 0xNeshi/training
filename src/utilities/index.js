@@ -1,2 +1,4 @@
-export * from "./getNewBlockSuggestedValues";
+import getNewBlockSuggestedValues from "./getNewBlockSuggestedValues";
+
 export * from "./backup";
+export { getNewBlockSuggestedValues };

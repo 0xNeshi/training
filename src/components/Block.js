@@ -3,15 +3,6 @@ import styled from "styled-components";
 import Section from "./Section";
 import WeekRow from "./WeekRow";
 
-const BlockRowContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-`;
-
 export default function Block({ data, changeAmrapReps, deleteBlock }) {
   const { id: blockId, number: blockNumber, weeks } = data;
 
@@ -36,8 +27,18 @@ export default function Block({ data, changeAmrapReps, deleteBlock }) {
     <Section
       sectionId={blockId}
       title={`Block ${blockNumber}`}
-      onDeleteSection={deleteBlock}>
+      onDeleteSection={deleteBlock}
+    >
       <BlockRowContainer>{rows}</BlockRowContainer>
     </Section>
   );
 }
+
+const BlockRowContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+`;
