@@ -1,3 +1,4 @@
 import useSections from "./useSections";
+import usePersistentState from "./usePersistentState";
 
-export { useSections };
+export { useSections, usePersistentState };
