@@ -15,7 +15,7 @@ export default function Section(props) {
       <Header>
         <Title>{title}</Title>
         <DeleteForeverOutlinedIcon
-          size="lg"
+          fontSize="large"
           color="secondary"
           style={{ cursor: "pointer" }}
           onClick={handleDeleteSection}

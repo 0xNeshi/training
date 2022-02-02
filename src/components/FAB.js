@@ -1,11 +1,10 @@
 import {
-  faBars,
-  faEdit,
-  faPlus,
-  faSignOutAlt,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+  Close,
+  FitnessCenter,
+  Logout,
+  Menu,
+  NoteAdd,
+} from "@mui/icons-material";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ChildButton,
@@ -51,38 +50,34 @@ export default function FAB({
         isOpen={isOpen}
       >
         <MainButton
-          iconResting={<Icon icon={faBars} />}
-          iconActive={<Icon icon={faTimes} />}
+          iconResting={<Menu fontSize="large" color="primary" />}
+          iconActive={<Close fontSize="large" color="primary" />}
           background="lightgrey"
           onClick={(e) => {
             e.preventDefault();
             setOpen((prev) => !prev);
           }}
-          size={60}
+          size={64}
         />
         <ChildButton
-          icon={<Icon icon={faPlus} />}
+          icon={<FitnessCenter fontSize="large" color="primary" />}
           background="lightgrey"
-          size={52}
+          size={56}
           onClick={(e) => handleClick(e, onAddBlockClicked)}
         />
         <ChildButton
-          icon={<Icon icon={faEdit} />}
+          icon={<NoteAdd fontSize="large" color="primary" />}
           background="lightgrey"
-          size={52}
+          size={56}
           onClick={(e) => handleClick(e, onAddNoteClicked)}
         />
         <ChildButton
-          icon={<Icon icon={faSignOutAlt} />}
+          icon={<Logout fontSize="large" color="primary" />}
           background="lightgrey"
-          size={52}
+          size={56}
           onClick={(e) => handleClick(e, onSignOutClicked)}
         />
       </FloatingMenu>
     </div>
   );
 }
-
-const Icon = ({ icon }) => (
-  <FontAwesomeIcon icon={icon} size="lg" color="#222" />
-);
