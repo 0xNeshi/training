@@ -12,14 +12,28 @@ export default function useSyncSections(userEmail) {
   const [isLoading, setLoading] = useState(false);
 
   const fetch = useCallback(async () => {
+    if (!window.navigator.onLine) {
+      alert("Please check your internet connection");
+      return;
+    }
+
     setLoading(true);
-    const backupSections = await getSectionsFromBackup(userEmail);
-    setSections(backupSections);
+    try {
+      const backupSections = await getSectionsFromBackup(userEmail);
+      setSections(backupSections);
+      localStorage.setItem(lastBackupKey, Date.now());
+    } catch (error) {
+      alert("Error getting data, please try again later");
+      console.log(error);
+    }
     setLoading(false);
-    localStorage.setItem(lastBackupKey, Date.now());
   }, [userEmail, setSections, lastBackupKey]);
 
   const backup = useCallback(async () => {
+    if (!window.navigator.onLine) {
+      console.log("Couldn't backup, no internet");
+      return;
+    }
     try {
       const backup = createBackupObject(userEmail, sections);
       await pushBackup(backup);
