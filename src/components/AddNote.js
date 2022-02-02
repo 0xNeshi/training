@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, TextField } from "@mui/material";
+import Input from "./Input";
 
 const schema = yup.object().shape({
   title: yup.string().required("Required"),
@@ -27,13 +28,18 @@ export default function AddNote({ isOpen, onClose, onSubmit }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <AddNoteForm onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
-          <TextField label="Title" variant="standard" {...register("title")} />
-          <TextField
+          <Input
+            label="Title"
+            registerReturn={register("title")}
+            error={errors?.title?.message}
+          />
+          <Input
             label="Text"
+            registerReturn={register("text")}
+            error={errors?.text?.message}
             multiline
             rows={4}
             variant="filled"
-            {...register("text")}
           />
         </InputContainer>
         <ButtonContainer>
