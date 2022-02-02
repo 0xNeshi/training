@@ -13,7 +13,9 @@ const schema = yup.object().shape({
   blockNumber: yup.number().required(),
 });
 
-export default function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
+export default function AddBlock(props) {
+  const { isOpen, onClose, onSubmit, initialValues } = props;
+
   const {
     register,
     formState: { errors, isSubmitting },

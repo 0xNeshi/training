@@ -12,5 +12,6 @@ export default function Note({ data, deleteNote }) {
 }
 
 const Text = styled.p`
-  width: 100%;
+  width: 90%;
+  overflow-wrap: break-word;
 `;

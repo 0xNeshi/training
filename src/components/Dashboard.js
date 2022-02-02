@@ -42,12 +42,14 @@ export default function Dashboard() {
   const handleAddNoteClicked = useCallback(() => setAddNodeModalOpen(true), []);
   const handleAddNoteClosed = useCallback(() => setAddNodeModalOpen(false), []);
   const handleAddNote = useCallback(
-    (title, text) =>
+    ({ title, text }) => {
       addSection({
         title,
         text,
         type: "note",
-      }),
+      });
+      setAddNodeModalOpen(false);
+    },
     [addSection]
   );
   const handleAddBlockClicked = useCallback(

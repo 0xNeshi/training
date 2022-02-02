@@ -1,51 +1,76 @@
-import { Field, Form, FormikProvider, useFormik } from "formik";
 import styled from "styled-components";
 import Modal from "./Modal";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Button, TextField } from "@mui/material";
+
+const schema = yup.object().shape({
+  title: yup.string().required(),
+  text: yup.string(),
+});
 
 export default function AddNote({ isOpen, onClose, onSubmit }) {
-  const formik = useFormik({
-    initialValues: {
+  const {
+    register,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
       title: "",
       text: "",
-    },
-    onSubmit: ({ title, text }, { resetForm }) => {
-      onSubmit(title, text);
-      resetForm();
-      onClose();
     },
   });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <FormikProvider value={formik}>
-        <AddNoteForm>
-          <Field
-            id="title"
-            name="title"
-            placeholder="Title"
-            type="text"
-            autoFocus={true}
+      <AddNoteForm onSubmit={handleSubmit(onSubmit)}>
+        <InputContainer>
+          <TextField label="Title" variant="standard" {...register("title")} />
+          <TextField
+            label="Text"
+            multiline
+            rows={4}
+            variant="filled"
+            {...register("text")}
           />
-          <Field id="text" name="text" placeholder="Text" type="text" />
-          <ButtonContainer>
-            <button onClick={onClose}>Cancel</button>
-            <button type="submit">Submit</button>
-          </ButtonContainer>
-        </AddNoteForm>
-      </FormikProvider>
+        </InputContainer>
+        <ButtonContainer>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={onClose}
+            color="secondary"
+          >
+            Cancel
+          </Button>
+          <Button type="submit" variant="contained" color="secondary">
+            Submit
+          </Button>
+        </ButtonContainer>
+      </AddNoteForm>
     </Modal>
   );
 }
 
-const ButtonContainer = styled.div`
-  display: flex;
-`;
-
-const AddNoteForm = styled(Form)`
+const AddNoteForm = styled.form`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
+  justify-content: space-evenly;
   align-items: center;
-  justify-content: center;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 80%;
 `;
