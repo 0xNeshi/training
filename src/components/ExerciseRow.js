@@ -14,29 +14,20 @@ export default function ExerciseRow({
     <tr>
       <NameCell>{exerciseName}</NameCell>
       <TMCell>{trainingMax}</TMCell>
-      <Cell>{first}</Cell>
-      <Cell>{second}</Cell>
-      <Cell>{third}</Cell>
-      <AmrapCell>
+      <td>{first}</td>
+      <td>{second}</td>
+      <td>{third}</td>
+      <td>
         <AmrapInput reps={amrapReps} onChangeAmrapReps={changeAmrapReps} />
-      </AmrapCell>
+      </td>
     </tr>
   );
 }
 
-const Cell = styled.td`
-  border-left: 1px solid white;
-`;
-
-const AmrapCell = styled(Cell)`
-  border-left: none;
-`;
-
-const TMCell = styled(Cell)`
+const TMCell = styled.td`
   font-weight: 600;
 `;
 
-const NameCell = styled(Cell)`
-  border-left: none;
+const NameCell = styled.td`
   text-align: left;
 `;

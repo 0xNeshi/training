@@ -44,9 +44,10 @@ export const AmrapInput = ({ reps, onChangeAmrapReps }) => {
 const Input = styled.input`
   width: 30px;
   height: 30px;
-  border: 1px solid #514b3e;
-  background-color: #514b3e;
-  color: white;
+  border: none;
+  border-radius: 2px;
+  color: lightgrey;
+  background-color: #444;
   font-weight: 600;
   text-align: center;
 `;

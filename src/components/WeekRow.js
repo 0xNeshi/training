@@ -2,6 +2,20 @@ import { useMemo } from "react";
 import styled from "styled-components";
 import ExerciseRow from "./ExerciseRow";
 
+const repSchemas = {
+  1: "5/5/5",
+  2: "3/3/3",
+  3: "5/3/1",
+};
+
+const exercisesInOrder = ["overhead", "deadlift", "bench", "squat"];
+
+const percentagesPerWeek = {
+  1: [0.65, 0.75, 0.85],
+  2: [0.7, 0.8, 0.9],
+  3: [0.75, 0.85, 0.95],
+};
+
 export default function WeekRow({ changeAmrapReps, week, blockId }) {
   const exerciseRows = useMemo(
     () =>
@@ -32,9 +46,9 @@ export default function WeekRow({ changeAmrapReps, week, blockId }) {
 
   return (
     <Container>
-      <span>
+      <h4 style={{ marginBlockStart: 0, marginBlockEnd: 0 }}>
         Week {week.number} (<u>{repSchemas[week.number]}</u>)
-      </span>
+      </h4>
       <Table>
         <thead>
           <tr>
@@ -43,7 +57,7 @@ export default function WeekRow({ changeAmrapReps, week, blockId }) {
             <HeaderCell>{fractionToPercentage(first)}</HeaderCell>
             <HeaderCell>{fractionToPercentage(second)}</HeaderCell>
             <HeaderCell>{fractionToPercentage(third)}</HeaderCell>
-            <AmrapHeaderCell>+</AmrapHeaderCell>
+            <HeaderCell>+</HeaderCell>
           </tr>
         </thead>
         <tbody>{exerciseRows}</tbody>
@@ -57,7 +71,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-around;
   width: 100%;
-  height: 230px;
+  height: 220px;
 `;
 
 const Table = styled.table`
@@ -67,18 +81,11 @@ const Table = styled.table`
 `;
 
 const HeaderCell = styled.td`
-  border-left: 1px solid white;
   font-weight: bold;
 `;
 
 const HeaderNameCell = styled(HeaderCell)`
-  border-left: none;
   text-align: left;
-`;
-
-const AmrapHeaderCell = styled(HeaderCell)`
-  text-align: center;
-  border-left: none;
 `;
 
 const fractionToPercentage = (fraction) => `${fraction * 100}%`;
@@ -98,17 +105,3 @@ const calculate = (weight, percent) => {
 };
 
 const getPercentages = (weekNumber) => percentagesPerWeek[weekNumber];
-
-const repSchemas = {
-  1: "5/5/5",
-  2: "3/3/3",
-  3: "5/3/1",
-};
-
-const exercisesInOrder = ["overhead", "deadlift", "bench", "squat"];
-
-const percentagesPerWeek = {
-  1: [0.65, 0.75, 0.85],
-  2: [0.7, 0.8, 0.9],
-  3: [0.75, 0.85, 0.95],
-};

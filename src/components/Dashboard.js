@@ -136,7 +136,7 @@ const Content = styled.div`
   flex-direction: column;
   gap: 20px;
   align-items: center;
-  padding: 20px 0 20px;
+  padding: 20px 0 80px;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
   width: 100%;

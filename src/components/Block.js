@@ -10,16 +10,14 @@ export default function Block({ data, changeAmrapReps, deleteBlock }) {
     () =>
       weeks
         .sort((w1, w2) => w2.number - w1.number)
-        .map((week) => {
-          return (
-            <WeekRow
-              key={`weekrow${blockId}${week.number}`}
-              changeAmrapReps={changeAmrapReps}
-              week={week}
-              blockId={blockId}
-            />
-          );
-        }),
+        .map((week) => (
+          <WeekRow
+            key={`weekrow${blockId}${week.number}`}
+            changeAmrapReps={changeAmrapReps}
+            week={week}
+            blockId={blockId}
+          />
+        )),
     [weeks, blockId, changeAmrapReps]
   );
 
