@@ -123,7 +123,12 @@ export default function Dashboard() {
 
   return (
     <Container>
-      {!isLoading && <Content>{sectionComponents}</Content>}
+      {!isLoading && (
+        <Content>
+          {sectionComponents}
+          <Footer>&copy;Copyright 2022 by misicnenad</Footer>
+        </Content>
+      )}
       <FABContainer>
         <FAB
           onAddNoteClicked={handleAddNoteClicked}
@@ -164,7 +169,7 @@ const Content = styled.div`
   flex-direction: column;
   gap: 20px;
   align-items: center;
-  padding: 20px 0 80px;
+  padding: 20px 0 20px;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
   width: 100%;
@@ -179,6 +184,11 @@ const FABContainer = styled.div`
   bottom: 10px;
   right: 10px;
   z-index: 2;
+`;
+
+const Footer = styled.footer`
+  margin-top: 10px;
+  font-size: 12px;
 `;
 
 const createBlock = (

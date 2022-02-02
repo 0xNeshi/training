@@ -13,11 +13,9 @@ import {
   MainButton,
 } from "react-floating-button-menu";
 
-export default function FAB({
-  onAddNoteClicked,
-  onAddBlockClicked,
-  onSignOutClicked,
-}) {
+export default function FAB(props) {
+  const { onAddNoteClicked, onAddBlockClicked, onSignOutClicked } = props;
+
   const [isOpen, setOpen] = useState(false);
   const ref = useRef();
 
