@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { AmrapInput } from "./AmrapInput";
 
@@ -19,7 +18,7 @@ const NameCell = styled(Cell)`
   text-align: left;
 `;
 
-function ExerciseRow({
+export default function ExerciseRow({
   exerciseName,
   weights,
   trainingMax,
@@ -41,5 +40,3 @@ function ExerciseRow({
     </tr>
   );
 }
-
-export default ExerciseRow;

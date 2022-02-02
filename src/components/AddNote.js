@@ -1,5 +1,5 @@
 import { Field, Form, FormikProvider, useFormik } from "formik";
-import React from "react";
+
 import styled from "styled-components";
 import Modal from "./Modal";
 
@@ -7,7 +7,16 @@ const ButtonContainer = styled.div`
   display: flex;
 `;
 
-function AddNote({ isOpen, onClose, onSubmit }) {
+const AddNoteForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+export default function AddNote({ isOpen, onClose, onSubmit }) {
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -23,7 +32,7 @@ function AddNote({ isOpen, onClose, onSubmit }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <FormikProvider value={formik}>
-        <Form>
+        <AddNoteForm>
           <Field
             id="title"
             name="title"
@@ -36,10 +45,8 @@ function AddNote({ isOpen, onClose, onSubmit }) {
             <button onClick={onClose}>Cancel</button>
             <button type="submit">Submit</button>
           </ButtonContainer>
-        </Form>
+        </AddNoteForm>
       </FormikProvider>
     </Modal>
   );
 }
-
-export default AddNote;

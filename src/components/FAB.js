@@ -6,7 +6,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ChildButton,
   Directions,
@@ -18,21 +18,24 @@ const Icon = ({ icon }) => (
   <FontAwesomeIcon icon={icon} size="lg" color="#28342A" />
 );
 
-function FAB({ onAddNoteClicked, onAddBlockClicked, onSignOutClicked }) {
+export default function FAB({
+  onAddNoteClicked,
+  onAddBlockClicked,
+  onSignOutClicked,
+}) {
   const [isOpen, setOpen] = useState(false);
 
-  const handleClick = (onClick) => {
+  const handleClick = useCallback((onClick) => {
     onClick();
     setOpen(false);
-  };
+  }, []);
 
   return (
     <FloatingMenu
       slideSpeed={500}
       direction={Directions.Up}
       spacing={8}
-      isOpen={isOpen}
-    >
+      isOpen={isOpen}>
       <MainButton
         iconResting={<Icon icon={faBars} />}
         iconActive={<Icon icon={faTimes} />}
@@ -61,5 +64,3 @@ function FAB({ onAddNoteClicked, onAddBlockClicked, onSignOutClicked }) {
     </FloatingMenu>
   );
 }
-
-export default FAB;

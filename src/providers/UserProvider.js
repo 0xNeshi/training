@@ -1,28 +1,28 @@
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
-import { exists } from "../services/userService";
+import { usePersistentState } from "../hooks";
 
-const UserContext = createContext({ user: null, error: null });
-
-function UserProvider(props) {
-  const [user, setUser] = useState();
+export default function UserProvider(props) {
+  const [user, setUser] = usePersistentState("user");
   const [error, setError] = useState();
 
   useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
-      if (!user) {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      if (!currentUser) {
         setUser(null);
         return;
       }
 
-      const userExists = await exists(user.email);
-      if (userExists) {
-        setUser(user);
+      if (currentUser.uid !== user?.uid) {
+        setUser(currentUser);
         setError("");
-      } else {
-        setError("User not found");
       }
     });
+
+    return () => unsubscribe();
+    // we should subscribe to these changes only when the app first runs
+    // and unsubscribe when prior to it closing
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -32,5 +32,6 @@ function UserProvider(props) {
   );
 }
 
-export default UserProvider;
+const UserContext = createContext({ user: null, error: null });
+
 export { UserContext };

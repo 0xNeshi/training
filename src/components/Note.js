@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import Section from "./Section";
 
@@ -6,7 +5,7 @@ const Text = styled.p`
   width: 100%;
 `;
 
-function Note({ data, deleteNote }) {
+export default function Note({ data, deleteNote }) {
   const { id: noteId, title, text } = data;
 
   return (
@@ -15,5 +14,3 @@ function Note({ data, deleteNote }) {
     </Section>
   );
 }
-
-export default Note;

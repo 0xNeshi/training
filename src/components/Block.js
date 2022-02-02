@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 import Section from "./Section";
 import WeekRow from "./WeekRow";
@@ -12,31 +12,32 @@ const BlockRowContainer = styled.div`
   gap: 10px;
 `;
 
-function Block({ data, changeAmrapReps, deleteBlock }) {
+export default function Block({ data, changeAmrapReps, deleteBlock }) {
   const { id: blockId, number: blockNumber, weeks } = data;
 
-  const rows = weeks
-    .sort((w1, w2) => w2.number - w1.number)
-    .map((week) => {
-      return (
-        <WeekRow
-          key={`weekrow${blockId}${week.number}`}
-          changeAmrapReps={changeAmrapReps}
-          week={week}
-          blockId={blockId}
-        />
-      );
-    });
+  const rows = useMemo(
+    () =>
+      weeks
+        .sort((w1, w2) => w2.number - w1.number)
+        .map((week) => {
+          return (
+            <WeekRow
+              key={`weekrow${blockId}${week.number}`}
+              changeAmrapReps={changeAmrapReps}
+              week={week}
+              blockId={blockId}
+            />
+          );
+        }),
+    [weeks, blockId, changeAmrapReps]
+  );
 
   return (
     <Section
       sectionId={blockId}
       title={`Block ${blockNumber}`}
-      onDeleteSection={deleteBlock}
-    >
+      onDeleteSection={deleteBlock}>
       <BlockRowContainer>{rows}</BlockRowContainer>
     </Section>
   );
 }
-
-export default Block;

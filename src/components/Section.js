@@ -1,6 +1,6 @@
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -28,7 +28,12 @@ const Divider = styled.hr`
   width: 100%;
 `;
 
-function Section({ sectionId, title, onDeleteSection, children }) {
+export default function Section({
+  sectionId,
+  title,
+  onDeleteSection,
+  children,
+}) {
   const handleDeleteSection = useCallback(
     () => onDeleteSection(sectionId),
     [sectionId, onDeleteSection]
@@ -51,5 +56,3 @@ function Section({ sectionId, title, onDeleteSection, children }) {
     </Container>
   );
 }
-
-export default Section;
