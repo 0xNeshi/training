@@ -27,6 +27,12 @@ const modalStyle = {
     height: "50vh",
     marginTop: "auto",
     marginBottom: "auto",
+    backgroundColor: "#222",
+    borderRadius: "3px",
+    border: "0",
+  },
+  overlay: {
+    backgroundColor: "rgba(22, 22, 22, 0.75)",
   },
 };
 

@@ -36,25 +36,25 @@ export default function FAB({
       <MainButton
         iconResting={<Icon icon={faBars} />}
         iconActive={<Icon icon={faTimes} />}
-        background="white"
+        background="lightgrey"
         onClick={() => setOpen((prev) => !prev)}
         size={60}
       />
       <ChildButton
         icon={<Icon icon={faPlus} />}
-        background="white"
+        background="lightgrey"
         size={52}
         onClick={() => handleClick(onAddBlockClicked)}
       />
       <ChildButton
         icon={<Icon icon={faEdit} />}
-        background="white"
+        background="lightgrey"
         size={52}
         onClick={() => handleClick(onAddNoteClicked)}
       />
       <ChildButton
         icon={<Icon icon={faSignOutAlt} />}
-        background="white"
+        background="lightgrey"
         size={52}
         onClick={() => handleClick(onSignOutClicked)}
       />
@@ -63,5 +63,5 @@ export default function FAB({
 }
 
 const Icon = ({ icon }) => (
-  <FontAwesomeIcon icon={icon} size="lg" color="#28342A" />
+  <FontAwesomeIcon icon={icon} size="lg" color="#222" />
 );
