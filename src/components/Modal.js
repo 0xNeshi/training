@@ -24,7 +24,7 @@ export default function Modal({ isOpen, onClose, children }) {
 
 const modalStyle = {
   content: {
-    height: "55vh",
+    height: "60vh",
     marginTop: "auto",
     marginBottom: "auto",
     backgroundColor: "#222",

@@ -42,10 +42,16 @@ export default function AddNote({ isOpen, onClose, onSubmit }) {
             variant="outlined"
             onClick={onClose}
             color="secondary"
+            disabled={isSubmitting}
           >
             Cancel
           </Button>
-          <Button type="submit" variant="contained" color="secondary">
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            disabled={isSubmitting}
+          >
             Submit
           </Button>
         </ButtonContainer>

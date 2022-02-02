@@ -5,12 +5,18 @@ import styled from "styled-components";
 import * as yup from "yup";
 import Modal from "./Modal";
 
-const schema = yup.object().shape({
-  squatMax: yup.number().required(),
-  overheadMax: yup.number().required(),
-  benchMax: yup.number().required(),
-  deadliftMax: yup.number().required(),
-  blockNumber: yup.number().required(),
+const REQUIRED_NUMBER_SCHEMA = yup
+  .number()
+  .typeError("Must be a positive number")
+  .positive("Must be a positive number")
+  .required("Missing input");
+
+const YUP_SHAPE = yup.object().shape({
+  squatMax: REQUIRED_NUMBER_SCHEMA,
+  overheadMax: REQUIRED_NUMBER_SCHEMA,
+  benchMax: REQUIRED_NUMBER_SCHEMA,
+  deadliftMax: REQUIRED_NUMBER_SCHEMA,
+  blockNumber: REQUIRED_NUMBER_SCHEMA,
 });
 
 export default function AddBlock(props) {
@@ -21,7 +27,7 @@ export default function AddBlock(props) {
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(YUP_SHAPE),
     defaultValues: initialValues,
   });
 
@@ -29,30 +35,30 @@ export default function AddBlock(props) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <InputForm onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
-          <TextField
+          <Input
             label="Squat max"
-            variant="standard"
-            {...register("squatMax")}
+            registerReturn={register("squatMax")}
+            error={errors?.squatMax?.message}
           />
-          <TextField
+          <Input
             label="Bench max"
-            variant="standard"
-            {...register("benchMax")}
+            registerReturn={register("benchMax")}
+            error={errors?.benchMax?.message}
           />
-          <TextField
+          <Input
             label="Deadlift max"
-            variant="standard"
-            {...register("deadliftMax")}
+            registerReturn={register("deadliftMax")}
+            error={errors?.deadliftMax?.message}
           />
-          <TextField
+          <Input
             label="Overhead max"
-            variant="standard"
-            {...register("overheadMax")}
+            registerReturn={register("overheadMax")}
+            error={errors?.overheadMax?.message}
           />
-          <TextField
+          <Input
             label="Block number"
-            variant="standard"
-            {...register("blockNumber")}
+            registerReturn={register("blockNumber")}
+            error={errors?.blockNumber?.message}
           />
         </InputContainer>
         <ButtonContainer>
@@ -61,10 +67,16 @@ export default function AddBlock(props) {
             variant="outlined"
             onClick={onClose}
             color="secondary"
+            disabled={isSubmitting}
           >
             Cancel
           </Button>
-          <Button type="submit" variant="contained" color="secondary">
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            disabled={isSubmitting}
+          >
             Submit
           </Button>
         </ButtonContainer>
@@ -94,3 +106,18 @@ const InputForm = styled.form`
   height: 100%;
   gap: 20px;
 `;
+
+function Input({ label, registerReturn, error }) {
+  return (
+    <TextField
+      label={label}
+      variant="standard"
+      {...registerReturn}
+      error={!!error}
+      helperText={error}
+      FormHelperTextProps={{
+        style: { fontSize: 12 },
+      }}
+    />
+  );
+}
