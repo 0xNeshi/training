@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, TextField } from "@mui/material";
 
 const schema = yup.object().shape({
-  title: yup.string().required(),
+  title: yup.string().required("Required"),
   text: yup.string(),
 });
 

@@ -1,8 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import * as yup from "yup";
+import Input from "./Input";
 import Modal from "./Modal";
 
 const REQUIRED_NUMBER_SCHEMA = yup
@@ -106,18 +107,3 @@ const InputForm = styled.form`
   height: 100%;
   gap: 20px;
 `;
-
-function Input({ label, registerReturn, error }) {
-  return (
-    <TextField
-      label={label}
-      variant="standard"
-      {...registerReturn}
-      error={!!error}
-      helperText={error}
-      FormHelperTextProps={{
-        style: { fontSize: 12 },
-      }}
-    />
-  );
-}
