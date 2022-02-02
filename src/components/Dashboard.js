@@ -59,7 +59,7 @@ export default function Dashboard() {
     []
   );
   const handleAddBlock = useCallback(
-    (blockNumber, squatMax, overheadMax, deadliftMax, benchMax) => {
+    ({ blockNumber, squatMax, overheadMax, deadliftMax, benchMax }) => {
       const section = createBlock(
         blockNumber,
         squatMax,
@@ -68,6 +68,7 @@ export default function Dashboard() {
         benchMax
       );
       addSection(section);
+      setAddBlockModalOpen(false);
     },
     [addSection]
   );
@@ -94,10 +95,12 @@ export default function Dashboard() {
       ),
     [sortedSections, changeAmrapReps, handleDeleteSection]
   );
+
   const suggestedValues = useMemo(
     () => getNewBlockSuggestedValues(sortedSections),
     [sortedSections]
   );
+
   return (
     <Container>
       {!isLoading && <Content>{sectionComponents}</Content>}

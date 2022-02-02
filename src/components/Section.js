@@ -1,7 +1,6 @@
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback } from "react";
 import styled from "styled-components";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 
 export default function Section(props) {
   const { sectionId, title, onDeleteSection, children } = props;
@@ -15,10 +14,9 @@ export default function Section(props) {
     <Container>
       <Header>
         <Title>{title}</Title>
-        <FontAwesomeIcon
-          icon={faTrashAlt}
+        <DeleteForeverOutlinedIcon
           size="lg"
-          color="darkgrey"
+          color="secondary"
           style={{ cursor: "pointer" }}
           onClick={handleDeleteSection}
         />

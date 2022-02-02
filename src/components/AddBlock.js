@@ -1,39 +1,78 @@
-import { Field, Form, FormikProvider, useFormik } from "formik";
 import styled from "styled-components";
 import Modal from "./Modal";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Button, TextField } from "@mui/material";
+
+const schema = yup.object().shape({
+  squatMax: yup.number().required(),
+  overheadMax: yup.number().required(),
+  benchMax: yup.number().required(),
+  deadliftMax: yup.number().required(),
+  blockNumber: yup.number().required(),
+});
 
 export default function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
-  const formik = useFormik({
-    initialValues: initialValues,
-    enableReinitialize: true,
-    onSubmit: (
-      { blockNumber, squatMax, overheadMax, deadliftMax, benchMax },
-      { resetForm }
-    ) => {
-      onSubmit(blockNumber, squatMax, overheadMax, deadliftMax, benchMax);
-      resetForm();
-      onClose();
-    },
+  const {
+    register,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: initialValues,
   });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Container>
-        <FormikProvider value={formik}>
-          <InputForm>
-            <InputContainer>
-              <Input fieldName="squatMax" label="Squat" autoFocus={true} />
-              <Input fieldName="overheadMax" label="Overhead" />
-              <Input fieldName="deadliftMax" label="Deadlift" />
-              <Input fieldName="benchMax" label="Bench" />
-              <Input fieldName="blockNumber" label="Block No." />
-            </InputContainer>
-            <ButtonContainer>
-              <button onClick={onClose}>Cancel</button>
-              <button type="submit">Submit</button>
-            </ButtonContainer>
-          </InputForm>
-        </FormikProvider>
+        <InputForm onSubmit={handleSubmit(onSubmit)}>
+          <InputContainer>
+            <TextField
+              id="standard-basic"
+              label="Squat max"
+              variant="standard"
+              {...register("squatMax")}
+            />
+            <TextField
+              id="standard-basic"
+              label="Bench max"
+              variant="standard"
+              {...register("benchMax")}
+            />
+            <TextField
+              id="standard-basic"
+              label="Deadlift max"
+              variant="standard"
+              {...register("deadliftMax")}
+            />
+            <TextField
+              id="standard-basic"
+              label="Overhead max"
+              variant="standard"
+              {...register("overheadMax")}
+            />
+            <TextField
+              id="standard-basic"
+              label="Block number"
+              variant="standard"
+              {...register("blockNumber")}
+            />
+          </InputContainer>
+          <ButtonContainer>
+            <Button
+              type="button"
+              variant="outlined"
+              onClick={onClose}
+              color="secondary"
+            >
+              Cancel
+            </Button>
+            <Button type="submit" variant="contained" color="secondary">
+              Submit
+            </Button>
+          </ButtonContainer>
+        </InputForm>
       </Container>
     </Modal>
   );
@@ -45,45 +84,24 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   align-items: center;
-  justify-content: center;
-`;
-
-const InputComponent = styled.div`
-  display: flex;
-  color: black;
-`;
-
-const Label = styled.label`
-  width: 50%;
-  text-align: right;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
 `;
 
-const InputForm = styled(Form)`
+const InputForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  height: 100%;
+  gap: 20px;
 `;
-
-const Input = ({ fieldName, label, autoFocus = false }) => (
-  <InputComponent>
-    <Label htmlFor={fieldName}>{label}:</Label>
-    <Field
-      style={{ width: "50%" }}
-      id={fieldName}
-      name={fieldName}
-      type="text"
-      autoFocus={autoFocus}
-    />
-  </InputComponent>
-);
