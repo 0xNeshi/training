@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import Modal from "./Modal";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
+import styled from "styled-components";
+import * as yup from "yup";
+import Modal from "./Modal";
 
 const schema = yup.object().shape({
   squatMax: yup.number().required(),
@@ -25,66 +25,51 @@ export default function AddBlock({ isOpen, onClose, onSubmit, initialValues }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <Container>
-        <InputForm onSubmit={handleSubmit(onSubmit)}>
-          <InputContainer>
-            <TextField
-              id="standard-basic"
-              label="Squat max"
-              variant="standard"
-              {...register("squatMax")}
-            />
-            <TextField
-              id="standard-basic"
-              label="Bench max"
-              variant="standard"
-              {...register("benchMax")}
-            />
-            <TextField
-              id="standard-basic"
-              label="Deadlift max"
-              variant="standard"
-              {...register("deadliftMax")}
-            />
-            <TextField
-              id="standard-basic"
-              label="Overhead max"
-              variant="standard"
-              {...register("overheadMax")}
-            />
-            <TextField
-              id="standard-basic"
-              label="Block number"
-              variant="standard"
-              {...register("blockNumber")}
-            />
-          </InputContainer>
-          <ButtonContainer>
-            <Button
-              type="button"
-              variant="outlined"
-              onClick={onClose}
-              color="secondary"
-            >
-              Cancel
-            </Button>
-            <Button type="submit" variant="contained" color="secondary">
-              Submit
-            </Button>
-          </ButtonContainer>
-        </InputForm>
-      </Container>
+      <InputForm onSubmit={handleSubmit(onSubmit)}>
+        <InputContainer>
+          <TextField
+            label="Squat max"
+            variant="standard"
+            {...register("squatMax")}
+          />
+          <TextField
+            label="Bench max"
+            variant="standard"
+            {...register("benchMax")}
+          />
+          <TextField
+            label="Deadlift max"
+            variant="standard"
+            {...register("deadliftMax")}
+          />
+          <TextField
+            label="Overhead max"
+            variant="standard"
+            {...register("overheadMax")}
+          />
+          <TextField
+            label="Block number"
+            variant="standard"
+            {...register("blockNumber")}
+          />
+        </InputContainer>
+        <ButtonContainer>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={onClose}
+            color="secondary"
+          >
+            Cancel
+          </Button>
+          <Button type="submit" variant="contained" color="secondary">
+            Submit
+          </Button>
+        </ButtonContainer>
+      </InputForm>
     </Modal>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-`;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -97,6 +82,8 @@ const InputContainer = styled.div`
   flex-direction: column;
   height: 100%;
   justify-content: space-evenly;
+  width: 100%;
+  align-items: center;
 `;
 
 const InputForm = styled.form`
