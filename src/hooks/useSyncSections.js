@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getSectionsFromBackup, pushBackup } from "../services/sectionService";
+import { getSectionsFromBackup, pushBackup } from "../utilities";
 import usePersistentState from "./usePersistentState";
 
 // 1000 ms * 60 secs * 60 mins * 24 hours = 86400000 ms

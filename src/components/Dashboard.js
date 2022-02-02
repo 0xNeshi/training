@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSections } from "../hooks";
 import { UserContext } from "../providers/UserProvider";
 import { signOut } from "../services/authService";
-import { createBlock, getNewBlockSuggestedValues } from "../utilities";
+import { getNewBlockSuggestedValues } from "../utilities";
 import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";
 import Block from "./Block";
@@ -152,3 +152,38 @@ export default function Dashboard() {
     </Container>
   );
 }
+
+const createBlock = (
+  blockNumber,
+  squatMax,
+  overheadMax,
+  deadliftMax,
+  benchMax
+) => {
+  const weeks = [];
+  const numberOfWeeks = 3;
+
+  for (let i = 1; i <= numberOfWeeks; i++) {
+    weeks.push({
+      number: i,
+      exercises: [
+        createExercise("squat", squatMax),
+        createExercise("overhead", overheadMax),
+        createExercise("deadlift", deadliftMax),
+        createExercise("bench", benchMax),
+      ],
+    });
+  }
+
+  return {
+    type: "block",
+    number: blockNumber,
+    weeks: weeks,
+  };
+};
+
+const createExercise = (exerciseName, trainingMax) => ({
+  name: exerciseName,
+  trainingMax,
+  amrapReps: 0,
+});

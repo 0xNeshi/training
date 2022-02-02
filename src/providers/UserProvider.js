@@ -1,6 +1,6 @@
+import { doc, getDoc } from "firebase/firestore";
 import React, { createContext, useEffect, useState } from "react";
-import { auth } from "../config/firebase";
-import { exists } from "../services/userService";
+import { auth, db } from "../config/firebase";
 
 const UserContext = createContext({ user: null, error: null });
 
@@ -34,3 +34,9 @@ function UserProvider(props) {
 
 export default UserProvider;
 export { UserContext };
+
+async function exists(userEmail) {
+  const snapshot = await getDoc(doc(db, "users", userEmail));
+
+  return snapshot.exists();
+}
