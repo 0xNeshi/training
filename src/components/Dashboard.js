@@ -28,6 +28,8 @@ export default function Dashboard() {
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
   const [isDeleteSectionModalOpen, setDeleteSectionModalOpen] = useState(false);
 
+  const [sectionIdToDelete, setSectionIdToDelete] = useState();
+
   const changeAmrapReps = useCallback(
     (sectionId, weekNumber, exerciseName, amrapReps) => {
       const section = sortedSections.find((x) => x.id === sectionId);
@@ -76,22 +78,19 @@ export default function Dashboard() {
   );
   const handleSignOutClicked = useCallback(() => signOut(), []);
 
-  const handleOpenDeleteSectionModal = useCallback(
-    () => setDeleteSectionModalOpen(true),
-    []
-  );
+  const handleOpenDeleteSectionModal = useCallback((sectionId) => {
+    setDeleteSectionModalOpen(true);
+    setSectionIdToDelete(sectionId);
+  }, []);
   const handleDeleteSectionCheckClosed = useCallback(
     () => setDeleteSectionModalOpen(false),
     []
   );
 
-  const handleDeleteSection = useCallback(
-    (sectionId) => {
-      deleteSection(sectionId);
-      setDeleteSectionModalOpen(false);
-    },
-    [deleteSection]
-  );
+  const handleDeleteSection = useCallback(() => {
+    deleteSection(sectionIdToDelete);
+    setDeleteSectionModalOpen(false);
+  }, [sectionIdToDelete, deleteSection]);
 
   const sectionComponents = useMemo(
     () =>
