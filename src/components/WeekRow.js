@@ -48,9 +48,9 @@ export default function WeekRow({ changeAmrapReps, week, blockId }) {
 
   return (
     <Container>
-      <h4 style={{ marginBlockStart: 0, marginBlockEnd: 0 }}>
+      <WeekHeader>
         Week {week.number} (<u>{repSchemas[week.number]}</u>)
-      </h4>
+      </WeekHeader>
       <Table>
         <thead>
           <tr>
@@ -74,6 +74,10 @@ const Container = styled.div`
   justify-content: space-around;
   width: 100%;
   height: 220px;
+`;
+
+const WeekHeader = styled.h4`
+  margin-block: 0;
 `;
 
 const Table = styled.table`
