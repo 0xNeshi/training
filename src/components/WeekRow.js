@@ -19,23 +19,25 @@ const percentagesPerWeek = {
 export default function WeekRow({ changeAmrapReps, week, blockId }) {
   const exerciseRows = useMemo(
     () =>
-      exercisesInOrder.map((exName) => {
-        const exercise = week.exercises.find((x) => x.name === exName);
-        const weights = getWeights(exercise.trainingMax, week.number);
+      exercisesInOrder
+        .map((exName) => week.exercises.find((x) => x.name === exName))
+        .filter((exercise) => (exercise?.trainingMax || 0) > 0)
+        .map((exercise) => {
+          const weights = getWeights(exercise.trainingMax, week.number);
 
-        return (
-          <ExerciseRow
-            key={`${blockId}${week.number}${exercise.name}`}
-            weights={weights}
-            changeAmrapReps={(newAmrapReps) =>
-              changeAmrapReps(week.number, exercise.name, newAmrapReps)
-            }
-            amrapReps={exercise.amrapReps}
-            exerciseName={exercise.name}
-            trainingMax={exercise.trainingMax}
-          />
-        );
-      }),
+          return (
+            <ExerciseRow
+              key={`${blockId}${week.number}${exercise.name}`}
+              weights={weights}
+              changeAmrapReps={(newAmrapReps) =>
+                changeAmrapReps(week.number, exercise.name, newAmrapReps)
+              }
+              amrapReps={exercise.amrapReps}
+              exerciseName={exercise.name}
+              trainingMax={exercise.trainingMax}
+            />
+          );
+        }),
     [week, blockId, changeAmrapReps]
   );
 
