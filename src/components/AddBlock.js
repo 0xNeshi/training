@@ -6,18 +6,19 @@ import * as yup from "yup";
 import Input from "./Input";
 import Modal from "./Modal";
 
-const REQUIRED_NUMBER_SCHEMA = yup
+const TRAINING_MAX_SCHEMA = yup
   .number()
-  .typeError("Must be a positive number")
+  .typeError("Must be a number")
   .positive("Must be a positive number")
-  .required("Missing input");
+  .nullable(true)
+  .transform((_, x) => (x === "" ? null : x));
 
 const YUP_SHAPE = yup.object().shape({
-  squatMax: REQUIRED_NUMBER_SCHEMA,
-  overheadMax: REQUIRED_NUMBER_SCHEMA,
-  benchMax: REQUIRED_NUMBER_SCHEMA,
-  deadliftMax: REQUIRED_NUMBER_SCHEMA,
-  blockNumber: REQUIRED_NUMBER_SCHEMA,
+  squatMax: TRAINING_MAX_SCHEMA,
+  overheadMax: TRAINING_MAX_SCHEMA,
+  benchMax: TRAINING_MAX_SCHEMA,
+  deadliftMax: TRAINING_MAX_SCHEMA,
+  blockNumber: TRAINING_MAX_SCHEMA,
 });
 
 export default function AddBlock(props) {
