@@ -72,17 +72,17 @@ function FetchCheck({ onFetch, onClose }) {
     <Container>
       <h4>Do you want to restore your data from the backup?</h4>
       <ButtonContainer>
-        <Button
+        <StyledButton
           type="button"
           variant="outlined"
           onClick={onClose}
           color="secondary"
         >
           No
-        </Button>
-        <Button variant="contained" color="secondary" onClick={onFetch}>
+        </StyledButton>
+        <StyledButton variant="contained" color="secondary" onClick={onFetch}>
           Yes
-        </Button>
+        </StyledButton>
       </ButtonContainer>
     </Container>
   );
@@ -100,6 +100,11 @@ const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-evenly;
+`;
+
+const StyledButton = styled(Button)`
+  max-width: 6rem;
+  width: 40%;
 `;
 
 function createBackupObject(userEmail, sections) {
