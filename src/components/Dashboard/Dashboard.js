@@ -8,7 +8,7 @@ import { getNewBlockSuggestedValues } from "../../utilities";
 import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";
 import Block from "../Block";
-import { DeleteSectionCheck2 } from "./DeleteSectionCheck";
+import DeleteSectionCheck from "./DeleteSectionCheck";
 import FAB from "./FAB";
 import Note from "../Note";
 import useNetworkChangeEvents from "./useNetworkChangeEvents";
@@ -95,7 +95,7 @@ export default function Dashboard() {
   const handleOpenDeleteSectionModal = useCallback(
     (sectionId) => {
       const content = (
-        <DeleteSectionCheck2
+        <DeleteSectionCheck
           onClose={closeModal}
           onConfirm={() => deleteSection(sectionId)}
         />
