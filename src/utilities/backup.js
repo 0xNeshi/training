@@ -25,16 +25,19 @@ export async function getSectionsFromBackup(userEmail) {
   if (!snapshot.docs?.length) {
     return [];
   }
-  const sections = extractSections(snapshot.docs[0].data());
-  return sections;
+  const data = extractData(snapshot.docs[0].data());
+  return data;
 }
 
-function extractSections(backup) {
+function extractData(backup) {
   const stringifiedSections = Buffer.from(
     backup.base64Sections,
     "base64"
   ).toString("utf8");
   const sections = JSON.parse(stringifiedSections);
 
-  return sections;
+  return {
+    sections,
+    lastBackupTime: backup.lastBackupTime,
+  };
 }

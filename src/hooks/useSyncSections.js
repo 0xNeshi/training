@@ -9,17 +9,19 @@ const DAY_DURATION = 86400000;
 
 export default function useSyncSections(userEmail) {
   const sectionsKey = useMemo(() => `sections-${userEmail}`, [userEmail]);
-  const lastBackupKey = useMemo(() => `lastbackup-${userEmail}`, [userEmail]);
+  const lastSyncKey = useMemo(() => `lastbackup-${userEmail}`, [userEmail]);
   const [sections, setSections] = usePersistentState(sectionsKey, []);
+  const [lastSyncTime, setLastSyncTime] = usePersistentState(lastSyncKey, []);
   const [isLoading, setLoading] = useState(false);
+  const [isBackupDataLoaded, setBackupDataLoaded] = useState(false);
 
   const { openModal, closeModal } = useContext(ModalContext);
 
-  const fetchBackupSections = useCallback(async (userEmail) => {
+  const fetchBackupData = useCallback(async (userEmail) => {
     setLoading(true);
     try {
-      const sections = await getSectionsFromBackup(userEmail);
-      return sections;
+      const data = await getSectionsFromBackup(userEmail);
+      return data;
     } catch (error) {
       alert("Error getting data, please try again later");
       console.log(error);
@@ -31,51 +33,76 @@ export default function useSyncSections(userEmail) {
   }, []);
 
   const loadBackupSections = useCallback(async () => {
-    if (!window.navigator.onLine) {
-      return alert("Please check your internet connection and reload the page");
-    }
+    const backupData = await fetchBackupData(userEmail);
 
-    const backupSections = await fetchBackupSections(userEmail);
+    setBackupDataLoaded(true);
 
-    // TODO ask if they want to load backup sections into local
-    if (!backupSections?.length) {
+    if (!backupData?.sections?.length) {
       return;
     }
 
-    const modalContent = (
-      <RestoreDataCheck
-        onConfirm={() => setSections(backupSections)}
-        onClose={closeModal}
-      />
-    );
-    return openModal(modalContent);
-  }, [userEmail, fetchBackupSections, setSections, closeModal, openModal]);
+    if (!sections?.length) {
+      const modalContent = (
+        <RestoreDataCheck
+          onConfirm={() => {
+            setSections(backupData.sections);
+            setLastSyncTime(backupData.lastBackupTime);
+          }}
+          onClose={closeModal}
+        />
+      );
+      return openModal(modalContent);
+    }
+
+    if (!lastSyncTime || lastSyncTime < backupData.lastBackupTime) {
+      setSections(backupData.sections);
+      setLastSyncTime(backupData.lastBackupTime);
+    }
+  }, [
+    userEmail,
+    fetchBackupData,
+    setSections,
+    closeModal,
+    openModal,
+    sections?.length,
+    lastSyncTime,
+    setLastSyncTime,
+  ]);
 
   const backup = useCallback(async () => {
     if (!window.navigator.onLine) {
       console.log("Couldn't backup, no internet");
       return;
     }
+
     try {
       const backup = createBackupObject(userEmail, sections);
       await pushBackup(backup);
-      localStorage.setItem(lastBackupKey, backup.lastBackupTime);
+      localStorage.setItem(lastSyncKey, backup.lastBackupTime);
     } catch (e) {
       console.log("There was an error, stopping backup\n", e);
     }
-  }, [userEmail, sections, lastBackupKey]);
+  }, [userEmail, sections, lastSyncKey]);
 
   useEffect(() => {
-    if (!sections?.length) {
-      return loadBackupSections();
+    if (!window.navigator.onLine) {
+      return alert("Please check your internet connection and reload the page");
     }
 
-    if (shouldBackup(lastBackupKey)) {
+    if (!isBackupDataLoaded) {
+      loadBackupSections();
+    }
+
+    if (shouldBackup(lastSyncTime)) {
       backup();
     }
-    // this should run only the first time the user opens the app
-    // eslint-disable-next-line
-  }, []);
+  }, [
+    sections?.length,
+    loadBackupSections,
+    backup,
+    isBackupDataLoaded,
+    lastSyncTime,
+  ]);
 
   return {
     isLoading,
@@ -90,8 +117,7 @@ function createBackupObject(userEmail, sections) {
   return { userEmail, lastBackupTime, base64Sections };
 }
 
-function shouldBackup(lastBackupKey) {
-  const lastBackupTime = +localStorage.getItem(lastBackupKey);
+function shouldBackup(lastBackupTime) {
   const currentTime = Date.now();
   return !lastBackupTime || currentTime - lastBackupTime >= DAY_DURATION;
 }
