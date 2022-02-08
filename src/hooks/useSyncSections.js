@@ -18,6 +18,10 @@ export default function useSyncSections(userEmail) {
   const { openModal, closeModal } = useContext(ModalContext);
 
   const fetchBackupData = useCallback(async (userEmail) => {
+    if (!window.navigator.onLine) {
+      return console.log("Couldn't fetch, no internet");
+    }
+
     setLoading(true);
     try {
       const data = await getSectionsFromBackup(userEmail);
@@ -47,6 +51,7 @@ export default function useSyncSections(userEmail) {
           onConfirm={() => {
             setSections(backupData.sections);
             setLastSyncTime(backupData.lastBackupTime);
+            closeModal();
           }}
           onClose={closeModal}
         />
@@ -71,8 +76,7 @@ export default function useSyncSections(userEmail) {
 
   const backup = useCallback(async () => {
     if (!window.navigator.onLine) {
-      console.log("Couldn't backup, no internet");
-      return;
+      return console.log("Couldn't backup, no internet");
     }
 
     try {
@@ -85,10 +89,6 @@ export default function useSyncSections(userEmail) {
   }, [userEmail, sections, lastSyncKey]);
 
   useEffect(() => {
-    if (!window.navigator.onLine) {
-      return alert("Please check your internet connection and reload the page");
-    }
-
     if (!isBackupDataLoaded) {
       loadBackupSections();
     }

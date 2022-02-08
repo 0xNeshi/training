@@ -1,21 +1,41 @@
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
-import { useSections } from "../hooks";
-import { ModalContext } from "../providers/ModalProvider";
-import { UserContext } from "../providers/UserProvider";
-import { signOut } from "../services/authService";
-import { getNewBlockSuggestedValues } from "../utilities";
-import AddBlock from "./AddBlock";
-import AddNote from "./AddNote";
-import Block from "./Block";
-import DeleteSectionCheck from "./DeleteSectionCheck";
-import FAB from "./FAB";
-import Note from "./Note";
-import SignOutCheck from "./SignOutCheck";
+import { useSections } from "../../hooks";
+import { ModalContext } from "../../providers/ModalProvider";
+import { UserContext } from "../../providers/UserProvider";
+import { signOut } from "../../services/authService";
+import { getNewBlockSuggestedValues } from "../../utilities";
+import AddBlock from "../AddBlock";
+import AddNote from "../AddNote";
+import Block from "../Block";
+import DeleteSectionCheck from "../DeleteSectionCheck";
+import FAB from "../FAB";
+import Note from "../Note";
+import OfflineWarning from "../OfflineWarning";
+import SignOutCheck from "../SignOutCheck";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
   const { openModal, closeModal } = useContext(ModalContext);
+
+  useEffect(() => {
+    function openWarningModal() {
+      const modalContent = <OfflineWarning onConfirm={closeModal} />;
+      openModal(modalContent);
+    }
+
+    function alertBackOnline() {
+      alert("Back online");
+    }
+
+    window.addEventListener("online", alertBackOnline);
+    window.addEventListener("offline", openWarningModal);
+
+    return () => {
+      window.removeEventListener("online", alertBackOnline);
+      window.removeEventListener("offline", openWarningModal);
+    };
+  }, [closeModal, openModal]);
 
   const {
     isLoading,
