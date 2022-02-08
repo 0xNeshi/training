@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
 import { usePersistentState } from "../hooks";
 
-export default function UserProvider(props) {
+export default function UserProvider({ children }) {
   const [user, setUser] = usePersistentState("user");
   const [error, setError] = useState();
 
@@ -27,7 +27,7 @@ export default function UserProvider(props) {
 
   return (
     <UserContext.Provider value={{ user, error }}>
-      {props.children}
+      {children}
     </UserContext.Provider>
   );
 }
