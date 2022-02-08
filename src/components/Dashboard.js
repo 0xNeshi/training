@@ -137,6 +137,7 @@ export default function Dashboard() {
     <Container>
       {!isLoading && (
         <Content>
+          {!sectionComponents?.length && <AddFirstSectionMessage />}
           {sectionComponents}
           <Footer>&copy;Copyright 2022 by misicnenad</Footer>
         </Content>
@@ -203,6 +204,20 @@ const Footer = styled.footer`
   font-size: 12px;
   justify-self: end;
 `;
+
+function AddFirstSectionMessage() {
+  return (
+    <div
+      style={{
+        marginTop: "auto",
+        marginBottom: "auto",
+        color: "lightgray",
+      }}
+    >
+      Add your first block/note
+    </div>
+  );
+}
 
 const createBlock = (
   blockNumber,

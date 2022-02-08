@@ -1,6 +1,5 @@
-import { Button } from "@mui/material";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import RestoreDataCheck from "../components/RestoreDataCheck";
 import { ModalContext } from "../providers/ModalProvider";
 import { getSectionsFromBackup, pushBackup } from "../utilities";
 import usePersistentState from "./usePersistentState";
@@ -16,23 +15,41 @@ export default function useSyncSections(userEmail) {
 
   const { openModal, closeModal } = useContext(ModalContext);
 
-  const fetch = useCallback(async () => {
-    if (!window.navigator.onLine) {
-      alert("Please check your internet connection");
-      return;
-    }
-
+  const fetchBackupSections = useCallback(async (userEmail) => {
     setLoading(true);
     try {
-      const backupSections = await getSectionsFromBackup(userEmail);
-      setSections(backupSections);
-      localStorage.setItem(lastBackupKey, Date.now());
+      const sections = await getSectionsFromBackup(userEmail);
+      return sections;
     } catch (error) {
       alert("Error getting data, please try again later");
       console.log(error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-  }, [userEmail, setSections, lastBackupKey]);
+
+    return [];
+  }, []);
+
+  const loadBackupSections = useCallback(async () => {
+    if (!window.navigator.onLine) {
+      return alert("Please check your internet connection and reload the page");
+    }
+
+    const backupSections = await fetchBackupSections(userEmail);
+
+    // TODO ask if they want to load backup sections into local
+    if (!backupSections?.length) {
+      return;
+    }
+
+    const modalContent = (
+      <RestoreDataCheck
+        onConfirm={() => setSections(backupSections)}
+        onClose={closeModal}
+      />
+    );
+    return openModal(modalContent);
+  }, [userEmail, fetchBackupSections, setSections, closeModal, openModal]);
 
   const backup = useCallback(async () => {
     if (!window.navigator.onLine) {
@@ -50,11 +67,7 @@ export default function useSyncSections(userEmail) {
 
   useEffect(() => {
     if (!sections?.length) {
-      if (!window.navigator.onLine) {
-        return alert("Please connect to the internet and reload the page");
-      }
-      const modalContent = <FetchCheck onFetch={fetch} onClose={closeModal} />;
-      return openModal(modalContent);
+      return loadBackupSections();
     }
 
     if (shouldBackup(lastBackupKey)) {
@@ -69,46 +82,6 @@ export default function useSyncSections(userEmail) {
     state: [sections, setSections],
   };
 }
-
-function FetchCheck({ onFetch, onClose }) {
-  return (
-    <Container>
-      <h4>Do you want to restore your data from the backup?</h4>
-      <ButtonContainer>
-        <StyledButton
-          type="button"
-          variant="outlined"
-          onClick={onClose}
-          color="secondary"
-        >
-          No
-        </StyledButton>
-        <StyledButton variant="contained" color="secondary" onClick={onFetch}>
-          Yes
-        </StyledButton>
-      </ButtonContainer>
-    </Container>
-  );
-}
-
-const Container = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  text-align: center;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-`;
-
-const StyledButton = styled(Button)`
-  max-width: 6rem;
-  width: 40%;
-`;
 
 function createBackupObject(userEmail, sections) {
   const stringified = JSON.stringify(sections);

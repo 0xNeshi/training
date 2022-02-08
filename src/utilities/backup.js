@@ -22,6 +22,9 @@ export async function getSectionsFromBackup(userEmail) {
     limit(1)
   );
   const snapshot = await getDocs(q);
+  if (!snapshot.docs?.length) {
+    return [];
+  }
   const sections = extractSections(snapshot.docs[0].data());
   return sections;
 }
