@@ -1,41 +1,25 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useSections } from "../../hooks";
 import { ModalContext } from "../../providers/ModalProvider";
 import { UserContext } from "../../providers/UserProvider";
 import { signOut } from "../../services/authService";
 import { getNewBlockSuggestedValues } from "../../utilities";
-import AddBlock from "../AddBlock";
-import AddNote from "../AddNote";
+import AddBlock from "./AddBlock";
+import AddNote from "./AddNote";
 import Block from "../Block";
-import DeleteSectionCheck from "../DeleteSectionCheck";
-import FAB from "../FAB";
+import DeleteSectionCheck from "./DeleteSectionCheck";
+import FAB from "./FAB";
 import Note from "../Note";
-import OfflineWarning from "../OfflineWarning";
-import SignOutCheck from "../SignOutCheck";
+import useNetworkChangeEvents from "./useNetworkChangeEvents";
+import SignOutCheck from "./SignOutCheck";
+import AddFirstSectionMessage from "./AddFirstSectionMessage";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
   const { openModal, closeModal } = useContext(ModalContext);
 
-  useEffect(() => {
-    function openWarningModal() {
-      const modalContent = <OfflineWarning onConfirm={closeModal} />;
-      openModal(modalContent);
-    }
-
-    function alertBackOnline() {
-      alert("Back online");
-    }
-
-    window.addEventListener("online", alertBackOnline);
-    window.addEventListener("offline", openWarningModal);
-
-    return () => {
-      window.removeEventListener("online", alertBackOnline);
-      window.removeEventListener("offline", openWarningModal);
-    };
-  }, [closeModal, openModal]);
+  useNetworkChangeEvents();
 
   const {
     isLoading,
@@ -224,20 +208,6 @@ const Footer = styled.footer`
   font-size: 12px;
   justify-self: end;
 `;
-
-function AddFirstSectionMessage() {
-  return (
-    <div
-      style={{
-        marginTop: "auto",
-        marginBottom: "auto",
-        color: "lightgray",
-      }}
-    >
-      Add your first block/note
-    </div>
-  );
-}
 
 const createBlock = (
   blockNumber,

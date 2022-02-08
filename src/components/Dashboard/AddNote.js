@@ -3,8 +3,8 @@ import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import * as yup from "yup";
-import Input from "./Input";
-import Modal from "./Modal";
+import Input from "../Input";
+import Modal from "../Modal";
 
 const schema = yup.object().shape({
   title: yup.string().required("Required"),

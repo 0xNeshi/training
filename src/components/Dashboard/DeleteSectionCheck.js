@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
-import Modal from "./Modal";
+import Modal from "../Modal";
 
 export default function DeleteSectionCheck(props) {
   const { isOpen, onClose, onSubmit } = props;
