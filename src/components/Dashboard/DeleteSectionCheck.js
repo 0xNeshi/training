@@ -27,6 +27,29 @@ export default function DeleteSectionCheck(props) {
   );
 }
 
+export function DeleteSectionCheck2(props) {
+  const { onClose, onConfirm } = props;
+
+  return (
+    <Container>
+      <h4>Confirm deletion</h4>
+      <ButtonContainer>
+        <Button
+          type="button"
+          variant="outlined"
+          onClick={onClose}
+          color="secondary"
+        >
+          Cancel
+        </Button>
+        <Button variant="contained" color="secondary" onClick={onConfirm}>
+          Delete
+        </Button>
+      </ButtonContainer>
+    </Container>
+  );
+}
+
 const Container = styled.form`
   display: flex;
   flex-direction: column;

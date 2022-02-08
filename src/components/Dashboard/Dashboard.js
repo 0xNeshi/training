@@ -8,7 +8,7 @@ import { getNewBlockSuggestedValues } from "../../utilities";
 import AddBlock from "./AddBlock";
 import AddNote from "./AddNote";
 import Block from "../Block";
-import DeleteSectionCheck from "./DeleteSectionCheck";
+import { DeleteSectionCheck2 } from "./DeleteSectionCheck";
 import FAB from "./FAB";
 import Note from "../Note";
 import useNetworkChangeEvents from "./useNetworkChangeEvents";
@@ -34,9 +34,6 @@ export default function Dashboard() {
   );
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
-  const [isDeleteSectionModalOpen, setDeleteSectionModalOpen] = useState(false);
-
-  const [sectionIdToDelete, setSectionIdToDelete] = useState();
 
   const changeAmrapReps = useCallback(
     (sectionId, weekNumber, exerciseName, amrapReps) => {
@@ -95,19 +92,18 @@ export default function Dashboard() {
     openModal(modalContent);
   }, [closeModal, openModal]);
 
-  const handleOpenDeleteSectionModal = useCallback((sectionId) => {
-    setDeleteSectionModalOpen(true);
-    setSectionIdToDelete(sectionId);
-  }, []);
-  const handleDeleteSectionCheckClosed = useCallback(
-    () => setDeleteSectionModalOpen(false),
-    []
+  const handleOpenDeleteSectionModal = useCallback(
+    (sectionId) => {
+      const content = (
+        <DeleteSectionCheck2
+          onClose={closeModal}
+          onConfirm={() => deleteSection(sectionId)}
+        />
+      );
+      openModal(content);
+    },
+    [closeModal, deleteSection, openModal]
   );
-
-  const handleDeleteSection = useCallback(() => {
-    deleteSection(sectionIdToDelete);
-    setDeleteSectionModalOpen(false);
-  }, [sectionIdToDelete, deleteSection]);
 
   const sectionComponents = useMemo(
     () =>
@@ -163,11 +159,6 @@ export default function Dashboard() {
         onClose={handleAddBlockClosed}
         onSubmit={handleAddBlock}
         initialValues={suggestedValues}
-      />
-      <DeleteSectionCheck
-        isOpen={isDeleteSectionModalOpen}
-        onClose={handleDeleteSectionCheckClosed}
-        onSubmit={handleDeleteSection}
       />
     </Container>
   );
