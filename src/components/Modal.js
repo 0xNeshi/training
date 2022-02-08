@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 
-export default function Modal({ isOpen, onClose, style, children }) {
+export default function Modal({ isOpen, onClose, children }) {
   const [overlayRef, setOverlayRef] = useState();
 
   useEffect(() => {
@@ -9,11 +9,6 @@ export default function Modal({ isOpen, onClose, style, children }) {
       overlayRef.style.zIndex = 3;
     }
   }, [overlayRef?.style]);
-
-  modalStyle.content = {
-    ...modalStyle.content,
-    ...style,
-  };
 
   return (
     <ReactModal
