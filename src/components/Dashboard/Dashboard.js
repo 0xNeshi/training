@@ -97,7 +97,10 @@ export default function Dashboard() {
       const content = (
         <DeleteSectionCheck
           onClose={closeModal}
-          onConfirm={() => deleteSection(sectionId)}
+          onConfirm={() => {
+            deleteSection(sectionId);
+            closeModal();
+          }}
         />
       );
       openModal(content);
