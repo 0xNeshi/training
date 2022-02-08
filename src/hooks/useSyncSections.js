@@ -1,4 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Button } from "@mui/material";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import styled from "styled-components";
+import { ModalContext } from "../providers/ModalProvider";
 import { getSectionsFromBackup, pushBackup } from "../utilities";
 import usePersistentState from "./usePersistentState";
 
@@ -10,6 +13,8 @@ export default function useSyncSections(userEmail) {
   const lastBackupKey = useMemo(() => `lastbackup-${userEmail}`, [userEmail]);
   const [sections, setSections] = usePersistentState(sectionsKey, []);
   const [isLoading, setLoading] = useState(false);
+
+  const { openModal, closeModal } = useContext(ModalContext);
 
   const fetch = useCallback(async () => {
     if (!window.navigator.onLine) {
@@ -45,8 +50,8 @@ export default function useSyncSections(userEmail) {
 
   useEffect(() => {
     if (!sections?.length) {
-      fetch();
-      return;
+      const modalContent = <FetchCheck onFetch={fetch} onClose={closeModal} />;
+      return openModal(modalContent);
     }
 
     if (shouldBackup(lastBackupKey)) {
@@ -61,6 +66,41 @@ export default function useSyncSections(userEmail) {
     state: [sections, setSections],
   };
 }
+
+function FetchCheck({ onFetch, onClose }) {
+  return (
+    <Container>
+      <h4>Do you want to restore your data from the backup?</h4>
+      <ButtonContainer>
+        <Button
+          type="button"
+          variant="outlined"
+          onClick={onClose}
+          color="secondary"
+        >
+          No
+        </Button>
+        <Button variant="contained" color="secondary" onClick={onFetch}>
+          Yes
+        </Button>
+      </ButtonContainer>
+    </Container>
+  );
+}
+
+const Container = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+`;
 
 function createBackupObject(userEmail, sections) {
   const stringified = JSON.stringify(sections);

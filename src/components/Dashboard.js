@@ -1,6 +1,7 @@
 import { useCallback, useContext, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useSections } from "../hooks";
+import { ModalContext } from "../providers/ModalProvider";
 import { UserContext } from "../providers/UserProvider";
 import { signOut } from "../services/authService";
 import { getNewBlockSuggestedValues } from "../utilities";
@@ -10,9 +11,12 @@ import Block from "./Block";
 import DeleteSectionCheck from "./DeleteSectionCheck";
 import FAB from "./FAB";
 import Note from "./Note";
+import SignOutCheck from "./SignOutCheck";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
+  const { openModal, closeModal } = useContext(ModalContext);
+
   const {
     isLoading,
     sections,
@@ -76,7 +80,16 @@ export default function Dashboard() {
     },
     [addSection]
   );
-  const handleSignOutClicked = useCallback(() => signOut(), []);
+  const handleSignOutClicked = useCallback(() => {
+    const onSignOut = () => {
+      closeModal();
+      signOut();
+    };
+    const modalContent = (
+      <SignOutCheck onSignOut={onSignOut} onClose={closeModal} />
+    );
+    openModal(modalContent);
+  }, [closeModal, openModal]);
 
   const handleOpenDeleteSectionModal = useCallback((sectionId) => {
     setDeleteSectionModalOpen(true);
