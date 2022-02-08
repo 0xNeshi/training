@@ -50,6 +50,9 @@ export default function useSyncSections(userEmail) {
 
   useEffect(() => {
     if (!sections?.length) {
+      if (!window.navigator.onLine) {
+        return alert("Please connect to the internet and reload the page");
+      }
       const modalContent = <FetchCheck onFetch={fetch} onClose={closeModal} />;
       return openModal(modalContent);
     }

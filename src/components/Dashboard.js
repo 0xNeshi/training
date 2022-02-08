@@ -201,6 +201,7 @@ const FABContainer = styled.div`
 const Footer = styled.footer`
   margin-top: 10px;
   font-size: 12px;
+  justify-self: end;
 `;
 
 const createBlock = (
