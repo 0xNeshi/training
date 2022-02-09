@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { RestoreDataCheck } from "../components/Modals";
+import { RestoreData } from "../components/Modals";
 import { ModalContext } from "../providers";
 import { getSectionsFromBackup, pushBackup } from "../utilities";
 import usePersistentState from "./usePersistentState";
@@ -47,7 +47,7 @@ export default function useSyncSections(userEmail) {
 
     if (!sections?.length) {
       const modalContent = (
-        <RestoreDataCheck
+        <RestoreData
           onConfirm={() => {
             setSections(backupData.sections);
             setLastSyncTime(backupData.lastBackupTime);

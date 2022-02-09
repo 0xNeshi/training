@@ -1,22 +1,22 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
 
-export default function RestoreDataCheck({ onConfirm, onClose }) {
+export default function SignOut({ onSignOut, onClose }) {
   return (
     <Container>
-      <h4>Do you want to restore your data from the backup?</h4>
+      <h4>Are you sure you wish to sign out?</h4>
       <ButtonContainer>
-        <StyledButton
+        <Button
           type="button"
           variant="outlined"
           onClick={onClose}
           color="secondary"
         >
-          No
-        </StyledButton>
-        <StyledButton variant="contained" color="secondary" onClick={onConfirm}>
-          Yes
-        </StyledButton>
+          Cancel
+        </Button>
+        <Button variant="contained" color="secondary" onClick={onSignOut}>
+          Sign out
+        </Button>
       </ButtonContainer>
     </Container>
   );
@@ -34,9 +34,4 @@ const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-evenly;
-`;
-
-const StyledButton = styled(Button)`
-  max-width: 6rem;
-  width: 40%;
 `;

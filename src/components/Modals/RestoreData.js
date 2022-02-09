@@ -1,24 +1,22 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
 
-export default function DeleteSectionCheck(props) {
-  const { onClose, onConfirm } = props;
-
+export default function RestoreData({ onConfirm, onClose }) {
   return (
     <Container>
-      <h4>Confirm deletion</h4>
+      <h4>Do you want to restore your data from the backup?</h4>
       <ButtonContainer>
-        <Button
+        <StyledButton
           type="button"
           variant="outlined"
           onClick={onClose}
           color="secondary"
         >
-          Cancel
-        </Button>
-        <Button variant="contained" color="secondary" onClick={onConfirm}>
-          Delete
-        </Button>
+          No
+        </StyledButton>
+        <StyledButton variant="contained" color="secondary" onClick={onConfirm}>
+          Yes
+        </StyledButton>
       </ButtonContainer>
     </Container>
   );
@@ -36,4 +34,9 @@ const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-evenly;
+`;
+
+const StyledButton = styled(Button)`
+  max-width: 6rem;
+  width: 40%;
 `;

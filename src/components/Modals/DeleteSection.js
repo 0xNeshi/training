@@ -1,10 +1,12 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
 
-export default function SignOutCheck({ onSignOut, onClose }) {
+export default function DeleteSection(props) {
+  const { onClose, onConfirm } = props;
+
   return (
     <Container>
-      <h4>Are you sure you wish to sign out?</h4>
+      <h4>Confirm deletion</h4>
       <ButtonContainer>
         <Button
           type="button"
@@ -14,8 +16,8 @@ export default function SignOutCheck({ onSignOut, onClose }) {
         >
           Cancel
         </Button>
-        <Button variant="contained" color="secondary" onClick={onSignOut}>
-          Sign out
+        <Button variant="contained" color="secondary" onClick={onConfirm}>
+          Delete
         </Button>
       </ButtonContainer>
     </Container>

@@ -1,9 +1,9 @@
 import { useCallback, useContext } from "react";
 import { ModalContext } from "../../../providers";
 import { signOut } from "../../../services/authService";
-import { SignOutCheck } from "../../Modals";
+import { SignOut } from "../../Modals";
 
-export default function useSignOutCheckModal() {
+export default function useSignOutModal() {
   const { openModal, closeModal } = useContext(ModalContext);
 
   const open = useCallback(() => {
@@ -11,9 +11,7 @@ export default function useSignOutCheckModal() {
       closeModal();
       signOut();
     };
-    const modalContent = (
-      <SignOutCheck onSignOut={onSignOut} onClose={closeModal} />
-    );
+    const modalContent = <SignOut onSignOut={onSignOut} onClose={closeModal} />;
     openModal(modalContent);
   }, [openModal, closeModal]);
 

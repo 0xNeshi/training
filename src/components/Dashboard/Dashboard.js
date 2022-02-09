@@ -1,24 +1,21 @@
 import { useCallback, useContext, useMemo } from "react";
 import styled from "styled-components";
 import { useSections } from "../../hooks";
-import { ModalContext, UserContext } from "../../providers";
-import { signOut } from "../../services/authService";
+import { UserContext } from "../../providers";
 import { getNewBlockSuggestedValues } from "../../utilities";
 import Block from "../Block";
-import { DeleteSectionCheck, SignOutCheck } from "../Modals";
 import Note from "../Note";
 import FAB from "./FAB";
 import {
   useAddBlockModal,
   useAddNoteModal,
   useNetworkChangeEvents,
-  useRemoveSectionCheck,
-  useSignOutCheckModal,
+  useRemoveSectionModal,
+  useSignOutModal,
 } from "./hooks";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
-  const { openModal, closeModal } = useContext(ModalContext);
 
   useNetworkChangeEvents();
 
@@ -32,8 +29,8 @@ export default function Dashboard() {
 
   const { open: openAddNote } = useAddNoteModal(addSection);
   const { open: openAddBlock } = useAddBlockModal(addSection);
-  const { open: openRemoveSectionCheck } = useRemoveSectionCheck(removeSection);
-  const { open: openSignOutCheck } = useSignOutCheckModal();
+  const { open: openRemoveSection } = useRemoveSectionModal(removeSection);
+  const { open: openSignOut } = useSignOutModal();
 
   const sortedSections = useMemo(
     () => [...sections].sort((s1, s2) => s2.dateCreated - s1.dateCreated),
@@ -66,17 +63,17 @@ export default function Dashboard() {
             changeAmrapReps={(weekNumber, exercise, amrapReps) =>
               changeAmrapReps(section.id, weekNumber, exercise, amrapReps)
             }
-            deleteBlock={openRemoveSectionCheck}
+            deleteBlock={openRemoveSection}
           />
         ) : (
           <Note
             key={section.id}
             data={section}
-            deleteNote={openRemoveSectionCheck}
+            deleteNote={openRemoveSection}
           />
         )
       ),
-    [sortedSections, changeAmrapReps, openRemoveSectionCheck]
+    [sortedSections, changeAmrapReps, openRemoveSection]
   );
 
   return (
@@ -92,7 +89,7 @@ export default function Dashboard() {
         <FAB
           onAddNoteClicked={openAddNote}
           onAddBlockClicked={handleOpenAddBlock}
-          onSignOutClicked={openSignOutCheck}
+          onSignOutClicked={openSignOut}
         />
       </FABContainer>
     </Container>

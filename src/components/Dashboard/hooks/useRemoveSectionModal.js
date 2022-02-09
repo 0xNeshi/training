@@ -1,14 +1,14 @@
 import { useCallback, useContext } from "react";
 import { ModalContext } from "../../../providers";
-import { DeleteSectionCheck } from "../../Modals";
+import { DeleteSection } from "../../Modals";
 
-export default function useRemoveSectionCheck(remove) {
+export default function useRemoveSectionModal(remove) {
   const { openModal, closeModal } = useContext(ModalContext);
 
   const open = useCallback(
     (sectionId) => {
       const content = (
-        <DeleteSectionCheck
+        <DeleteSection
           onClose={closeModal}
           onConfirm={() => {
             remove(sectionId);
