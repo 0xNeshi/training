@@ -10,15 +10,20 @@ import { signInWithGoogle } from "../services/authService";
 
 export default function SignIn() {
   const { error } = useContext(UserContext);
-  const [isLoading, setLoading] = useState(true);
-  const [canSignIn, setCanSignIn] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
 
   useEffect(() => {
-    const loadingTimeout = setTimeout(() => setLoading(false), 2000);
-    const signInTimeout = setTimeout(() => setCanSignIn(true), 3000);
+    const showLogoTimeout = setTimeout(() => setLoading(true), 2000);
+    const hideLogoTimeout = setTimeout(() => setLoading(false), 4000);
+    const showMessageTimeout = setTimeout(() => setShowMessage(true), 5000);
+    const showSignInTimeout = setTimeout(() => setShowSignIn(true), 6000);
     return () => {
-      clearTimeout(loadingTimeout);
-      clearTimeout(signInTimeout);
+      clearTimeout(showLogoTimeout);
+      clearTimeout(hideLogoTimeout);
+      clearTimeout(showMessageTimeout);
+      clearTimeout(showSignInTimeout);
     };
   }, []);
 
@@ -27,9 +32,11 @@ export default function SignIn() {
       <Fade in={isLoading} unmountOnExit>
         <img src={FithOnLogo} alt="" style={{ width: "80%" }} />
       </Fade>
-      <Fade in={canSignIn} unmountOnExit>
+      <Fade in={showMessage} unmountOnExit>
+        <h3 style={{ textAlign: "center" }}>Let's get started...</h3>
+      </Fade>
+      <Fade in={showSignIn}>
         <div>
-          <h3 style={{ textAlign: "center" }}>Let's get started...</h3>
           <Button
             variant="contained"
             onClick={signInWithGoogle}

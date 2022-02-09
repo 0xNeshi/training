@@ -11,7 +11,12 @@ module.exports = {
     port: PORT,
   },
   output: {
-    publicPath: "auto",
+    path: path.resolve(__dirname, "dist"),
+    filename: "index_bundle.js",
+    publicPath: "/",
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   resolve: {
     extensions: [".js", ".jsx"],
