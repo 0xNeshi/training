@@ -33,7 +33,7 @@ export default function AddBlock(props) {
   });
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <InputContainer>
         <Input
           label="Squat max"
@@ -66,7 +66,7 @@ export default function AddBlock(props) {
           type="button"
           variant="outlined"
           onClick={onClose}
-          color="secondary"
+          color="primary"
           disabled={isSubmitting}
         >
           Cancel
@@ -74,7 +74,7 @@ export default function AddBlock(props) {
         <Button
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           disabled={isSubmitting}
         >
           Submit
