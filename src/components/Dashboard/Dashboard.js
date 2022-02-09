@@ -8,8 +8,7 @@ import Block from "../Block";
 import { AddBlock, DeleteSectionCheck, SignOutCheck } from "../Modals";
 import Note from "../Note";
 import FAB from "./FAB";
-import { useAddNoteModal } from "./hooks";
-import useNetworkChangeEvents from "./useNetworkChangeEvents";
+import { useNetworkChangeEvents, useAddNoteModal } from "./hooks";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
