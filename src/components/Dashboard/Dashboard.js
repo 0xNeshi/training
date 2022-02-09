@@ -5,10 +5,14 @@ import { ModalContext, UserContext } from "../../providers";
 import { signOut } from "../../services/authService";
 import { getNewBlockSuggestedValues } from "../../utilities";
 import Block from "../Block";
-import { AddBlock, DeleteSectionCheck, SignOutCheck } from "../Modals";
+import { DeleteSectionCheck, SignOutCheck } from "../Modals";
 import Note from "../Note";
 import FAB from "./FAB";
-import { useNetworkChangeEvents, useAddNoteModal } from "./hooks";
+import {
+  useAddBlockModal,
+  useAddNoteModal,
+  useNetworkChangeEvents,
+} from "./hooks";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
@@ -25,11 +29,17 @@ export default function Dashboard() {
   } = useSections(user.email);
 
   const { open: openAddNote } = useAddNoteModal(addSection);
+  const { open: openAddBlock } = useAddBlockModal(addSection);
 
   const sortedSections = useMemo(
     () => [...sections].sort((s1, s2) => s2.dateCreated - s1.dateCreated),
     [sections]
   );
+
+  const handleOpenAddBlock = useCallback(() => {
+    const suggestedValues = getNewBlockSuggestedValues(sortedSections);
+    openAddBlock(suggestedValues);
+  }, [openAddBlock, sortedSections]);
 
   const changeAmrapReps = useCallback(
     (sectionId, weekNumber, exerciseName, amrapReps) => {
@@ -41,32 +51,6 @@ export default function Dashboard() {
     },
     [sortedSections, updateSection]
   );
-
-  const handleAddNote = useCallback(
-    () => openAddNote(),
-    [openAddNote, addSection]
-  );
-
-  const suggestedValues = useMemo(
-    () => getNewBlockSuggestedValues(sortedSections),
-    [sortedSections]
-  );
-
-  const handleAddBlockClicked = useCallback(() => {
-    const onSubmit = (blockData) => {
-      const section = createBlock(blockData);
-      addSection(section);
-      closeModal();
-    };
-    const modalContent = (
-      <AddBlock
-        onSubmit={onSubmit}
-        onClose={closeModal}
-        initialValues={suggestedValues}
-      />
-    );
-    openModal(modalContent);
-  }, [closeModal, openModal, addSection, suggestedValues]);
 
   const handleSignOutClicked = useCallback(() => {
     const onSignOut = () => {
@@ -129,8 +113,8 @@ export default function Dashboard() {
       )}
       <FABContainer>
         <FAB
-          onAddNoteClicked={handleAddNote}
-          onAddBlockClicked={handleAddBlockClicked}
+          onAddNoteClicked={openAddNote}
+          onAddBlockClicked={handleOpenAddBlock}
           onSignOutClicked={handleSignOutClicked}
         />
       </FABContainer>
