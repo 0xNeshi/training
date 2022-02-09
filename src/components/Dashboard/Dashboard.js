@@ -5,13 +5,12 @@ import { ModalContext } from "../../providers/ModalProvider";
 import { UserContext } from "../../providers/UserProvider";
 import { signOut } from "../../services/authService";
 import { getNewBlockSuggestedValues } from "../../utilities";
-import { AddBlock, DeleteSectionCheck } from "./Modals";
+import { AddBlock, DeleteSectionCheck, SignOutCheck } from "./Modals";
 import AddNote from "./AddNote";
 import Block from "../Block";
 import FAB from "./FAB";
 import Note from "../Note";
 import useNetworkChangeEvents from "./useNetworkChangeEvents";
-import SignOutCheck from "./SignOutCheck";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
