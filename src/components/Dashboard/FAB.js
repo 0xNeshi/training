@@ -48,9 +48,9 @@ export default function FAB(props) {
         isOpen={isOpen}
       >
         <MainButton
-          iconResting={<Menu fontSize="large" color="primary" />}
-          iconActive={<Close fontSize="large" color="primary" />}
-          background="lightgrey"
+          iconResting={<Menu fontSize="large" color="secondary" />}
+          iconActive={<Close fontSize="large" color="secondary" />}
+          background="#33691e"
           onClick={(e) => {
             e.preventDefault();
             setOpen((prev) => !prev);
@@ -58,20 +58,20 @@ export default function FAB(props) {
           size={64}
         />
         <ChildButton
-          icon={<FitnessCenter fontSize="large" color="primary" />}
-          background="lightgrey"
+          icon={<FitnessCenter fontSize="large" color="secondary" />}
+          background="#33691e"
           size={56}
           onClick={(e) => handleClick(e, onAddBlockClicked)}
         />
         <ChildButton
-          icon={<NoteAdd fontSize="large" color="primary" />}
-          background="lightgrey"
+          icon={<NoteAdd fontSize="large" color="secondary" />}
+          background="#33691e"
           size={56}
           onClick={(e) => handleClick(e, onAddNoteClicked)}
         />
         <ChildButton
-          icon={<Logout fontSize="large" color="primary" />}
-          background="lightgrey"
+          icon={<Logout fontSize="large" color="secondary" />}
+          background="#33691e"
           size={56}
           onClick={(e) => handleClick(e, onSignOutClicked)}
         />

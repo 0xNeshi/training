@@ -14,7 +14,7 @@ export default function RestoreData({ onConfirm, onClose }) {
         >
           No
         </StyledButton>
-        <StyledButton variant="contained" color="secondary" onClick={onConfirm}>
+        <StyledButton variant="contained" color="primary" onClick={onConfirm}>
           Yes
         </StyledButton>
       </ButtonContainer>

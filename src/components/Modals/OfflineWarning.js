@@ -8,7 +8,7 @@ export default function OfflineWarning({ onConfirm }) {
         You are in offline mode and will be unable to interact with the app
       </h4>
       <ButtonContainer>
-        <StyledButton variant="contained" color="secondary" onClick={onConfirm}>
+        <StyledButton variant="contained" color="primary" onClick={onConfirm}>
           I Understand
         </StyledButton>
       </ButtonContainer>

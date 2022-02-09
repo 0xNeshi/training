@@ -80,7 +80,7 @@ export default function Dashboard() {
     <Container>
       {!isLoading && (
         <Content>
-          {!sectionComponents?.length && <AddFirstSectionMessage />}
+          {!sectionComponents?.length && <EmptySectionsMessage />}
           {sectionComponents}
           <Footer>&copy;Copyright 2022 by misicnenad</Footer>
         </Content>
@@ -96,7 +96,7 @@ export default function Dashboard() {
   );
 }
 
-function AddFirstSectionMessage() {
+function EmptySectionsMessage() {
   return (
     <div
       style={{
@@ -144,32 +144,3 @@ const Footer = styled.footer`
   font-size: 12px;
   margin-top: auto;
 `;
-
-const createBlock = (blockData) => {
-  const weeks = [];
-  const numberOfWeeks = 3;
-
-  for (let i = 1; i <= numberOfWeeks; i++) {
-    weeks.push({
-      number: i,
-      exercises: [
-        createExercise("squat", blockData.squatMax),
-        createExercise("overhead", blockData.overheadMax),
-        createExercise("deadlift", blockData.deadliftMax),
-        createExercise("bench", blockData.benchMax),
-      ],
-    });
-  }
-
-  return {
-    type: "block",
-    number: blockData.blockNumber,
-    weeks: weeks,
-  };
-};
-
-const createExercise = (exerciseName, trainingMax) => ({
-  name: exerciseName,
-  trainingMax,
-  amrapReps: 0,
-});

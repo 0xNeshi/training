@@ -8,13 +8,13 @@ export default function SignOut({ onSignOut, onClose }) {
       <ButtonContainer>
         <Button
           type="button"
-          variant="outlined"
+          variant="contained"
           onClick={onClose}
-          color="secondary"
+          color="primary"
         >
           Cancel
         </Button>
-        <Button variant="contained" color="secondary" onClick={onSignOut}>
+        <Button variant="outlined" color="secondary" onClick={onSignOut}>
           Sign out
         </Button>
       </ButtonContainer>

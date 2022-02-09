@@ -16,7 +16,7 @@ export default function DeleteSection(props) {
         >
           Cancel
         </Button>
-        <Button variant="contained" color="secondary" onClick={onConfirm}>
+        <Button variant="contained" color="primary" onClick={onConfirm}>
           Delete
         </Button>
       </ButtonContainer>

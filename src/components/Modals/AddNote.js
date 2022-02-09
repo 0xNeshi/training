@@ -53,7 +53,7 @@ export default function AddNote({ onClose, onSubmit }) {
         <Button
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           disabled={isSubmitting}
         >
           Submit
