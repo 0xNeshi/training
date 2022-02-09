@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import RestoreDataCheck from "../components/RestoreDataCheck";
+import { RestoreDataCheck } from "../components/Modals";
 import { ModalContext } from "../providers/ModalProvider";
 import { getSectionsFromBackup, pushBackup } from "../utilities";
 import usePersistentState from "./usePersistentState";

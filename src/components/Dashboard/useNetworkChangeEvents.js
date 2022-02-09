@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { ModalContext } from "../../providers/ModalProvider";
-import { OfflineWarning } from "./Modals";
+import { OfflineWarning } from "../Modals";
 
 export default function useNetworkChangeEvents() {
   const { openModal, closeModal } = useContext(ModalContext);

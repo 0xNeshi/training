@@ -8,7 +8,7 @@ import { getNewBlockSuggestedValues } from "../../utilities";
 import Block from "../Block";
 import Note from "../Note";
 import FAB from "./FAB";
-import { AddBlock, AddNote, DeleteSectionCheck, SignOutCheck } from "./Modals";
+import { AddBlock, AddNote, DeleteSectionCheck, SignOutCheck } from "../Modals";
 import useNetworkChangeEvents from "./useNetworkChangeEvents";
 
 export default function Dashboard() {
