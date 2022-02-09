@@ -1,4 +1,3 @@
-import AddBlock from "./AddBlock";
-import DeleteSectionCheck from "./DeleteSectionCheck";
-
-export { AddBlock, DeleteSectionCheck };
+export { default as AddBlock } from "./AddBlock";
+export { default as DeleteSectionCheck } from "./DeleteSectionCheck";
+export { default as OfflineWarning } from "./OfflineWarning";
