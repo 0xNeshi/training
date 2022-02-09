@@ -30,8 +30,19 @@ export default function Dashboard() {
 
   const [ref, setRef] = useState();
 
-  const { open: openAddNote } = useAddNoteModal(addSection);
-  const { open: openAddBlock } = useAddBlockModal(addSection);
+  const handleAddSection = useCallback(
+    (section) => {
+      addSection(section);
+      ref.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
+    [addSection, ref]
+  );
+
+  const { open: openAddNote } = useAddNoteModal(handleAddSection);
+  const { open: openAddBlock } = useAddBlockModal(handleAddSection);
   const { open: openRemoveSection } = useRemoveSectionModal(removeSection);
   const { open: openSignOut } = useSignOutModal();
 
