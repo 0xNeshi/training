@@ -1,81 +1,87 @@
-import {
-  Close,
-  FitnessCenter,
-  Logout,
-  Menu,
-  NoteAdd,
-} from "@mui/icons-material";
-import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  ChildButton,
-  Directions,
-  FloatingMenu,
-  MainButton,
-} from "react-floating-button-menu";
+import { FitnessCenter, Menu as MenuIcon, NoteAdd } from "@mui/icons-material";
+import Logout from "@mui/icons-material/Logout";
+import { Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
+import * as React from "react";
 
 export default function FAB(props) {
-  const { onAddNoteClicked, onAddBlockClicked, onSignOutClicked } = props;
+  const { onAddNote, onAddBlock, onSignOut } = props;
 
-  const [isOpen, setOpen] = useState(false);
-  const ref = useRef();
-
-  const handleClick = useCallback((event, onClick) => {
-    event.preventDefault();
-    onClick();
-    setOpen(false);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const path = event.path || (event.composedPath && event.composedPath());
-
-      if (!path.includes(ref.current)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
 
   return (
-    <div ref={ref}>
-      <FloatingMenu
-        slideSpeed={500}
-        direction={Directions.Up}
-        spacing={8}
-        isOpen={isOpen}
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          textAlign: "center",
+        }}
       >
-        <MainButton
-          iconResting={<Menu fontSize="large" color="secondary" />}
-          iconActive={<Close fontSize="large" color="secondary" />}
-          background="#33691e"
-          onClick={(e) => {
-            e.preventDefault();
-            setOpen((prev) => !prev);
-          }}
-          size={64}
-        />
-        <ChildButton
-          icon={<FitnessCenter fontSize="large" color="secondary" />}
-          background="#33691e"
-          size={56}
-          onClick={(e) => handleClick(e, onAddBlockClicked)}
-        />
-        <ChildButton
-          icon={<NoteAdd fontSize="large" color="secondary" />}
-          background="#33691e"
-          size={56}
-          onClick={(e) => handleClick(e, onAddNoteClicked)}
-        />
-        <ChildButton
-          icon={<Logout fontSize="large" color="secondary" />}
-          background="#33691e"
-          size={56}
-          onClick={(e) => handleClick(e, onSignOutClicked)}
-        />
-      </FloatingMenu>
-    </div>
+        <Tooltip title="Actions">
+          <Button
+            onClick={handleClick}
+            sx={{
+              width: 72,
+              height: 72,
+              borderRadius: "50%",
+              boxShadow: "2px 3px 6px #000",
+            }}
+            aria-controls={!!anchorEl ? "account-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={!!anchorEl ? "true" : undefined}
+            variant="contained"
+            color="secondary"
+          >
+            <MenuIcon fontSize="large" />
+          </Button>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={!!anchorEl}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mt: 1.5,
+            width: 180,
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem sx={{ fontSize: 20 }} onClick={onAddBlock}>
+          <ListItemIcon>
+            <FitnessCenter fontSize="medium" />
+          </ListItemIcon>
+          Add block
+        </MenuItem>
+        <MenuItem onClick={onAddNote}>
+          <ListItemIcon>
+            <NoteAdd fontSize="medium" />
+          </ListItemIcon>
+          Add note
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={onSignOut}>
+          <ListItemIcon>
+            <Logout fontSize="medium" />
+          </ListItemIcon>
+          Sign out
+        </MenuItem>
+      </Menu>
+    </>
   );
 }

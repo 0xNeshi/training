@@ -66,7 +66,7 @@ export default function AddBlock(props) {
           type="button"
           variant="outlined"
           onClick={onClose}
-          color="secondary"
+          color="warning"
           disabled={isSubmitting}
         >
           Cancel

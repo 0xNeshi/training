@@ -10,7 +10,7 @@ export default function RestoreData({ onConfirm, onClose }) {
           type="button"
           variant="outlined"
           onClick={onClose}
-          color="secondary"
+          color="warning"
         >
           No
         </StyledButton>

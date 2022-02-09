@@ -14,7 +14,7 @@ export default function SignOut({ onSignOut, onClose }) {
         >
           Cancel
         </Button>
-        <Button variant="outlined" color="secondary" onClick={onSignOut}>
+        <Button variant="outlined" color="warning" onClick={onSignOut}>
           Sign out
         </Button>
       </ButtonContainer>

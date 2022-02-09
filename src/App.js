@@ -62,6 +62,9 @@ const theme = createTheme({
       main: lightGreen[900],
     },
     secondary: {
+      main: grey[800],
+    },
+    warning: {
       main: grey[300],
     },
     background: {

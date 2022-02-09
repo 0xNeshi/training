@@ -5,7 +5,6 @@ import { UserContext } from "../../providers";
 import { getNewBlockSuggestedValues } from "../../utilities";
 import Block from "../Block";
 import Note from "../Note";
-import FAB from "./FAB";
 import {
   useAddBlockModal,
   useAddNoteModal,
@@ -13,6 +12,7 @@ import {
   useRemoveSectionModal,
   useSignOutModal,
 } from "./hooks";
+import FAB from "./FAB";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
@@ -27,8 +27,21 @@ export default function Dashboard() {
     update: updateSection,
   } = useSections(user.email);
 
-  const { open: openAddNote } = useAddNoteModal(addSection);
-  const { open: openAddBlock } = useAddBlockModal(addSection);
+  const wind = window;
+
+  const handleAddSection = useCallback(
+    (section) => {
+      addSection(section);
+      wind.scrollTo({
+        top: 0,
+        behavior: "smooth", // for smoothly scrolling
+      });
+    },
+    [addSection]
+  );
+
+  const { open: openAddNote } = useAddNoteModal(handleAddSection);
+  const { open: openAddBlock } = useAddBlockModal(handleAddSection);
   const { open: openRemoveSection } = useRemoveSectionModal(removeSection);
   const { open: openSignOut } = useSignOutModal();
 
@@ -87,9 +100,9 @@ export default function Dashboard() {
       )}
       <FABContainer>
         <FAB
-          onAddNoteClicked={openAddNote}
-          onAddBlockClicked={handleOpenAddBlock}
-          onSignOutClicked={openSignOut}
+          onAddNote={openAddNote}
+          onAddBlock={handleOpenAddBlock}
+          onSignOut={openSignOut}
         />
       </FABContainer>
     </Container>
@@ -101,7 +114,6 @@ function EmptySectionsMessage() {
     <div
       style={{
         marginTop: "auto",
-        marginBottom: "auto",
         color: "lightgray",
       }}
     >
@@ -140,7 +152,7 @@ const FABContainer = styled.div`
 `;
 
 const Footer = styled.footer`
-  margin-top: 10px;
   font-size: 12px;
+  height: 20px;
   margin-top: auto;
 `;
