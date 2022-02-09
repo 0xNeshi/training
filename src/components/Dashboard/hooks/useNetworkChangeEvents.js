@@ -13,6 +13,7 @@ export default function useNetworkChangeEvents() {
 
     function alertBackOnline() {
       alert("Back online");
+      closeModal();
     }
 
     window.addEventListener("online", alertBackOnline);

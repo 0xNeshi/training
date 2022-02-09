@@ -31,6 +31,6 @@ const ButtonContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  max-width: 6rem;
-  width: 40%;
+  max-width: 9rem;
+  width: 70%;
 `;
