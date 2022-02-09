@@ -1,15 +1,14 @@
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import styled from "styled-components";
 import { useSections } from "../../hooks";
 import { ModalContext } from "../../providers/ModalProvider";
 import { UserContext } from "../../providers/UserProvider";
 import { signOut } from "../../services/authService";
 import { getNewBlockSuggestedValues } from "../../utilities";
-import { AddBlock, DeleteSectionCheck, SignOutCheck } from "./Modals";
-import AddNote from "./AddNote";
 import Block from "../Block";
-import FAB from "./FAB";
 import Note from "../Note";
+import FAB from "./FAB";
+import { AddBlock, AddNote, DeleteSectionCheck, SignOutCheck } from "./Modals";
 import useNetworkChangeEvents from "./useNetworkChangeEvents";
 
 export default function Dashboard() {
@@ -30,7 +29,6 @@ export default function Dashboard() {
     () => [...sections].sort((s1, s2) => s2.dateCreated - s1.dateCreated),
     [sections]
   );
-  const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
 
   const changeAmrapReps = useCallback(
     (sectionId, weekNumber, exerciseName, amrapReps) => {
@@ -43,19 +41,19 @@ export default function Dashboard() {
     [sortedSections, updateSection]
   );
 
-  const handleAddNoteClicked = useCallback(() => setAddNodeModalOpen(true), []);
-  const handleAddNoteClosed = useCallback(() => setAddNodeModalOpen(false), []);
-  const handleAddNote = useCallback(
-    ({ title, text }) => {
+  const handleAddNoteClicked = useCallback(() => {
+    const onSubmit = ({ title, text }) => {
       addSection({
         title,
         text,
         type: "note",
       });
-      setAddNodeModalOpen(false);
-    },
-    [addSection]
-  );
+      closeModal();
+    };
+
+    const modalContent = <AddNote onSubmit={onSubmit} onClose={closeModal} />;
+    openModal(modalContent);
+  }, [openModal, closeModal, addSection]);
 
   const suggestedValues = useMemo(
     () => getNewBlockSuggestedValues(sortedSections),
@@ -144,11 +142,6 @@ export default function Dashboard() {
           onSignOutClicked={handleSignOutClicked}
         />
       </FABContainer>
-      <AddNote
-        isOpen={isAddNodeModalOpen}
-        onClose={handleAddNoteClosed}
-        onSubmit={handleAddNote}
-      />
     </Container>
   );
 }
