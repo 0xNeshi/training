@@ -1,10 +1,12 @@
-import { useCallback, useContext, useMemo } from "react";
+import { Fade, useScrollTrigger } from "@mui/material";
+import { useCallback, useContext, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useSections } from "../../hooks";
 import { UserContext } from "../../providers";
 import { getNewBlockSuggestedValues } from "../../utilities";
 import Block from "../Block";
 import Note from "../Note";
+import FAB from "./FAB";
 import {
   useAddBlockModal,
   useAddNoteModal,
@@ -12,7 +14,6 @@ import {
   useRemoveSectionModal,
   useSignOutModal,
 } from "./hooks";
-import FAB from "./FAB";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
@@ -27,21 +28,10 @@ export default function Dashboard() {
     update: updateSection,
   } = useSections(user.email);
 
-  const wind = window;
+  const [ref, setRef] = useState();
 
-  const handleAddSection = useCallback(
-    (section) => {
-      addSection(section);
-      wind.scrollTo({
-        top: 0,
-        behavior: "smooth", // for smoothly scrolling
-      });
-    },
-    [addSection]
-  );
-
-  const { open: openAddNote } = useAddNoteModal(handleAddSection);
-  const { open: openAddBlock } = useAddBlockModal(handleAddSection);
+  const { open: openAddNote } = useAddNoteModal(addSection);
+  const { open: openAddBlock } = useAddBlockModal(addSection);
   const { open: openRemoveSection } = useRemoveSectionModal(removeSection);
   const { open: openSignOut } = useSignOutModal();
 
@@ -89,22 +79,28 @@ export default function Dashboard() {
     [sortedSections, changeAmrapReps, openRemoveSection]
   );
 
+  const trigger = useScrollTrigger({
+    target: ref ? ref : window,
+  });
+
   return (
     <Container>
       {!isLoading && (
-        <Content>
+        <Content ref={(_ref) => setRef(_ref)}>
           {!sectionComponents?.length && <EmptySectionsMessage />}
           {sectionComponents}
           <Footer>&copy;Copyright 2022 by misicnenad</Footer>
         </Content>
       )}
-      <FABContainer>
-        <FAB
-          onAddNote={openAddNote}
-          onAddBlock={handleOpenAddBlock}
-          onSignOut={openSignOut}
-        />
-      </FABContainer>
+      <Fade in={!trigger}>
+        <FABContainer>
+          <FAB
+            onAddNote={openAddNote}
+            onAddBlock={handleOpenAddBlock}
+            onSignOut={openSignOut}
+          />
+        </FABContainer>
+      </Fade>
     </Container>
   );
 }
@@ -126,6 +122,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   align-items: center;
   position: relative;
 `;
@@ -145,7 +142,7 @@ const Content = styled.div`
 `;
 
 const FABContainer = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 10px;
   right: 10px;
   z-index: 2;

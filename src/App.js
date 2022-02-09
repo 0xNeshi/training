@@ -13,36 +13,30 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <UserProvider>
         <ModalProvider>
-          <Container component="main" sx={{ padding: 0 }}>
+          <Container component="main" sx={{ padding: 0, height: "100vh" }}>
             <CssBaseline />
             <BrowserRouter>
-              <ContentContainer>
-                <Routes>
-                  <Route
-                    exact
-                    path="/signin"
-                    element={
-                      <RequireAnon>
-                        <SignIn />
-                      </RequireAnon>
-                    }
-                  />
-                  <Route
-                    exact
-                    path="/dashboard"
-                    element={
-                      <RequireAuth>
-                        <Dashboard />
-                      </RequireAuth>
-                    }
-                  />
-                  <Route
-                    exact
-                    path="/"
-                    element={<Navigate to="/dashboard" />}
-                  />
-                </Routes>
-              </ContentContainer>
+              <Routes>
+                <Route
+                  exact
+                  path="/signin"
+                  element={
+                    <RequireAnon>
+                      <SignIn />
+                    </RequireAnon>
+                  }
+                />
+                <Route
+                  exact
+                  path="/dashboard"
+                  element={
+                    <RequireAuth>
+                      <Dashboard />
+                    </RequireAuth>
+                  }
+                />
+                <Route exact path="/" element={<Navigate to="/dashboard" />} />
+              </Routes>
             </BrowserRouter>
           </Container>
         </ModalProvider>
@@ -50,10 +44,6 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
-const ContentContainer = styled.div`
-  height: 100vh;
-`;
 
 const theme = createTheme({
   palette: {
