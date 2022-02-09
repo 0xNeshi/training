@@ -12,6 +12,7 @@ import {
   useAddBlockModal,
   useAddNoteModal,
   useNetworkChangeEvents,
+  useSignOutCheckModal,
 } from "./hooks";
 
 export default function Dashboard() {
@@ -30,6 +31,7 @@ export default function Dashboard() {
 
   const { open: openAddNote } = useAddNoteModal(addSection);
   const { open: openAddBlock } = useAddBlockModal(addSection);
+  const { open: openSignOutCheck } = useSignOutCheckModal();
 
   const sortedSections = useMemo(
     () => [...sections].sort((s1, s2) => s2.dateCreated - s1.dateCreated),
@@ -51,17 +53,6 @@ export default function Dashboard() {
     },
     [sortedSections, updateSection]
   );
-
-  const handleSignOutClicked = useCallback(() => {
-    const onSignOut = () => {
-      closeModal();
-      signOut();
-    };
-    const modalContent = (
-      <SignOutCheck onSignOut={onSignOut} onClose={closeModal} />
-    );
-    openModal(modalContent);
-  }, [closeModal, openModal]);
 
   const handleOpenDeleteSectionModal = useCallback(
     (sectionId) => {
@@ -115,7 +106,7 @@ export default function Dashboard() {
         <FAB
           onAddNoteClicked={openAddNote}
           onAddBlockClicked={handleOpenAddBlock}
-          onSignOutClicked={handleSignOutClicked}
+          onSignOutClicked={openSignOutCheck}
         />
       </FABContainer>
     </Container>
