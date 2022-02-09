@@ -12,6 +12,7 @@ import {
   useAddBlockModal,
   useAddNoteModal,
   useNetworkChangeEvents,
+  useRemoveSectionCheck,
   useSignOutCheckModal,
 } from "./hooks";
 
@@ -25,12 +26,13 @@ export default function Dashboard() {
     isLoading,
     sections,
     add: addSection,
-    remove: deleteSection,
+    remove: removeSection,
     update: updateSection,
   } = useSections(user.email);
 
   const { open: openAddNote } = useAddNoteModal(addSection);
   const { open: openAddBlock } = useAddBlockModal(addSection);
+  const { open: openRemoveSectionCheck } = useRemoveSectionCheck(removeSection);
   const { open: openSignOutCheck } = useSignOutCheckModal();
 
   const sortedSections = useMemo(
@@ -54,22 +56,6 @@ export default function Dashboard() {
     [sortedSections, updateSection]
   );
 
-  const handleOpenDeleteSectionModal = useCallback(
-    (sectionId) => {
-      const content = (
-        <DeleteSectionCheck
-          onClose={closeModal}
-          onConfirm={() => {
-            deleteSection(sectionId);
-            closeModal();
-          }}
-        />
-      );
-      openModal(content);
-    },
-    [closeModal, deleteSection, openModal]
-  );
-
   const sectionComponents = useMemo(
     () =>
       sortedSections.map((section) =>
@@ -80,17 +66,17 @@ export default function Dashboard() {
             changeAmrapReps={(weekNumber, exercise, amrapReps) =>
               changeAmrapReps(section.id, weekNumber, exercise, amrapReps)
             }
-            deleteBlock={handleOpenDeleteSectionModal}
+            deleteBlock={openRemoveSectionCheck}
           />
         ) : (
           <Note
             key={section.id}
             data={section}
-            deleteNote={handleOpenDeleteSectionModal}
+            deleteNote={openRemoveSectionCheck}
           />
         )
       ),
-    [sortedSections, changeAmrapReps, handleOpenDeleteSectionModal]
+    [sortedSections, changeAmrapReps, openRemoveSectionCheck]
   );
 
   return (
