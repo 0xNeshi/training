@@ -5,7 +5,7 @@ import { ModalContext } from "../../providers/ModalProvider";
 import { UserContext } from "../../providers/UserProvider";
 import { signOut } from "../../services/authService";
 import { getNewBlockSuggestedValues } from "../../utilities";
-import AddBlock from "./AddBlock";
+import { AddBlock } from "./Modals";
 import AddNote from "./AddNote";
 import Block from "../Block";
 import DeleteSectionCheck from "./DeleteSectionCheck";
@@ -28,12 +28,12 @@ export default function Dashboard() {
     remove: deleteSection,
     update: updateSection,
   } = useSections(user.email);
+
   const sortedSections = useMemo(
     () => [...sections].sort((s1, s2) => s2.dateCreated - s1.dateCreated),
     [sections]
   );
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
-  const [isAddBlockModalOpen, setAddBlockModalOpen] = useState(false);
 
   const changeAmrapReps = useCallback(
     (sectionId, weekNumber, exerciseName, amrapReps) => {
@@ -59,28 +59,28 @@ export default function Dashboard() {
     },
     [addSection]
   );
-  const handleAddBlockClicked = useCallback(
-    () => setAddBlockModalOpen(true),
-    []
+
+  const suggestedValues = useMemo(
+    () => getNewBlockSuggestedValues(sortedSections),
+    [sortedSections]
   );
-  const handleAddBlockClosed = useCallback(
-    () => setAddBlockModalOpen(false),
-    []
-  );
-  const handleAddBlock = useCallback(
-    ({ blockNumber, squatMax, overheadMax, deadliftMax, benchMax }) => {
-      const section = createBlock(
-        blockNumber,
-        squatMax,
-        overheadMax,
-        deadliftMax,
-        benchMax
-      );
+
+  const handleAddBlockClicked = useCallback(() => {
+    const onSubmit = (blockData) => {
+      const section = createBlock(blockData);
       addSection(section);
-      setAddBlockModalOpen(false);
-    },
-    [addSection]
-  );
+      closeModal();
+    };
+    const modalContent = (
+      <AddBlock
+        onSubmit={onSubmit}
+        onClose={closeModal}
+        initialValues={suggestedValues}
+      />
+    );
+    openModal(modalContent);
+  }, [closeModal, openModal, addSection, suggestedValues]);
+
   const handleSignOutClicked = useCallback(() => {
     const onSignOut = () => {
       closeModal();
@@ -131,11 +131,6 @@ export default function Dashboard() {
     [sortedSections, changeAmrapReps, handleOpenDeleteSectionModal]
   );
 
-  const suggestedValues = useMemo(
-    () => getNewBlockSuggestedValues(sortedSections),
-    [sortedSections]
-  );
-
   return (
     <Container>
       {!isLoading && (
@@ -156,12 +151,6 @@ export default function Dashboard() {
         isOpen={isAddNodeModalOpen}
         onClose={handleAddNoteClosed}
         onSubmit={handleAddNote}
-      />
-      <AddBlock
-        isOpen={isAddBlockModalOpen}
-        onClose={handleAddBlockClosed}
-        onSubmit={handleAddBlock}
-        initialValues={suggestedValues}
       />
     </Container>
   );
@@ -203,13 +192,7 @@ const Footer = styled.footer`
   justify-self: end;
 `;
 
-const createBlock = (
-  blockNumber,
-  squatMax,
-  overheadMax,
-  deadliftMax,
-  benchMax
-) => {
+const createBlock = (blockData) => {
   const weeks = [];
   const numberOfWeeks = 3;
 
@@ -217,17 +200,17 @@ const createBlock = (
     weeks.push({
       number: i,
       exercises: [
-        createExercise("squat", squatMax),
-        createExercise("overhead", overheadMax),
-        createExercise("deadlift", deadliftMax),
-        createExercise("bench", benchMax),
+        createExercise("squat", blockData.squatMax),
+        createExercise("overhead", blockData.overheadMax),
+        createExercise("deadlift", blockData.deadliftMax),
+        createExercise("bench", blockData.benchMax),
       ],
     });
   }
 
   return {
     type: "block",
-    number: blockNumber,
+    number: blockData.blockNumber,
     weeks: weeks,
   };
 };
