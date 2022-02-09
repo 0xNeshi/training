@@ -1,26 +1,46 @@
+import { Fade } from "@mui/material";
 import Button from "@mui/material/Button";
 import { blue } from "@mui/material/colors";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Google from "../assets/images/google.png";
+import FithOnLogo from "../assets/images/fithon-logo.png";
 import { UserContext } from "../providers";
 import { signInWithGoogle } from "../services/authService";
 
 export default function SignIn() {
   const { error } = useContext(UserContext);
+  const [isLoading, setLoading] = useState(true);
+  const [canSignIn, setCanSignIn] = useState(false);
+
+  useEffect(() => {
+    const loadingTimeout = setTimeout(() => setLoading(false), 2000);
+    const signInTimeout = setTimeout(() => setCanSignIn(true), 3000);
+    return () => {
+      clearTimeout(loadingTimeout);
+      clearTimeout(signInTimeout);
+    };
+  }, []);
 
   return (
     <Container>
-      <h3>Let's get started...</h3>
-      <Button
-        variant="contained"
-        onClick={signInWithGoogle}
-        sx={{ backgroundColor: blue[800], paddingLeft: 1 }}
-      >
-        <Icon src={Google} alt="Google logo" />
-        Connect with Google
-      </Button>
-      {error && <Error>{error}</Error>}
+      <Fade in={isLoading} unmountOnExit>
+        <img src={FithOnLogo} alt="" style={{ width: "80%" }} />
+      </Fade>
+      <Fade in={canSignIn} unmountOnExit>
+        <div>
+          <h3 style={{ textAlign: "center" }}>Let's get started...</h3>
+          <Button
+            variant="contained"
+            onClick={signInWithGoogle}
+            sx={{ backgroundColor: blue[800], paddingLeft: 1 }}
+          >
+            <ButtonIcon src={Google} alt="" />
+            Connect with Google
+          </Button>
+          {error && <Error>{error}</Error>}
+        </div>
+      </Fade>
     </Container>
   );
 }
@@ -39,7 +59,7 @@ const Error = styled.span`
   text-align: center;
 `;
 
-const Icon = styled.img`
+const ButtonIcon = styled.img`
   padding: 10px;
   width: 50px;
   height: 100%;

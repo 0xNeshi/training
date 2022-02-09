@@ -1,12 +1,13 @@
 import { Container, CssBaseline } from "@mui/material";
 import { grey, lightGreen } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import styled from "styled-components";
-import Dashboard from "./components/Dashboard";
-import SignIn from "./components/SignIn";
 import { RequireAnon, RequireAuth } from "./guards";
 import { ModalProvider, UserProvider } from "./providers";
+
+const Dashboard = lazy(() => import("./components/Dashboard"));
+const SignIn = lazy(() => import("./components/SignIn"));
 
 export default function App() {
   return (
@@ -15,29 +16,35 @@ export default function App() {
         <ModalProvider>
           <Container component="main" sx={{ padding: 0, height: "100vh" }}>
             <CssBaseline />
-            <BrowserRouter>
-              <Routes>
-                <Route
-                  exact
-                  path="/signin"
-                  element={
-                    <RequireAnon>
-                      <SignIn />
-                    </RequireAnon>
-                  }
-                />
-                <Route
-                  exact
-                  path="/dashboard"
-                  element={
-                    <RequireAuth>
-                      <Dashboard />
-                    </RequireAuth>
-                  }
-                />
-                <Route exact path="/" element={<Navigate to="/dashboard" />} />
-              </Routes>
-            </BrowserRouter>
+            <Suspense fallback={<p>Loading...</p>}>
+              <BrowserRouter>
+                <Routes>
+                  <Route
+                    exact
+                    path="/signin"
+                    element={
+                      <RequireAnon>
+                        <SignIn />
+                      </RequireAnon>
+                    }
+                  />
+                  <Route
+                    exact
+                    path="/dashboard"
+                    element={
+                      <RequireAuth>
+                        <Dashboard />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    exact
+                    path="/"
+                    element={<Navigate to="/dashboard" />}
+                  />
+                </Routes>
+              </BrowserRouter>
+            </Suspense>
           </Container>
         </ModalProvider>
       </UserProvider>

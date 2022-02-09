@@ -33,7 +33,7 @@ export default function Dashboard() {
   const handleAddSection = useCallback(
     (section) => {
       addSection(section);
-      ref.scrollTo({
+      ref?.scrollTo({
         top: 0,
         behavior: "smooth",
       });
