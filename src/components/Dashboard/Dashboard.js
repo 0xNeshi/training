@@ -1,14 +1,14 @@
 import { useCallback, useContext, useMemo } from "react";
 import styled from "styled-components";
 import { useSections } from "../../hooks";
-import { ModalContext } from "../../providers/ModalProvider";
-import { UserContext } from "../../providers/UserProvider";
+import { ModalContext, UserContext } from "../../providers";
 import { signOut } from "../../services/authService";
 import { getNewBlockSuggestedValues } from "../../utilities";
 import Block from "../Block";
+import { AddBlock, DeleteSectionCheck, SignOutCheck } from "../Modals";
 import Note from "../Note";
 import FAB from "./FAB";
-import { AddBlock, AddNote, DeleteSectionCheck, SignOutCheck } from "../Modals";
+import { useAddNoteModal } from "./hooks";
 import useNetworkChangeEvents from "./useNetworkChangeEvents";
 
 export default function Dashboard() {
@@ -24,6 +24,8 @@ export default function Dashboard() {
     remove: deleteSection,
     update: updateSection,
   } = useSections(user.email);
+
+  const { open: openAddNote } = useAddNoteModal(addSection);
 
   const sortedSections = useMemo(
     () => [...sections].sort((s1, s2) => s2.dateCreated - s1.dateCreated),
@@ -41,19 +43,10 @@ export default function Dashboard() {
     [sortedSections, updateSection]
   );
 
-  const handleAddNoteClicked = useCallback(() => {
-    const onSubmit = ({ title, text }) => {
-      addSection({
-        title,
-        text,
-        type: "note",
-      });
-      closeModal();
-    };
-
-    const modalContent = <AddNote onSubmit={onSubmit} onClose={closeModal} />;
-    openModal(modalContent);
-  }, [openModal, closeModal, addSection]);
+  const handleAddNote = useCallback(
+    () => openAddNote(),
+    [openAddNote, addSection]
+  );
 
   const suggestedValues = useMemo(
     () => getNewBlockSuggestedValues(sortedSections),
@@ -137,7 +130,7 @@ export default function Dashboard() {
       )}
       <FABContainer>
         <FAB
-          onAddNoteClicked={handleAddNoteClicked}
+          onAddNoteClicked={handleAddNote}
           onAddBlockClicked={handleAddBlockClicked}
           onSignOutClicked={handleSignOutClicked}
         />
@@ -174,7 +167,6 @@ const Content = styled.div`
   gap: 20px;
   align-items: center;
   padding: 20px 0 20px;
-  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   width: 100%;
   height: 100%;
@@ -193,7 +185,7 @@ const FABContainer = styled.div`
 const Footer = styled.footer`
   margin-top: 10px;
   font-size: 12px;
-  justify-self: end;
+  margin-top: auto;
 `;
 
 const createBlock = (blockData) => {

@@ -6,8 +6,7 @@ import styled from "styled-components";
 import Dashboard from "./components/Dashboard";
 import SignIn from "./components/SignIn";
 import { RequireAnon, RequireAuth } from "./guards";
-import ModalProvider from "./providers/ModalProvider";
-import UserProvider from "./providers/UserProvider";
+import { ModalProvider, UserProvider } from "./providers";
 
 export default function App() {
   return (

@@ -3,7 +3,7 @@ import { blue } from "@mui/material/colors";
 import { useContext } from "react";
 import styled from "styled-components";
 import Google from "../assets/images/google.png";
-import { UserContext } from "../providers/UserProvider";
+import { UserContext } from "../providers";
 import { signInWithGoogle } from "../services/authService";
 
 export default function SignIn() {
