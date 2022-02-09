@@ -13,7 +13,6 @@ import FAB from "./FAB";
 import Note from "../Note";
 import useNetworkChangeEvents from "./useNetworkChangeEvents";
 import SignOutCheck from "./SignOutCheck";
-import AddFirstSectionMessage from "./AddFirstSectionMessage";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
@@ -153,6 +152,20 @@ export default function Dashboard() {
         onSubmit={handleAddNote}
       />
     </Container>
+  );
+}
+
+function AddFirstSectionMessage() {
+  return (
+    <div
+      style={{
+        marginTop: "auto",
+        marginBottom: "auto",
+        color: "lightgray",
+      }}
+    >
+      Add your first block/note
+    </div>
   );
 }
 
