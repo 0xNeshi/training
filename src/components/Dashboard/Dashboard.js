@@ -14,6 +14,7 @@ import {
   useRemoveSectionModal,
   useSignOutModal,
 } from "./hooks";
+import Loading from "../Loading";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
@@ -96,9 +97,11 @@ export default function Dashboard() {
 
   return (
     <Container ref={(_ref) => setRef(_ref)}>
-      {!sectionComponents?.length && <EmptySectionsMessage />}
+      {!isLoading && !sectionComponents?.length && <EmptySectionsMessage />}
       {!isLoading && !!sectionComponents?.length && sectionComponents}
-      <Fade in={!trigger} unmountOnExit>
+      {isLoading && <Loading />}
+      <Footer>&copy;Copyright 2022 by misicnenad</Footer>
+      <Fade in={!isLoading && !trigger} unmountOnExit>
         <FABContainer>
           <FAB
             onAddNote={openAddNote}
@@ -131,7 +134,6 @@ const Container = styled.div`
   gap: 20px;
   align-items: center;
   padding: 20px 0 20px;
-  font-size: calc(10px + 2vmin);
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
@@ -143,4 +145,11 @@ const FABContainer = styled.div`
   bottom: 10px;
   right: 10px;
   z-index: 2;
+`;
+
+const Footer = styled.footer`
+  font-size: 12px;
+  width: 100%;
+  margin-top: auto;
+  text-align: center;
 `;
