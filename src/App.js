@@ -3,6 +3,7 @@ import { grey, lightGreen } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import styled from "styled-components";
 import { RequireAnon, RequireAuth } from "./guards";
 import { ModalProvider, UserProvider } from "./providers";
 
@@ -14,7 +15,15 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <UserProvider>
         <ModalProvider>
-          <Container component="main" sx={{ padding: 0, height: "100vh" }}>
+          <Container
+            component="main"
+            sx={{
+              padding: 0,
+              height: "100vh",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <CssBaseline />
             <Suspense fallback={<p>Loading...</p>}>
               <BrowserRouter>
@@ -45,6 +54,7 @@ export default function App() {
                 </Routes>
               </BrowserRouter>
             </Suspense>
+            <Footer>&copy;Copyright 2022 by misicnenad</Footer>
           </Container>
         </ModalProvider>
       </UserProvider>
@@ -70,3 +80,10 @@ const theme = createTheme({
     },
   },
 });
+
+const Footer = styled.footer`
+  font-size: 12px;
+  width: 100%;
+  height: 5%;
+  text-align: center;
+`;
