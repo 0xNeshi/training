@@ -1,4 +1,12 @@
-# Getting Started with Create React App
+# FithOn - Fitness tracker for 5/3/1 lifting program by Jim Wendler
+
+An app to assist in running the 5/3/1 weight lifting program created by Jim Wendler, used to track blocks, exercises, weights and reps.
+
+Created with the mobile-first web-undfriendly approach.
+
+To use visit https://training-711ed.web.app/
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
