@@ -1,5 +1,5 @@
 {
-  "name": "FithOn",
+  "name": "FithOn - Tracker for 5/3/1 lifting program by Jim Wendler",
   "short_name": "FithOn",
   "icons": [
     {
@@ -18,6 +18,7 @@
       "type": "image/png"
     }
   ],
+  "start_url": ".",
   "theme_color": "#222222",
   "background_color": "#222222",
   "display": "standalone"
