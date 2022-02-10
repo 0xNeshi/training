@@ -10,14 +10,12 @@ module.exports = {
   devServer: {
     static: [path.join(__dirname, "dist"), path.join(__dirname, "public")],
     port: PORT,
+    historyApiFallback: true,
   },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "index_bundle.js",
     publicPath: "/",
-  },
-  devServer: {
-    historyApiFallback: true,
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -55,7 +53,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      manifest: "./public/manifest.json",
+      manifest: "./public/site.webmanifest",
       favicon: "./public/favicon.ico",
       template: "./public/index.html",
     }),

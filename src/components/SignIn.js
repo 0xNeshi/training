@@ -30,7 +30,7 @@ export default function SignIn() {
   return (
     <Container>
       <Fade in={isLoading} unmountOnExit>
-        <img src={FithOnLogo} alt="" style={{ width: "80%" }} />
+        <img src={FithOnLogo} alt="" width={300} height={150} />
       </Fade>
       <Fade in={showMessage} unmountOnExit>
         <h3 style={{ textAlign: "center" }}>Let's get started...</h3>
