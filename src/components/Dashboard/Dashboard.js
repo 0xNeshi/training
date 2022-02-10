@@ -5,6 +5,7 @@ import { useSections } from "../../hooks";
 import { UserContext } from "../../providers";
 import { getNewBlockSuggestedValues } from "../../utilities";
 import Block from "../Block";
+import Loading from "../Loading";
 import Note from "../Note";
 import FAB from "./FAB";
 import {
@@ -14,7 +15,6 @@ import {
   useRemoveSectionModal,
   useSignOutModal,
 } from "./hooks";
-import Loading from "../Loading";
 
 export default function Dashboard() {
   const { user } = useContext(UserContext);
@@ -96,11 +96,13 @@ export default function Dashboard() {
   });
 
   return (
-    <Container ref={(_ref) => setRef(_ref)}>
-      {!isLoading && !sectionComponents?.length && <EmptySectionsMessage />}
-      {!isLoading && !!sectionComponents?.length && sectionComponents}
-      {isLoading && <Loading />}
-      <Footer>&copy;Copyright 2022 by misicnenad</Footer>
+    <Container>
+      <Content ref={(_ref) => setRef(_ref)}>
+        {!isLoading && !sectionComponents?.length && <EmptySectionsMessage />}
+        {!isLoading && !!sectionComponents?.length && sectionComponents}
+        {isLoading && <Loading />}
+        <Footer>&copy;Copyright 2022 by misicnenad</Footer>
+      </Content>
       <Fade in={!isLoading && !trigger} unmountOnExit>
         <FABContainer>
           <FAB
@@ -128,12 +130,19 @@ function EmptySectionsMessage() {
 }
 
 const Container = styled.div`
+  height: 100vh;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  position: relative;
+`;
+
+const Content = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
   gap: 20px;
   align-items: center;
-  padding: 20px 0 20px;
+  padding: 20px 0;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
@@ -142,8 +151,8 @@ const Container = styled.div`
 
 const FABContainer = styled.div`
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 15px;
+  right: 15px;
   z-index: 2;
 `;
 

@@ -15,16 +15,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <UserProvider>
         <ModalProvider>
-          <Container
-            component="main"
-            sx={{
-              padding: 0,
-              height: "100vh",
-              display: "flex",
-              flexDirection: "column",
-              fontSize: "calc(10px + 2vmin)",
-            }}
-          >
+          <Container component="main" sx={{ padding: 0 }}>
             <CssBaseline />
             <Suspense fallback={<Loading />}>
               <BrowserRouter>
