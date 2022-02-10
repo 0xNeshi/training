@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.17.2",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@hookform/resolvers": "^2.8.8",
@@ -56,6 +57,7 @@
   "packageManager": "yarn@3.1.1",
   "devDependencies": {
     "@babel/core": "^7.17.2",
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@svgr/webpack": "^6.2.1",

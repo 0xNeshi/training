@@ -81,8 +81,8 @@ export default function useSyncSections(userEmail) {
 
     try {
       const backup = createBackupObject(userEmail, sections);
+      setLastSyncTime(backup.lastBackupTime);
       await pushBackup(backup);
-      localStorage.setItem(lastSyncKey, backup.lastBackupTime);
     } catch (e) {
       console.log("There was an error, stopping backup\n", e);
     }
