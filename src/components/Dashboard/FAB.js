@@ -59,8 +59,8 @@ export default function FAB(props) {
             width: 180,
           },
         }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: "right", vertical: "bottom" }}
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
         <MenuItem sx={{ fontSize: 20 }} onClick={onAddBlock}>
           <ListItemIcon>
