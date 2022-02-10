@@ -14,8 +14,8 @@ export default function ModalProvider({ children }) {
   const [content, setContent] = useState();
 
   const openModal = useCallback((modalContent) => {
-    setOpen(true);
     setContent(modalContent);
+    setOpen(true);
   }, []);
   const closeModal = useCallback(() => setOpen(false), []);
 
@@ -31,7 +31,7 @@ export default function ModalProvider({ children }) {
       <ReactModal
         isOpen={isOpen}
         overlayRef={(ref) => setOverlayRef(ref)}
-        onRequestClose={() => console.log("close modal")}
+        onRequestClose={() => closeModal()}
         style={modalStyle}
       >
         {content}
